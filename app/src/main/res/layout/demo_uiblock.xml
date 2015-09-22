@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    
+    android:background="#bc58af"
+    android:orientation="vertical"
+    android:padding="12dp"
+    tools:showIn="@layout/demo_activity"
+    >
+
+    <EditText
+        android:id="@+id/bottom_et"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ffffff"
+        android:hint="This is a UI Block"
+        />
+
+    <Button
+        android:id="@+id/bottom_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="send"
+        />
+
+</LinearLayout>

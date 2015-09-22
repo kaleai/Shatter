@@ -1,0 +1,27 @@
+package kale.ui;
+
+import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.view.View;
+
+/**
+ * @author Jack Tony
+ * @date 2015/9/22
+ */
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.main_activity);
+
+        findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                startActivity(DemoActivity.newIntent(MainActivity.this, "this is a string"));
+            }
+        });
+
+       
+    }
+}
