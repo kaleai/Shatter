@@ -4,13 +4,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import kale.ui.ContainUIBlockActivity;
 import kale.ui.UIBlockManager;
 
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class BaseActivity extends AppCompatActivity {
+public class BaseActivity extends AppCompatActivity implements ContainUIBlockActivity{
 
     private UIBlockManager mUIBlockManager;
 
@@ -20,6 +21,7 @@ public class BaseActivity extends AppCompatActivity {
         mUIBlockManager = new UIBlockManager(this);
     }
 
+    @Override
     public UIBlockManager getUIBlockManager() {
         return mUIBlockManager;
     }
@@ -33,13 +35,13 @@ public class BaseActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onDestroy() {
+    public void onDestroy() {
         super.onDestroy();
         mUIBlockManager.onDestroy();
     }
 
     @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         mUIBlockManager.onActivityResult(requestCode, resultCode, data);
     }
