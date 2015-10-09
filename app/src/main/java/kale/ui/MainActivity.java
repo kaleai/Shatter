@@ -1,5 +1,6 @@
 package kale.ui;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -18,10 +19,8 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivity(DemoActivity.newIntent(MainActivity.this, "this is a string"));
+                startActivity(new Intent(MainActivity.this, DemoActivity.class));
             }
         });
-
-       
     }
 }
