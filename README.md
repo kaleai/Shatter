@@ -1,7 +1,6 @@
-# UIBlock
+# UIBlock  
 代替fragment的轻量级解耦UI的类  
 
---  
 
 ## 准备工作  
 在项目中建立一个BaseActivity，让它实现ContainUIBlockActivity接口：
