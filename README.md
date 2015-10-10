@@ -1,6 +1,22 @@
 # UIBlock  
 代替fragment的轻量级解耦UI的类  
 
+## 添加依赖  
+1.在项目外层的build.gradle中添加JitPack仓库
+  
+```  
+repositories {
+	maven {
+		url "https://jitpack.io"
+	}
+}
+```    
+2.在用到的项目中添加依赖
+```  
+dependencies {
+		compile 'com.github.tianzhijiexian:UIBlock:1.0'
+}    
+```   
 
 ## 准备工作  
 在项目中建立一个BaseActivity，让它实现ContainUIBlockActivity接口：
