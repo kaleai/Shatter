@@ -30,6 +30,7 @@
 
     </LinearLayout>
 
+    <!-- 嵌套 -->
     <LinearLayout
         android:id="@+id/middle_ub"
         android:layout_width="match_parent"
