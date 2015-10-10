@@ -24,8 +24,6 @@ public class DemoTopUIBlock extends UIBlock{
     protected void setViews() {
         String content = mTopTv.getText().toString();
         mTopTv.setText(content + " :)");
-
-       // XXXHelper.getInstance(getActivity()).setRetainedTextView(mTopTv);
     }
     
 }

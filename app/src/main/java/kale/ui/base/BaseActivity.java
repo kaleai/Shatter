@@ -28,8 +28,7 @@ public class BaseActivity extends AppCompatActivity implements ContainUIBlockAct
 
     @Override
     public void onBackPressed() {
-        boolean handled = mUIBlockManager.onBackPressed();
-        if (!handled) {
+        if (!mUIBlockManager.onBackPressed()) {
             super.onBackPressed();
         }
     }
