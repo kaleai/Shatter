@@ -2,6 +2,9 @@ package kale.ui;
 
 import android.widget.TextView;
 
+import butterknife.Bind;
+import butterknife.ButterKnife;
+
 /**
  * @author Jack Tony
  * @date 2015/9/21
@@ -13,11 +16,13 @@ public class DemoTopUIBlock extends UIBlock{
         return R.id.top_ub;
     }
 
+    @Bind(R.id.top_tv)
     TextView mTopTv;
 
     @Override
     protected void bindViews() {
-        mTopTv = getView(R.id.top_tv);
+        ButterKnife.bind(this,getRootView());
+        //mTopTv = getView(R.id.top_tv);
     }
 
     @Override

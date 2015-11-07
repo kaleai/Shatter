@@ -56,6 +56,10 @@
                 android:text="Inner UI Block"
                 android:textSize="30sp"
                 />
+            <!-- 也支持include -->
+            <!-- <include android:id="@+id/inner_tv" 
+                 layout="@layout/demo_inner_uiblock"/>-->
+            
         </LinearLayout>
 
     </LinearLayout>
