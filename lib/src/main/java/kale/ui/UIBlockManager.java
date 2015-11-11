@@ -73,21 +73,25 @@ public class UIBlockManager {
     }
 
     public void onDestroy() {
-        callBlock(new Callback() {
-            @Override
-            public void onCall(int i) {
-                mUIBlockList.get(i).onDestroy();
-            }
-        });
-        mUIBlockList.clear();
-        mUIBlockList = null;
+        if (mUIBlockList != null) {
+            callBlock(new Callback() {
+                @Override
+                public void onCall(int i) {
+                    mUIBlockList.get(i).onDestroy();
+                }
+            });
+            mUIBlockList.clear();
+            mUIBlockList = null;
+        }
     }
 
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         callBlock(new Callback() {
             @Override
             public void onCall(int i) {
-                mUIBlockList.get(i).onActivityResult(requestCode, resultCode, data);
+                if (mUIBlockList != null) {
+                    mUIBlockList.get(i).onActivityResult(requestCode, resultCode, data);
+                }
             }
         });
     }
