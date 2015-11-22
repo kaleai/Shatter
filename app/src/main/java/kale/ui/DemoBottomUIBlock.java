@@ -1,36 +1,45 @@
 package kale.ui;
 
+import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import kale.ui.uiblock.UiBlock;
+
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoBottomUIBlock extends UIBlock{
+public class DemoBottomUiBlock extends UiBlock<DemoActivity> {
 
     @Override
-    public int getRootViewId() {
-        return R.id.bottom_ub;
+    public View initRootView(Activity activity) {
+        return activity.findViewById(R.id.bottom_ub);
+    }
+    
+    private EditText mBottomEt;
+
+    private Button mBottomBtn;
+
+    @Override
+    protected void onAttach(DemoActivity activity) {
+        super.onAttach(activity);
     }
 
-    private EditText mBottomEt;
-    private Button mBottomBtn;
-    
     @Override
-    protected void bindViews() {
+    protected void onBindViews() {
         mBottomEt = getView(R.id.bottom_et);
         mBottomBtn = getView(R.id.bottom_btn);
     }
 
     @Override
-    protected void setViews() {
+    protected void onSetViews() {
         mBottomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getActivity(DemoActivity.class).changeText();
+                getActivity().changeText();
             }
         });
     }

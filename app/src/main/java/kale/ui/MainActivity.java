@@ -16,6 +16,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_activity);
 
+        startActivity(new Intent(MainActivity.this, DemoActivity.class));
+
+
         findViewById(R.id.jump_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

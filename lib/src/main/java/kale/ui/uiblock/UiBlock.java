@@ -1,8 +1,7 @@
-package kale.ui;
+package kale.ui.uiblock;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.support.annotation.IdRes;
 import android.util.Log;
 import android.view.View;
 
@@ -11,56 +10,51 @@ import android.view.View;
  * @date 2015/6/15
  * 1.需要在界面销毁时把回调停止
  */
-public abstract class UIBlock {
-
-    protected String TAG = getClass().getSimpleName();
+public abstract class UiBlock<T extends ContainUIBlockActivity> {
 
     private View mRootView;
 
-    private Activity mActivity;
+    private T mActivity;
 
-    protected void attachActivity(Activity activity) {
-        mActivity = activity;
-        mRootView = mActivity.findViewById(getRootViewId());
-        
-        bindViews();
+    protected void attachActivity(T activity) {
+        onAttach(activity);
+        mRootView = initRootView((Activity) activity);
+        onBindViews();
         beforeSetViews();
-        setViews();
+        onSetViews();
+    }
+
+    protected void onAttach(T activity) {
+        mActivity = activity;
     }
 
     /**
-     * @return fragment的根view
+     * @return 的根view
      */
-    public abstract
-    @IdRes
-    int getRootViewId();
+    public abstract View initRootView(Activity activity);
 
     /**
-     * 找到所有的views
+/     * 找到所有的views
      */
-    protected abstract void bindViews();
+    protected abstract void onBindViews();
 
     /**
      * 在这里初始化设置view的各种资源，比如适配器或各种变量
      */
-    protected void beforeSetViews() {}
+    protected void beforeSetViews() {
+    }
 
     /**
      * 设置所有的view
      */
-    protected abstract void setViews();
-
+    protected abstract void onSetViews();
 
     public View getRootView() {
         return mRootView;
     }
 
-    protected Activity getActivity() {
+    protected T getActivity() {
         return mActivity;
-    }
-
-    protected <T extends Activity> T getActivity(Class<T> cls) {
-        return (T)mActivity;
     }
 
     /**
@@ -75,15 +69,14 @@ public abstract class UIBlock {
         mRootView = null;
     }
 
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {}
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+    }
 
-
-    @SuppressWarnings("unchecked")
     protected final <E extends View> E getView(int id) {
         try {
             return (E) mRootView.findViewById(id);
         } catch (ClassCastException ex) {
-            Log.e(TAG, "Could not cast View to concrete class.", ex);
+            Log.e(UiBlock.class.getSimpleName(), "Could not cast View to concrete class.", ex);
             throw ex;
         }
     }

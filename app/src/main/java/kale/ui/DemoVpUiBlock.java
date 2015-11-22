@@ -1,28 +1,30 @@
 package kale.ui;
 
 import android.app.Activity;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.TextView;
 
 import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
- * @date 2015/9/22
+ * @date 2015/11/21
  */
-public class DemoMiddleUiBlock extends UiBlock {
+public class DemoVpUiBlock extends UiBlock<DemoActivity> {
 
     @Override
     public View initRootView(Activity activity) {
-        return activity.findViewById(R.id.middle_ub);
+        return LayoutInflater.from(activity).inflate(R.layout.demo_vp_uiblock, null);
     }
 
     @Override
     protected void onBindViews() {
-        getActivity().getUiBlockManager().add(new DemoInnerUiBlock());
+            
     }
 
     @Override
     protected void onSetViews() {
-        getRootView().setBackgroundColor(0xffff5722);
+        ((TextView) getView(R.id.header_tv)).setTextSize(30);
     }
 }

@@ -10,12 +10,23 @@
     tools:context=".MainActivity"
     >
 
+    <android.support.v4.view.ViewPager
+        android:id="@+id/top_vp"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:background="#ff9800"
+        />
+
     <!-- 使用普通的布局 -->
     <LinearLayout
         android:id="@+id/top_ub"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:background="#65a8b7"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/top_vp"
+        android:layout_marginTop="16dp"
+        android:background="#009688"
         >
 
         <TextView
@@ -35,8 +46,13 @@
         android:id="@+id/middle_ub"
         android:layout_width="match_parent"
         android:layout_height="100dp"
-        android:layout_centerVertical="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/top_ub"
+        android:layout_marginTop="16dp"
         android:padding="12dp"
+        android:background="#9e9e9e"
+        android:contentDescription="这里的背景会被代码修改"
         >
 
         <LinearLayout
@@ -44,7 +60,7 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_gravity="center"
-            android:background="#bc58af"
+            android:background="#00bcd4"
             >
 
             <TextView
@@ -53,13 +69,13 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="Inner UI Block"
+                android:text="文字会被代码修改"
                 android:textSize="30sp"
                 />
             <!-- 也支持include -->
             <!-- <include android:id="@+id/inner_tv" 
                  layout="@layout/demo_inner_uiblock"/>-->
-            
+
         </LinearLayout>
 
     </LinearLayout>
@@ -69,9 +85,11 @@
         android:id="@+id/bottom_ub"
         layout="@layout/demo_uiblock"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="16dp"
+        android:layout_below="@+id/middle_ub"
         />
 
 </RelativeLayout>

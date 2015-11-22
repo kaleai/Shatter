@@ -1,4 +1,4 @@
-package kale.ui;
+package kale.ui.uiblock;
 
 import android.content.Intent;
 
@@ -8,7 +8,7 @@ import android.content.Intent;
  */
 public interface ContainUIBlockActivity {
 
-    UIBlockManager getUIBlockManager();
+    UiBlockManager getUiBlockManager();
 
     void onBackPressed();
 
