@@ -22,9 +22,9 @@ public class DemoActivity extends BaseActivity {
                 .setAdapter(new UiBlockPagerAdapter(getUiBlockManager(), getUIBlocks()));
 
         getUiBlockManager()
-                .add(new DemoTopUiBlock())
-                .add(new DemoBottomUiBlock())
-                .add(new DemoMiddleUiBlock());
+                .add(new DemoTopUIBlock())
+                .add(new DemoBottomUIBlock())
+                .add(new DemoMiddleUIBlock());
     }
 
     @NonNull
@@ -39,6 +39,6 @@ public class DemoActivity extends BaseActivity {
     // 被uiblock调用
     public void changeText() {
         // activity调用uiblock
-        getUiBlockManager().get(DemoBottomUiBlock.class).onTextChangeCompleted("Text from activity");
+        getUiBlockManager().get(DemoBottomUIBlock.class).onTextChangeCompleted("Text from activity");
     }
 }

@@ -9,7 +9,7 @@ import kale.ui.uiblock.UiBlock;
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class DemoMiddleUiBlock extends UiBlock {
+public class DemoMiddleUIBlock extends UiBlock {
 
     @Override
     public View initRootView(Activity activity) {
@@ -18,7 +18,7 @@ public class DemoMiddleUiBlock extends UiBlock {
 
     @Override
     protected void onBindViews() {
-        getActivity().getUiBlockManager().add(new DemoInnerUiBlock());
+        getActivity().getUiBlockManager().add(new DemoInnerUIBlock());
     }
 
     @Override

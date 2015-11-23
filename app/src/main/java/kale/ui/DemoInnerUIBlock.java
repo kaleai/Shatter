@@ -10,7 +10,7 @@ import kale.ui.uiblock.UiBlock;
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class DemoInnerUiBlock extends UiBlock {
+public class DemoInnerUIBlock extends UiBlock {
 
     @Override
     public View initRootView(Activity activity) {

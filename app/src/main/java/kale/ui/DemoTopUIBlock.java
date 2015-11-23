@@ -12,7 +12,7 @@ import kale.ui.uiblock.UiBlock;
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoTopUiBlock extends UiBlock {
+public class DemoTopUIBlock extends UiBlock {
 
     @Override
     public View initRootView(Activity activity) {
