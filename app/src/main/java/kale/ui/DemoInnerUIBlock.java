@@ -4,13 +4,13 @@ import android.app.Activity;
 import android.view.View;
 import android.widget.TextView;
 
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class DemoInnerUIBlock extends UiBlock {
+public class DemoInnerUIBlock extends UIBlock {
 
     @Override
     public View initRootView(Activity activity) {

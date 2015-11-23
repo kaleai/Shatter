@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kale.ui.base.BaseActivity;
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 import kale.ui.uiblock.adapter.UiBlockPagerAdapter;
 
 public class DemoActivity extends BaseActivity {
@@ -28,12 +28,12 @@ public class DemoActivity extends BaseActivity {
     }
 
     @NonNull
-    private List<UiBlock> getUIBlocks() {
-        List<UiBlock> uiBlockList = new ArrayList<>();
-        uiBlockList.add(new DemoVpUiBlock());
-        uiBlockList.add(new DemoVpUiBlock());
-        uiBlockList.add(new DemoVpUiBlock());
-        return uiBlockList;
+    private List<UIBlock> getUIBlocks() {
+        List<UIBlock> UIBlockList = new ArrayList<>();
+        UIBlockList.add(new DemoVpUiBlock());
+        UIBlockList.add(new DemoVpUiBlock());
+        UIBlockList.add(new DemoVpUiBlock());
+        return UIBlockList;
     }
 
     // 被uiblock调用

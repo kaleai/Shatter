@@ -10,7 +10,7 @@ import android.view.View;
  * @date 2015/6/15
  * 1.需要在界面销毁时把回调停止
  */
-public abstract class UiBlock<T extends ContainUIBlockActivity> {
+public abstract class UIBlock<T extends ContainUIBlockActivity> {
 
     private View mRootView;
 
@@ -76,7 +76,7 @@ public abstract class UiBlock<T extends ContainUIBlockActivity> {
         try {
             return (E) mRootView.findViewById(id);
         } catch (ClassCastException ex) {
-            Log.e(UiBlock.class.getSimpleName(), "Could not cast View to concrete class.", ex);
+            Log.e(UIBlock.class.getSimpleName(), "Could not cast View to concrete class.", ex);
             throw ex;
         }
     }

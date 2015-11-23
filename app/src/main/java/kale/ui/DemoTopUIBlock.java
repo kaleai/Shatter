@@ -6,13 +6,13 @@ import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoTopUIBlock extends UiBlock {
+public class DemoTopUIBlock extends UIBlock {
 
     @Override
     public View initRootView(Activity activity) {

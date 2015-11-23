@@ -14,7 +14,7 @@ import java.util.List;
  */
 public class UiBlockManager {
 
-    private List<UiBlock> mUiBlockList;
+    private List<UIBlock> mUIBlockList;
 
     protected Activity activity;
     
@@ -22,33 +22,33 @@ public class UiBlockManager {
         this.activity = (Activity) activity;
     }
 
-    public <T extends ContainUIBlockActivity> UiBlockManager add(@NonNull UiBlock<T> uiBlock) {
-        uiBlock.attachActivity((T) activity);
-        if (mUiBlockList == null) {
-            mUiBlockList = new ArrayList<>();
+    public <T extends ContainUIBlockActivity> UiBlockManager add(@NonNull UIBlock<T> UIBlock) {
+        UIBlock.attachActivity((T) activity);
+        if (mUIBlockList == null) {
+            mUIBlockList = new ArrayList<>();
         }
-        mUiBlockList.add(uiBlock);
+        mUIBlockList.add(UIBlock);
         return this;
     }
 
-    public UiBlockManager remove(@NonNull UiBlock uiBlock) {
-        uiBlock.onDestroy();
-        if (mUiBlockList != null && mUiBlockList.contains(uiBlock)) {
-            mUiBlockList.remove(uiBlock);
+    public UiBlockManager remove(@NonNull UIBlock UIBlock) {
+        UIBlock.onDestroy();
+        if (mUIBlockList != null && mUIBlockList.contains(UIBlock)) {
+            mUIBlockList.remove(UIBlock);
         }
         return this;
     }
 
-    public List<UiBlock> getUIblocks() {
-        return mUiBlockList;
+    public List<UIBlock> getUIblocks() {
+        return mUIBlockList;
     }
     
     @CheckResult
-    public <T extends UiBlock> T get(@NonNull Class<T> cls) {
-        if (mUiBlockList != null) {
-            for (int i = 0, size = mUiBlockList.size(); i < size; i++) {
-                if (mUiBlockList.get(i).getClass().getCanonicalName().equals(cls.getCanonicalName())) {
-                    return (T) mUiBlockList.get(i);
+    public <T extends UIBlock> T get(@NonNull Class<T> cls) {
+        if (mUIBlockList != null) {
+            for (int i = 0, size = mUIBlockList.size(); i < size; i++) {
+                if (mUIBlockList.get(i).getClass().getCanonicalName().equals(cls.getCanonicalName())) {
+                    return (T) mUIBlockList.get(i);
                 }
             }
         }
@@ -56,8 +56,8 @@ public class UiBlockManager {
     }
 
     @CheckResult
-    public List<UiBlock> getUiBlockList() {
-        return mUiBlockList;
+    public List<UIBlock> getUiBlockList() {
+        return mUIBlockList;
     }
     
     
@@ -65,9 +65,9 @@ public class UiBlockManager {
     
     public boolean onBackPressed() {
         boolean handled = false;
-        if (mUiBlockList != null) {
-            for (int i = 0, size = mUiBlockList.size(); i < size; i++) {
-                handled = mUiBlockList.get(i).onBackPressed();
+        if (mUIBlockList != null) {
+            for (int i = 0, size = mUIBlockList.size(); i < size; i++) {
+                handled = mUIBlockList.get(i).onBackPressed();
                 if (handled) {
                     break;
                 }
@@ -77,15 +77,15 @@ public class UiBlockManager {
     }
 
     public void onDestroy() {
-        if (mUiBlockList != null) {
+        if (mUIBlockList != null) {
             callBlock(new Callback() {
                 @Override
                 public void onCall(int i) {
-                    mUiBlockList.get(i).onDestroy();
+                    mUIBlockList.get(i).onDestroy();
                 }
             });
-            mUiBlockList.clear();
-            mUiBlockList = null;
+            mUIBlockList.clear();
+            mUIBlockList = null;
         }
     }
 
@@ -93,7 +93,7 @@ public class UiBlockManager {
         callBlock(new Callback() {
             @Override
             public void onCall(int i) {
-                mUiBlockList.get(i).onActivityResult(requestCode, resultCode, data);
+                mUIBlockList.get(i).onActivityResult(requestCode, resultCode, data);
             }
         });
     }
@@ -101,8 +101,8 @@ public class UiBlockManager {
     //// 回调 end -------------------
 
     private void callBlock(final Callback callback) {
-        if (mUiBlockList != null) {
-            for (int i = 0, size = mUiBlockList.size(); i < size; i++) {
+        if (mUIBlockList != null) {
+            for (int i = 0, size = mUIBlockList.size(); i < size; i++) {
                 callback.onCall(i);
             }
         }

@@ -5,32 +5,32 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 import kale.ui.uiblock.UiBlockManager;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class UiBlockPagerAdapter extends CommonPagerAdapter<UiBlock>{
+public class UiBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
 
     private final UiBlockManager mManager;
 
-    public UiBlockPagerAdapter(UiBlockManager manager, List<UiBlock> items) {
+    public UiBlockPagerAdapter(UiBlockManager manager, List<UIBlock> items) {
         super(items);
         mManager = manager;
     }
 
     @Override
-    public View onInitItem(ViewGroup container, UiBlock uiBlock, int position) {
-        mManager.add(uiBlock);
-        container.addView(uiBlock.getRootView());
-        return uiBlock.getRootView();
+    public View onInitItem(ViewGroup container, UIBlock UIBlock, int position) {
+        mManager.add(UIBlock);
+        container.addView(UIBlock.getRootView());
+        return UIBlock.getRootView();
     }
 
     @Override
-    public void onDestroyItem(ViewGroup container, UiBlock uiBlock, int position, View view) {
+    public void onDestroyItem(ViewGroup container, UIBlock UIBlock, int position, View view) {
         container.removeView(view);
-        mManager.remove(uiBlock);
+        mManager.remove(UIBlock);
     }
 }

@@ -3,13 +3,13 @@ package kale.ui;
 import android.app.Activity;
 import android.view.View;
 
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class DemoMiddleUIBlock extends UiBlock {
+public class DemoMiddleUIBlock extends UIBlock {
 
     @Override
     public View initRootView(Activity activity) {

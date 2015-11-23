@@ -5,13 +5,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
 
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class DemoVpUiBlock extends UiBlock<DemoActivity> {
+public class DemoVpUiBlock extends UIBlock<DemoActivity> {
 
     @Override
     public View initRootView(Activity activity) {

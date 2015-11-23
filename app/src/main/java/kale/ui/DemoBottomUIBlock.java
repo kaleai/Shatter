@@ -6,13 +6,13 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import kale.ui.uiblock.UiBlock;
+import kale.ui.uiblock.UIBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoBottomUIBlock extends UiBlock<DemoActivity> {
+public class DemoBottomUIBlock extends UIBlock<DemoActivity> {
 
     @Override
     public View initRootView(Activity activity) {
