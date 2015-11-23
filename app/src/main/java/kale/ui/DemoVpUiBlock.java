@@ -11,7 +11,7 @@ import kale.ui.uiblock.UIBlock;
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class DemoVpUiBlock extends UIBlock<DemoActivity> {
+public class DemoVpUIBlock extends UIBlock<DemoActivity> {
 
     @Override
     public View initRootView(Activity activity) {

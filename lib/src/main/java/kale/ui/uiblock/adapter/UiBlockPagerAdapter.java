@@ -6,17 +6,17 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import kale.ui.uiblock.UIBlock;
-import kale.ui.uiblock.UiBlockManager;
+import kale.ui.uiblock.UIBlockManager;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class UiBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
+public class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
 
-    private final UiBlockManager mManager;
+    private final UIBlockManager mManager;
 
-    public UiBlockPagerAdapter(UiBlockManager manager, List<UIBlock> items) {
+    public UIBlockPagerAdapter(UIBlockManager manager, List<UIBlock> items) {
         super(items);
         mManager = manager;
     }

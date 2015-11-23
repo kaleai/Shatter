@@ -6,7 +6,7 @@ import android.os.PersistableBundle;
 import android.support.v7.app.AppCompatActivity;
 
 import kale.ui.uiblock.ContainUIBlockActivity;
-import kale.ui.uiblock.UiBlockManager;
+import kale.ui.uiblock.UIBlockManager;
 
 /**
  * @author Jack Tony
@@ -14,16 +14,16 @@ import kale.ui.uiblock.UiBlockManager;
  */
 public class BaseActivity extends AppCompatActivity implements ContainUIBlockActivity{
 
-    private UiBlockManager mUiBlockManager;
+    private UIBlockManager mUiBlockManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        mUiBlockManager = new UiBlockManager(this);
+        mUiBlockManager = new UIBlockManager(this);
     }
 
     @Override
-    public UiBlockManager getUiBlockManager() {
+    public UIBlockManager getUiBlockManager() {
         return mUiBlockManager;
     }
 

@@ -9,7 +9,7 @@ import java.util.List;
 
 import kale.ui.base.BaseActivity;
 import kale.ui.uiblock.UIBlock;
-import kale.ui.uiblock.adapter.UiBlockPagerAdapter;
+import kale.ui.uiblock.adapter.UIBlockPagerAdapter;
 
 public class DemoActivity extends BaseActivity {
 
@@ -19,7 +19,7 @@ public class DemoActivity extends BaseActivity {
         setContentView(R.layout.demo_activity);
 
         ((ViewPager) findViewById(R.id.top_vp))
-                .setAdapter(new UiBlockPagerAdapter(getUiBlockManager(), getUIBlocks()));
+                .setAdapter(new UIBlockPagerAdapter(getUiBlockManager(), getUIBlocks()));
 
         getUiBlockManager()
                 .add(new DemoTopUIBlock())
@@ -30,9 +30,9 @@ public class DemoActivity extends BaseActivity {
     @NonNull
     private List<UIBlock> getUIBlocks() {
         List<UIBlock> UIBlockList = new ArrayList<>();
-        UIBlockList.add(new DemoVpUiBlock());
-        UIBlockList.add(new DemoVpUiBlock());
-        UIBlockList.add(new DemoVpUiBlock());
+        UIBlockList.add(new DemoVpUIBlock());
+        UIBlockList.add(new DemoVpUIBlock());
+        UIBlockList.add(new DemoVpUIBlock());
         return UIBlockList;
     }
 

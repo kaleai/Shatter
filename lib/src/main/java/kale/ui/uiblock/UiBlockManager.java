@@ -12,17 +12,17 @@ import java.util.List;
  * @author Jack Tony
  * @date 2015/6/28
  */
-public class UiBlockManager {
+public class UIBlockManager {
 
     private List<UIBlock> mUIBlockList;
 
     protected Activity activity;
     
-    public UiBlockManager(@NonNull ContainUIBlockActivity activity) {
+    public UIBlockManager(@NonNull ContainUIBlockActivity activity) {
         this.activity = (Activity) activity;
     }
 
-    public <T extends ContainUIBlockActivity> UiBlockManager add(@NonNull UIBlock<T> UIBlock) {
+    public <T extends ContainUIBlockActivity> UIBlockManager add(@NonNull UIBlock<T> UIBlock) {
         UIBlock.attachActivity((T) activity);
         if (mUIBlockList == null) {
             mUIBlockList = new ArrayList<>();
@@ -31,7 +31,7 @@ public class UiBlockManager {
         return this;
     }
 
-    public UiBlockManager remove(@NonNull UIBlock UIBlock) {
+    public UIBlockManager remove(@NonNull UIBlock UIBlock) {
         UIBlock.onDestroy();
         if (mUIBlockList != null && mUIBlockList.contains(UIBlock)) {
             mUIBlockList.remove(UIBlock);

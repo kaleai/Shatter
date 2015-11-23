@@ -8,7 +8,7 @@ import android.content.Intent;
  */
 public interface ContainUIBlockActivity {
 
-    UiBlockManager getUiBlockManager();
+    UIBlockManager getUiBlockManager();
 
     void onBackPressed();
 

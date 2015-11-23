@@ -34,7 +34,7 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> {
     public abstract View initRootView(Activity activity);
 
     /**
-/     * 找到所有的views
+     * 找到所有的views
      */
     protected abstract void onBindViews();
 
