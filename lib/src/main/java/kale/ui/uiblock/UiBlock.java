@@ -2,15 +2,19 @@ package kale.ui.uiblock;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
+import android.os.PersistableBundle;
 import android.util.Log;
 import android.view.View;
+
+import kale.ui.uiblock.iface.ActivityLifecycle;
 
 /**
  * @author Jack Tony
  * @date 2015/6/15
  * 1.需要在界面销毁时把回调停止
  */
-public abstract class UiBlock<T extends ContainUIBlockActivity> {
+public abstract class UIBlock<T extends ContainUIBlockActivity> implements ActivityLifecycle{
 
     private View mRootView;
 
@@ -41,8 +45,7 @@ public abstract class UiBlock<T extends ContainUIBlockActivity> {
     /**
      * 在这里初始化设置view的各种资源，比如适配器或各种变量
      */
-    protected void beforeSetViews() {
-    }
+    protected void beforeSetViews() {}
 
     /**
      * 设置所有的view
@@ -57,26 +60,39 @@ public abstract class UiBlock<T extends ContainUIBlockActivity> {
         return mActivity;
     }
 
+    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {}
+
+    public void onRestoreInstanceState(Bundle savedInstanceState) {}
+
+    public void onStart() {}
+
+    public void onResume() {}
+
+    public void onPause() {}
+
+    public void onStop() {}
+
+    public void onRestart() {}
+
+    public void onDestroy() {
+        mActivity = null;
+        mRootView = null;
+    }
+
     /**
      * @return true if you want to shield back key
      */
     protected boolean onBackPressed() {
         return false;
     }
-
-    protected void onDestroy() {
-        mActivity = null;
-        mRootView = null;
-    }
-
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-    }
+    
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {}
 
     protected final <E extends View> E getView(int id) {
         try {
             return (E) mRootView.findViewById(id);
         } catch (ClassCastException ex) {
-            Log.e(UiBlock.class.getSimpleName(), "Could not cast View to concrete class.", ex);
+            Log.e(UIBlock.class.getSimpleName(), "Could not cast View to concrete class.", ex);
             throw ex;
         }
     }

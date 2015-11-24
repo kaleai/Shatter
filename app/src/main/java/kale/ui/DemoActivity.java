@@ -8,8 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import kale.ui.base.BaseActivity;
-import kale.ui.uiblock.UiBlock;
-import kale.ui.uiblock.adapter.UiBlockPagerAdapter;
+import kale.ui.uiblock.UIBlock;
+import kale.ui.uiblock.adapter.UIBlockPagerAdapter;
 
 public class DemoActivity extends BaseActivity {
 
@@ -19,26 +19,26 @@ public class DemoActivity extends BaseActivity {
         setContentView(R.layout.demo_activity);
 
         ((ViewPager) findViewById(R.id.top_vp))
-                .setAdapter(new UiBlockPagerAdapter(getUiBlockManager(), getUIBlocks()));
+                .setAdapter(new UIBlockPagerAdapter(getUIBlockManager(), getUIBlocks()));
 
-        getUiBlockManager()
-                .add(new DemoTopUiBlock())
-                .add(new DemoBottomUiBlock())
-                .add(new DemoMiddleUiBlock());
+        getUIBlockManager()
+                .add(new DemoTopUIBlock())
+                .add(new DemoBottomUIBlock())
+                .add(new DemoMiddleUIBlock());
     }
 
     @NonNull
-    private List<UiBlock> getUIBlocks() {
-        List<UiBlock> uiBlockList = new ArrayList<>();
-        uiBlockList.add(new DemoVpUiBlock());
-        uiBlockList.add(new DemoVpUiBlock());
-        uiBlockList.add(new DemoVpUiBlock());
-        return uiBlockList;
+    private List<UIBlock> getUIBlocks() {
+        List<UIBlock> UIBlockList = new ArrayList<>();
+        UIBlockList.add(new DemoVpUIBlock());
+        UIBlockList.add(new DemoVpUIBlock());
+        UIBlockList.add(new DemoVpUIBlock());
+        return UIBlockList;
     }
 
     // 被uiblock调用
     public void changeText() {
         // activity调用uiblock
-        getUiBlockManager().get(DemoBottomUiBlock.class).onTextChangeCompleted("Text from activity");
+        getUIBlockManager().get(DemoBottomUIBlock.class).onTextChangeCompleted("Text from activity");
     }
 }
