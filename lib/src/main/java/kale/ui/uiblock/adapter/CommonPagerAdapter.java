@@ -9,12 +9,19 @@ import java.util.List;
 /**
  * @author Jack Tony
  * @date 2015/11/21
+ * 
+ * 适合于item对象不是很多的情况，不适合传入数量太多的item。
+ * 如果要更新某个对象，可以通过{@link #getItem(int)}来得到，然后调用其public方法
+ * 如果做了item的删减，可以调用{@link #notifyDataSetChanged()}来更新。
+ * 它会自动调用{@link #instantiateItem(ViewGroup, int)}重新初始化一次。
  */
 public abstract class CommonPagerAdapter<T> extends PagerAdapter {
 
     private int mChildCount = 0;
 
     protected List<T> itemList;
+
+    protected T currentItem;
 
     public CommonPagerAdapter(List<T> items) {
         itemList = items;
@@ -27,6 +34,7 @@ public abstract class CommonPagerAdapter<T> extends PagerAdapter {
 
     @Override
     public boolean isViewFromObject(View arg0, Object arg1) {
+        // 如果onInitItem()返回的不是view对象，那么请复写这里
         return arg0 == arg1;
     }
 
@@ -52,20 +60,34 @@ public abstract class CommonPagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        super.setPrimaryItem(container, position, object);
+        currentItem = (T) object;
+    }
+
+    @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
-        onDestroyItem(container, itemList.get(position), position, (View) object);
+        onDestroyItem(container, (T) object, position);
     }
 
     public T getItem(int position) {
         return itemList.get(position);
     }
 
+    public void setItemList(List<T> itemList) {
+        this.itemList = itemList;
+    }
+
     public List<T> getItemList() {
         return itemList;
     }
 
-    public abstract View onInitItem(ViewGroup container, T t, int position);
+    public T getCurrentItem() {
+        return currentItem;
+    }
 
-    public abstract void onDestroyItem(ViewGroup container, T t, int position, View view);
+    public abstract T onInitItem(ViewGroup container, T t, int position);
+
+    public abstract void onDestroyItem(ViewGroup container, T t, int position);
 
 }

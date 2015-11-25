@@ -1,6 +1,7 @@
 package kale.ui;
 
 import android.app.Activity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -26,5 +27,11 @@ public class DemoVpUIBlock extends UIBlock<DemoActivity> {
     @Override
     protected void onSetViews() {
         ((TextView) getView(R.id.header_tv)).setTextSize(30);
+    }
+
+    @Override
+    public void onVisibleToUser(boolean isVisible) {
+        super.onVisibleToUser(isVisible);
+        Log.d("ddd", "onVisibleToUser: " + isVisible);
     }
 }

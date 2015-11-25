@@ -22,15 +22,33 @@ public class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
     }
 
     @Override
-    public View onInitItem(ViewGroup container, UIBlock UIBlock, int position) {
-        mManager.add(UIBlock);
-        container.addView(UIBlock.getRootView());
-        return UIBlock.getRootView();
+    public UIBlock onInitItem(ViewGroup container, UIBlock uiBlock, int position) {
+        mManager.add(uiBlock);
+        container.addView(uiBlock.getRootView());
+        return uiBlock;
     }
 
     @Override
-    public void onDestroyItem(ViewGroup container, UIBlock UIBlock, int position, View view) {
-        container.removeView(view);
-        mManager.remove(UIBlock);
+    public void onDestroyItem(ViewGroup container, UIBlock uiBlock, int position) {
+        container.removeView(uiBlock.getRootView());
+        mManager.remove(uiBlock);
     }
+
+    @Override
+    public boolean isViewFromObject(View view, Object object) {
+        return ((UIBlock) object).getRootView() == view;
+    }
+
+    @Override
+    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+        UIBlock item = (UIBlock) object;
+        if (item != currentItem) {
+            item.setUserVisibleHint(true);
+            if (currentItem != null) {
+                currentItem.setUserVisibleHint(false);
+            }
+            super.setPrimaryItem(container, position, object);
+        }
+    }
+
 }

@@ -20,6 +20,9 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
 
     private T mActivity;
 
+    // Hint provided by the app that this UIBlock is currently visible to the user.
+    boolean mUserVisibleHint = true;
+
     protected void attachActivity(T activity) {
         onAttach(activity);
         mRootView = initRootView((Activity) activity);
@@ -60,6 +63,21 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
         return mActivity;
     }
 
+    public void setUserVisibleHint(boolean isVisibleToUser) {
+        mUserVisibleHint = isVisibleToUser;
+        onVisibleToUser(mUserVisibleHint);
+    }
+
+    /**
+     * @return The current value of the user-visible hint on this fragment.
+     * @see #setUserVisibleHint(boolean)
+     */
+    public boolean isVisibleToUser() {
+        return mUserVisibleHint;
+    }
+
+    public void onVisibleToUser(boolean isVisible) {}
+    
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {}
 
     public void onRestoreInstanceState(Bundle savedInstanceState) {}
