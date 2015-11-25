@@ -1,7 +1,5 @@
 package kale.ui;
 
-import android.app.Activity;
-import android.view.View;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -14,13 +12,14 @@ import kale.ui.uiblock.UIBlock;
  */
 public class DemoTopUIBlock extends UIBlock {
 
-    @Override
-    public View initRootView(Activity activity) {
-        return activity.findViewById(R.id.top_ub);
-    }
 
     @Bind(R.id.top_tv)
     TextView mTopTv;
+
+    @Override
+    public int getRootViewId() {
+        return R.id.top_ub;
+    }
 
     @Override
     protected void onBindViews() {

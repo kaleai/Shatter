@@ -1,8 +1,5 @@
 package kale.ui;
 
-import android.app.Activity;
-import android.view.View;
-
 import kale.ui.uiblock.UIBlock;
 
 /**
@@ -11,9 +8,10 @@ import kale.ui.uiblock.UIBlock;
  */
 public class DemoMiddleUIBlock extends UIBlock {
 
+
     @Override
-    public View initRootView(Activity activity) {
-        return activity.findViewById(R.id.middle_ub);
+    public int getRootViewId() {
+        return R.id.middle_ub;
     }
 
     @Override

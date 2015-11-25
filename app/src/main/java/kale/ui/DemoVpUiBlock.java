@@ -1,6 +1,5 @@
 package kale.ui;
 
-import android.app.Activity;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,8 +14,13 @@ import kale.ui.uiblock.UIBlock;
 public class DemoVpUIBlock extends UIBlock<DemoActivity> {
 
     @Override
-    public View initRootView(Activity activity) {
-        return LayoutInflater.from(activity).inflate(R.layout.demo_vp_uiblock, null);
+    public int getRootViewId() {
+        return R.id.top_vp;
+    }
+
+    @Override
+    public View resetRootView(View oldRootView, LayoutInflater inflater) {
+        return inflater.inflate(R.layout.demo_vp_uiblock, null);
     }
 
     @Override

@@ -1,7 +1,5 @@
 package kale.ui;
 
-import android.app.Activity;
-import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.uiblock.UIBlock;
@@ -13,8 +11,8 @@ import kale.ui.uiblock.UIBlock;
 public class DemoInnerUIBlock extends UIBlock {
 
     @Override
-    public View initRootView(Activity activity) {
-        return activity.findViewById(R.id.inner_tv);
+    public int getRootViewId() {
+        return R.id.inner_tv;
     }
 
     @Override

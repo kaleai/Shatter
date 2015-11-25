@@ -1,6 +1,5 @@
 package kale.ui;
 
-import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.view.View;
 import android.widget.Button;
@@ -13,15 +12,15 @@ import kale.ui.uiblock.UIBlock;
  * @date 2015/9/21
  */
 public class DemoBottomUIBlock extends UIBlock<DemoActivity> {
-
-    @Override
-    public View initRootView(Activity activity) {
-        return activity.findViewById(R.id.bottom_ub);
-    }
     
     private EditText mBottomEt;
 
     private Button mBottomBtn;
+
+    @Override
+    public int getRootViewId() {
+        return R.id.bottom_ub;
+    }
 
     @Override
     protected void onAttach(DemoActivity activity) {

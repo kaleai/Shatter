@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
+import android.support.annotation.IdRes;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 
 import kale.ui.uiblock.iface.ActivityLifecycle;
@@ -25,20 +27,21 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
 
     protected void attachActivity(T activity) {
         onAttach(activity);
-        mRootView = initRootView((Activity) activity);
+        mRootView = ((Activity) activity).findViewById(getRootViewId());
+        mRootView = resetRootView(mRootView, LayoutInflater.from(mRootView.getContext()));
         onBindViews();
         beforeSetViews();
         onSetViews();
     }
 
+    /**
+     * @return 得到UIBlock作用于的容器view的id
+     */
+    public abstract @IdRes int getRootViewId();
+
     protected void onAttach(T activity) {
         mActivity = activity;
     }
-
-    /**
-     * @return 的根view
-     */
-    public abstract View initRootView(Activity activity);
 
     /**
 /     * 找到所有的views
@@ -55,6 +58,13 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
      */
     protected abstract void onSetViews();
 
+    /**
+     * 重置根布局
+     */
+    public View resetRootView(View oldRootView, LayoutInflater inflater) {
+        return oldRootView;
+    }
+    
     public View getRootView() {
         return mRootView;
     }
