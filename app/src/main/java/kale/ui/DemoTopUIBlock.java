@@ -1,5 +1,6 @@
 package kale.ui;
 
+import android.view.View;
 import android.widget.TextView;
 
 import butterknife.Bind;
@@ -12,7 +13,6 @@ import kale.ui.uiblock.UIBlock;
  */
 public class DemoTopUIBlock extends UIBlock {
 
-
     @Bind(R.id.top_tv)
     TextView mTopTv;
 
@@ -22,13 +22,13 @@ public class DemoTopUIBlock extends UIBlock {
     }
 
     @Override
-    protected void onBindViews() {
+    public void onBindViews(View rootView) {
         ButterKnife.bind(this, getRootView());
         //mTopTv = getView(R.id.top_tv);
     }
 
     @Override
-    protected void onSetViews() {
+    public void onSetViews() {
         String content = mTopTv.getText().toString();
         mTopTv.setText(content + " :)");
     }

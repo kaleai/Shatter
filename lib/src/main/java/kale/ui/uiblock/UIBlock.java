@@ -23,13 +23,13 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
     private T mActivity;
 
     // Hint provided by the app that this UIBlock is currently visible to the user.
-    boolean mUserVisibleHint = true;
-
+    private boolean mUserVisibleHint = true;
+    
     protected void attachActivity(T activity) {
         onAttach(activity);
         mRootView = ((Activity) activity).findViewById(getRootViewId());
-        mRootView = resetRootView(mRootView, LayoutInflater.from(mRootView.getContext()));
-        onBindViews();
+        mRootView = resetRootView(mRootView, LayoutInflater.from((Activity) activity));
+        onBindViews(mRootView);
         beforeSetViews();
         onSetViews();
     }
@@ -44,9 +44,9 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
     }
 
     /**
-/     * 找到所有的views
+     * 找到所有的views
      */
-    protected abstract void onBindViews();
+    public abstract void onBindViews(View rootView);
 
     /**
      * 在这里初始化设置view的各种资源，比如适配器或各种变量
@@ -56,10 +56,13 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
     /**
      * 设置所有的view
      */
-    protected abstract void onSetViews();
+    public abstract void onSetViews();
+
+    public void onUpdateViews(Object model, int position) {}
 
     /**
-     * 重置根布局
+     * 重置根布局，如果你这个UIBlock的根布局不是直接显示在界面，
+     * 而是通过什么adapter放入的，那么就可能要重写这个方法了。
      */
     public View resetRootView(View oldRootView, LayoutInflater inflater) {
         return oldRootView;
@@ -73,20 +76,13 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
         return mActivity;
     }
 
-    public void setUserVisibleHint(boolean isVisibleToUser) {
-        mUserVisibleHint = isVisibleToUser;
-        onVisibleToUser(mUserVisibleHint);
-    }
-
-    /**
-     * @return The current value of the user-visible hint on this fragment.
-     * @see #setUserVisibleHint(boolean)
-     */
     public boolean isVisibleToUser() {
         return mUserVisibleHint;
     }
 
-    public void onVisibleToUser(boolean isVisible) {}
+    public void onVisibleToUser(boolean isVisible) {
+        mUserVisibleHint = isVisible;
+    }
     
     public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {}
 
@@ -124,4 +120,5 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
             throw ex;
         }
     }
+
 }

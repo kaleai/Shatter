@@ -1,5 +1,6 @@
 package kale.ui;
 
+import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.uiblock.UIBlock;
@@ -16,12 +17,12 @@ public class DemoInnerUIBlock extends UIBlock {
     }
 
     @Override
-    protected void onBindViews() {
+    public void onBindViews(View rootView) {
         
     }
 
     @Override
-    protected void onSetViews() {
+    public void onSetViews() {
         ((TextView) getView(R.id.inner_tv)).setText("Inner UI Block :-)");
     }
 }

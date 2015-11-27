@@ -1,6 +1,5 @@
 package kale.ui;
 
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.TextView;
@@ -18,24 +17,26 @@ public class DemoVpUIBlock extends UIBlock<DemoActivity> {
         return R.id.top_vp;
     }
 
+    /**
+     * 如果你是把这个放入viewpager中，你就必须要复写这个方法，重置下根布局
+     */
     @Override
     public View resetRootView(View oldRootView, LayoutInflater inflater) {
         return inflater.inflate(R.layout.demo_vp_uiblock, null);
     }
 
     @Override
-    protected void onBindViews() {
+    public void onBindViews(View rootView) {
             
     }
 
     @Override
-    protected void onSetViews() {
+    public void onSetViews() {
         ((TextView) getView(R.id.header_tv)).setTextSize(30);
     }
 
     @Override
     public void onVisibleToUser(boolean isVisible) {
         super.onVisibleToUser(isVisible);
-        Log.d("ddd", "onVisibleToUser: " + isVisible);
     }
 }

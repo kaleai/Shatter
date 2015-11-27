@@ -1,9 +1,8 @@
 package kale.ui.uiblock.adapter;
 
+import android.support.annotation.NonNull;
 import android.view.View;
 import android.view.ViewGroup;
-
-import java.util.List;
 
 import kale.ui.uiblock.UIBlock;
 import kale.ui.uiblock.UIBlockManager;
@@ -12,20 +11,33 @@ import kale.ui.uiblock.UIBlockManager;
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
+public abstract class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
 
     private final UIBlockManager mManager;
-
-    public UIBlockPagerAdapter(UIBlockManager manager, List<UIBlock> items) {
-        super(items);
+    
+    public UIBlockPagerAdapter(UIBlockManager manager) {
+        super();
         mManager = manager;
     }
 
     @Override
-    public UIBlock onInitItem(ViewGroup container, UIBlock uiBlock, int position) {
+    public UIBlock instantiateItem(ViewGroup container, int position) {
+        UIBlock uiBlock = super.instantiateItem(container, position);
         mManager.add(uiBlock);
         container.addView(uiBlock.getRootView());
+
+        if (uiBlock != currentItem) {
+            uiBlock.onVisibleToUser(false);
+        }
         return uiBlock;
+    }
+
+    /**
+     * 请用{@link #getUIBlockItem(Object)}代替
+     */
+    @Override
+    public UIBlock getItem(ViewGroup container, int position) {
+        return getUIBlockItem(getItemType(position));
     }
 
     @Override
@@ -43,12 +55,15 @@ public class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         UIBlock item = (UIBlock) object;
         if (item != currentItem) {
-            item.setUserVisibleHint(true);
+            // 支持懒加载
+            item.onVisibleToUser(true);
             if (currentItem != null) {
-                currentItem.setUserVisibleHint(false);
+                currentItem.onVisibleToUser(false);
             }
             super.setPrimaryItem(container, position, object);
         }
     }
+
+    public abstract @NonNull UIBlock getUIBlockItem(Object type);
 
 }

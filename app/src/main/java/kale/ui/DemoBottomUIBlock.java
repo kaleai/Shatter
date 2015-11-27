@@ -28,13 +28,13 @@ public class DemoBottomUIBlock extends UIBlock<DemoActivity> {
     }
 
     @Override
-    protected void onBindViews() {
+    public void onBindViews(View rootView) {
         mBottomEt = getView(R.id.bottom_et);
         mBottomBtn = getView(R.id.bottom_btn);
     }
 
     @Override
-    protected void onSetViews() {
+    public void onSetViews() {
         mBottomBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

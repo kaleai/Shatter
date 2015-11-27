@@ -92,4 +92,13 @@
         android:layout_below="@+id/middle_ub"
         />
 
+    <Button
+        android:id="@+id/noty_btn"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/bottom_ub"
+        android:layout_centerHorizontal="true"
+        android:text="button"
+        />
+    
 </RelativeLayout>

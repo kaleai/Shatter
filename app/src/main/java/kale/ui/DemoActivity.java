@@ -3,9 +3,8 @@ package kale.ui;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
-
-import java.util.ArrayList;
-import java.util.List;
+import android.util.Log;
+import android.view.View;
 
 import kale.ui.base.BaseActivity;
 import kale.ui.uiblock.UIBlock;
@@ -18,22 +17,35 @@ public class DemoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_activity);
 
-        ((ViewPager) findViewById(R.id.top_vp))
-                .setAdapter(new UIBlockPagerAdapter(getUIBlockManager(), getUIBlocks()));
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.top_vp);
+        final UIBlockPagerAdapter pagerAdapter = new UIBlockPagerAdapter(getUIBlockManager()) {
+
+            @Override
+            public int getCount() {
+                return 3; // viewpager的页面数
+            }
+
+            @NonNull
+            @Override
+            public UIBlock getUIBlockItem(Object type) {
+                Log.d("ddd", "getUIBlockItem: 得到新的");
+                return new DemoVpUIBlock();
+            }
+        };
+        
+        viewPager.setAdapter(pagerAdapter);
 
         getUIBlockManager()
                 .add(new DemoTopUIBlock())
                 .add(new DemoBottomUIBlock())
                 .add(new DemoMiddleUIBlock());
-    }
-
-    @NonNull
-    private List<UIBlock> getUIBlocks() {
-        List<UIBlock> UIBlockList = new ArrayList<>();
-        UIBlockList.add(new DemoVpUIBlock());
-        UIBlockList.add(new DemoVpUIBlock());
-        UIBlockList.add(new DemoVpUIBlock());
-        return UIBlockList;
+        
+        findViewById(R.id.noty_btn).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pagerAdapter.notifyDataSetChanged();
+            }
+        });
     }
 
     // 被uiblock调用
