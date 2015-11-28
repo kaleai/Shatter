@@ -9,7 +9,6 @@ import android.view.View;
 import kale.ui.base.BaseActivity;
 import kale.ui.uiblock.UIBlock;
 import kale.ui.uiblock.adapter.UIBlockPagerAdapter;
-
 public class DemoActivity extends BaseActivity {
 
     @Override
@@ -17,9 +16,7 @@ public class DemoActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.demo_activity);
 
-        final ViewPager viewPager = (ViewPager) findViewById(R.id.top_vp);
         final UIBlockPagerAdapter pagerAdapter = new UIBlockPagerAdapter(getUIBlockManager()) {
-
             @Override
             public int getCount() {
                 return 3; // viewpager的页面数
@@ -27,19 +24,21 @@ public class DemoActivity extends BaseActivity {
 
             @NonNull
             @Override
-            public UIBlock getUIBlockItem(Object type) {
-                Log.d("ddd", "getUIBlockItem: 得到新的");
+            public UIBlock onCreateItem(Object type) {
+                Log.d("ddd", "onCreateItem: 得到新的");
                 return new DemoVpUIBlock();
             }
         };
-        
+
+
+        final ViewPager viewPager = (ViewPager) findViewById(R.id.top_vp);
         viewPager.setAdapter(pagerAdapter);
 
         getUIBlockManager()
                 .add(new DemoTopUIBlock())
                 .add(new DemoBottomUIBlock())
                 .add(new DemoMiddleUIBlock());
-        
+
         findViewById(R.id.noty_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

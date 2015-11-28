@@ -1,6 +1,7 @@
 package kale.ui.uiblock.adapter;
 
 import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -27,20 +28,20 @@ abstract class CommonPagerAdapter<T> extends PagerAdapter {
     }
 
     /**
-     * 如果{@link #getItem(ViewGroup, int)}返回的不是view对象，那么请复写这里
      * 注意：这里必须是view和view的比较
      */
     @Override
-    public boolean isViewFromObject(View arg0, Object arg1) {
-        return arg0 == arg1;
+    public boolean isViewFromObject(View view, Object obj) {
+        return view == getViewFromItem((T) obj);
     }
 
     @Override
     public T instantiateItem(ViewGroup container, int position) {
         T item = mCache.getItem(getItemType(position));
         if (item == null) {
-            item = getItem(container, position);
+            item = onCreateItem(position);
         }
+        container.addView(getWillBeAddedView(item, position));
         return item;
     }
 
@@ -54,16 +55,10 @@ abstract class CommonPagerAdapter<T> extends PagerAdapter {
     public void destroyItem(ViewGroup container, int position, Object object) {
         T item = (T) object;
         Object type = getItemType(position);
-        onDestroyItem(container, item, position);
-        mCache.putItem(item, type);
+        container.removeView(getWillBeDestroyedView(item, position));
+        mCache.putItem(type, item);
     }
-
-    @Override
-    public void notifyDataSetChanged() {
-        mChildCount = getCount();
-        super.notifyDataSetChanged();
-    }
-
+    
     @Override
     public int getItemPosition(Object object) {
         // 开始逐个刷新item
@@ -74,19 +69,41 @@ abstract class CommonPagerAdapter<T> extends PagerAdapter {
         return super.getItemPosition(object);
     }
 
-    public T getCurrentItem() {
-        return currentItem;
+    @Override
+    public void notifyDataSetChanged() {
+        mChildCount = getCount();
+        super.notifyDataSetChanged();
     }
 
     public Object getItemType(int position){
         return -1;
     }
 
-    /**
-     * 仅仅在没有缓存的情况下才会触发
-     */
-    public abstract T getItem(ViewGroup container, int position);
+    public T getCurrentItem() {
+        return currentItem;
+    }
 
-    public abstract void onDestroyItem(ViewGroup container, T t, int position);
+
+    /**
+     * @return obj中的view对象
+     */
+    public abstract View getViewFromItem(T item);
+
+    /**
+     * 得到初始化后的item中的view
+     */
+    public abstract View getWillBeAddedView(T item, int position);
+    
+    /**
+     * 当{@link ViewPager#getOffscreenPageLimit()}缓存的大小不够时，会移出最早显示的item
+     *
+     * @return 被移除的item中view的对象（如果item是view那么直接返回即可）
+     */
+    public abstract View getWillBeDestroyedView(T item, int position);
+
+    /**
+     * 当缓存中无法得到所需item时才会调用
+     */
+    public abstract T onCreateItem(int position);
     
 }

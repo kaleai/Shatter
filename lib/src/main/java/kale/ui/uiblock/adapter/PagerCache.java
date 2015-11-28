@@ -27,7 +27,7 @@ class PagerCache<T> {
         }
     }
 
-    public void putItem(T item, Object key) {
+    public void putItem(Object key, T item) {
         Queue<T> queue;
         if ((queue = mCacheMap.get(key)) == null) {
             queue = new LinkedList<>();

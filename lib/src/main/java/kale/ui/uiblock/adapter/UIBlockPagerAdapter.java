@@ -21,34 +21,23 @@ public abstract class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
     }
 
     @Override
-    public UIBlock instantiateItem(ViewGroup container, int position) {
-        UIBlock uiBlock = super.instantiateItem(container, position);
+    public View getViewFromItem(UIBlock uiBlock) {
+        return uiBlock.getRootView();
+    }
+    
+    @Override
+    public View getWillBeAddedView(UIBlock uiBlock, int position) {
         mManager.add(uiBlock);
-        container.addView(uiBlock.getRootView());
-
         if (uiBlock != currentItem) {
             uiBlock.onVisibleToUser(false);
         }
-        return uiBlock;
-    }
-
-    /**
-     * 请用{@link #getUIBlockItem(Object)}代替
-     */
-    @Override
-    public UIBlock getItem(ViewGroup container, int position) {
-        return getUIBlockItem(getItemType(position));
+        return uiBlock.getRootView();
     }
 
     @Override
-    public void onDestroyItem(ViewGroup container, UIBlock uiBlock, int position) {
-        container.removeView(uiBlock.getRootView());
+    public View getWillBeDestroyedView(UIBlock uiBlock, int position) {
         mManager.remove(uiBlock);
-    }
-
-    @Override
-    public boolean isViewFromObject(View view, Object object) {
-        return ((UIBlock) object).getRootView() == view;
+        return uiBlock.getRootView();
     }
 
     @Override
@@ -64,6 +53,18 @@ public abstract class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
         }
     }
 
-    public abstract @NonNull UIBlock getUIBlockItem(Object type);
+    /**
+     * 请用{@link #onCreateItem(Object)}代替
+     */
+    @Deprecated
+    @Override
+    public UIBlock onCreateItem(int position) {
+        return onCreateItem(getItemType(position));
+    }
+
+    /**
+     * 当没办法从缓存中得到item的时候才会调用此方法
+     */
+    public abstract @NonNull UIBlock onCreateItem(Object type);
 
 }
