@@ -30,7 +30,6 @@ public class DemoActivity extends BaseActivity {
             }
         };
 
-
         final ViewPager viewPager = (ViewPager) findViewById(R.id.top_vp);
         viewPager.setAdapter(pagerAdapter);
 

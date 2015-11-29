@@ -10,8 +10,9 @@ import kale.ui.uiblock.UIBlockManager;
 /**
  * @author Jack Tony
  * @date 2015/11/21
+ * 这个类不关心缓存，仅仅做一般的操作。比如得到view，返回view
  */
-public abstract class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
+public abstract class UIBlockPagerAdapter extends BasePagerAdapter<UIBlock> {
 
     private final UIBlockManager mManager;
     
@@ -36,21 +37,27 @@ public abstract class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
 
     @Override
     public View getWillBeDestroyedView(UIBlock uiBlock, int position) {
-        mManager.remove(uiBlock);
         return uiBlock.getRootView();
     }
 
     @Override
+    public void destroyItem(ViewGroup container, int position, Object object) {
+        super.destroyItem(container, position, object);
+        // 这里必须在destroy的最后做。
+        // 因为，被manager清除的UIBlock的view会被置空。所以必须要在父容器remove掉这个view后再做view的置空操作
+        mManager.remove((UIBlock) object);
+    }
+
+    @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        UIBlock item = (UIBlock) object;
-        if (item != currentItem) {
+        if (object != currentItem) {
             // 支持懒加载
-            item.onVisibleToUser(true);
+            ((UIBlock) object).onVisibleToUser(true);
             if (currentItem != null) {
                 currentItem.onVisibleToUser(false);
             }
-            super.setPrimaryItem(container, position, object);
         }
+        super.setPrimaryItem(container, position, object);
     }
 
     /**
@@ -58,7 +65,7 @@ public abstract class UIBlockPagerAdapter extends CommonPagerAdapter<UIBlock>{
      */
     @Deprecated
     @Override
-    public UIBlock onCreateItem(int position) {
+    public UIBlock onCreateItem(ViewGroup viewGroup, int position) {
         return onCreateItem(getItemType(position));
     }
 
