@@ -1,7 +1,7 @@
 package kale.ui.uiblock.adapter;
 
 import android.support.annotation.NonNull;
-import android.view.ViewGroup;
+import android.view.View;
 
 import java.util.List;
 
@@ -11,8 +11,11 @@ import kale.ui.uiblock.UIBlockManager;
 /**
  * @author Jack Tony
  * @date 2015/11/27
+ * 如果uiblock中要更新数据，可以这么写
+ * 目前这里仅仅是做个范例
  */
-public abstract class CommonUIBlockPagerAdapter<T> extends UIBlockPagerAdapter {
+@Deprecated
+abstract class CommonUIBlockPagerAdapter<T> extends UIBlockPagerAdapter2 {
 
     private List<T> mData;
 
@@ -22,10 +25,11 @@ public abstract class CommonUIBlockPagerAdapter<T> extends UIBlockPagerAdapter {
     }
 
     @Override
-    public UIBlock instantiateItem(ViewGroup container, int position) {
-        UIBlock uiBlock = super.instantiateItem(container, position);
-        uiBlock.onUpdateViews(mData.get(position), position);
-        return uiBlock;
+    protected View getWillBeAddedView(View item, int position) {
+        View view = super.getWillBeAddedView(item, position);
+        UIBlock uiBlock = (UIBlock) view.getTag();
+        // uiBlock.onUpdateViews(mData.get(position), position);
+        return view;
     }
 
     @Override
@@ -45,10 +49,12 @@ public abstract class CommonUIBlockPagerAdapter<T> extends UIBlockPagerAdapter {
     public Object getItemType(int position) {
         return getItemType(mData.get(position));
     }
-    
+
     public T getItem(int position) {
         return mData.get(position);
     }
 
-    public abstract Object getItemType(T t);
+    public Object getItemType(T t) {
+        return -1; // default
+    }
 }

@@ -58,8 +58,6 @@ public abstract class UIBlock<T extends ContainUIBlockActivity> implements Activ
      */
     public abstract void onSetViews();
 
-    public void onUpdateViews(Object model, int position) {}
-
     /**
      * 重置根布局，如果你这个UIBlock的根布局不是直接显示在界面，
      * 而是通过什么adapter放入的，那么就可能要重写这个方法了。

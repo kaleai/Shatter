@@ -28,7 +28,6 @@ public abstract class UIBlockPagerAdapter extends BasePagerAdapter<UIBlock> {
     
     @Override
     public View getWillBeAddedView(UIBlock uiBlock, int position) {
-        mManager.add(uiBlock);
         if (uiBlock != currentItem) {
             uiBlock.onVisibleToUser(false);
         }
@@ -41,17 +40,8 @@ public abstract class UIBlockPagerAdapter extends BasePagerAdapter<UIBlock> {
     }
 
     @Override
-    public void destroyItem(ViewGroup container, int position, Object object) {
-        super.destroyItem(container, position, object);
-        // 这里必须在destroy的最后做。
-        // 因为，被manager清除的UIBlock的view会被置空。所以必须要在父容器remove掉这个view后再做view的置空操作
-        mManager.remove((UIBlock) object);
-    }
-
-    @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        if (object != currentItem) {
-            // 支持懒加载
+        if (object != currentItem) { // 支持懒加载
             ((UIBlock) object).onVisibleToUser(true);
             if (currentItem != null) {
                 currentItem.onVisibleToUser(false);
@@ -66,7 +56,9 @@ public abstract class UIBlockPagerAdapter extends BasePagerAdapter<UIBlock> {
     @Deprecated
     @Override
     public UIBlock onCreateItem(ViewGroup viewGroup, int position) {
-        return onCreateItem(getItemType(position));
+        UIBlock uiBlock = onCreateItem(getItemType(position));
+        mManager.add(uiBlock);
+        return uiBlock;
     }
 
     /**

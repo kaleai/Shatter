@@ -55,8 +55,8 @@ abstract class BasePagerAdapter<T> extends PagerAdapter {
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
-        if (currentItem != object) {
-            currentItem = (T) object;
+        if (object != currentItem) { // 可能是currentItem不等于null，可能是二者不同
+            currentItem = (T) object; 
         }
     }
 

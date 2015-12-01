@@ -9,6 +9,7 @@ import android.view.View;
 import kale.ui.base.BaseActivity;
 import kale.ui.uiblock.UIBlock;
 import kale.ui.uiblock.adapter.UIBlockPagerAdapter;
+
 public class DemoActivity extends BaseActivity {
 
     @Override
@@ -51,4 +52,5 @@ public class DemoActivity extends BaseActivity {
         // activity调用uiblock
         getUIBlockManager().get(DemoBottomUIBlock.class).onTextChangeCompleted("Text from activity");
     }
+
 }
