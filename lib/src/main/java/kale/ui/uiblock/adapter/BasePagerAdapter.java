@@ -1,5 +1,6 @@
 package kale.ui.uiblock.adapter;
 
+import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -10,6 +11,8 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
+import kale.ui.uiblock.R;
+
 /**
  * @author Jack Tony
  * @date 2015/11/21
@@ -17,19 +20,15 @@ import java.util.Queue;
  * 如果调用{@link #notifyDataSetChanged()}来更新，
  * 它会自动调用{@link #instantiateItem(ViewGroup, int)}重新new出需要的item，算是完全初始化一次。
  */
-abstract class BasePagerAdapter<T> extends PagerAdapter {
+public abstract class BasePagerAdapter<T> extends PagerAdapter {
 
-    public static final String TAG = "BasePagerAdapter";
-
-    private int mChildCount = 0;
-
-    protected T currentItem;
-
+    protected T currentItem = null;
+    
     /**
-     * 这的cache的最大大小是：type x pageSize
+     * 这的cache的最大大小是：type * pageSize
      */
     private final PagerCache<T> mCache;
-    
+
     public BasePagerAdapter() {
         mCache = new PagerCache<>();
     }
@@ -39,52 +38,51 @@ abstract class BasePagerAdapter<T> extends PagerAdapter {
      */
     @Override
     public boolean isViewFromObject(View view, Object obj) {
-        return view == getViewFromItem((T) obj);
+        return view == getViewFromItem((T) obj, 0);
     }
 
     @Override
     public T instantiateItem(ViewGroup container, int position) {
-        T item = mCache.getItem(getItemType(position));
+        Object type = getItemType(position);
+        T item = mCache.getItem(type); // get item from type
         if (item == null) {
-            item = onCreateItem(container, position);
+            item = createItem((ViewPager) container, position);
         }
-        container.addView(getWillBeAddedView(item, position));
+        // 通过item得到将要被add到viewpager中的view
+        View view = getViewFromItem(item, position);
+        view.setTag(R.id.item_type, type);
+        
+        if (view.getParent() != null) {
+            ((ViewGroup) view.getParent()).removeView(view);
+        }
+        container.addView(view);
         return item;
     }
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         super.setPrimaryItem(container, position, object);
-        if (object != currentItem) { // 可能是currentItem不等于null，可能是二者不同
-            currentItem = (T) object; 
+        if (object != currentItem) {
+            // 可能是currentItem不等于null，可能是二者不同
+            currentItem = (T) object;
         }
     }
 
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         T item = (T) object;
-        Object type = getItemType(position);
-        container.removeView(getWillBeDestroyedView(item, position));
+        // 现在通过item拿到其中的view，然后remove掉
+        container.removeView(getViewFromItem(item, position));
+        Object type = getViewFromItem(item, position).getTag(R.id.item_type);
         mCache.putItem(type, item);
     }
 
     @Override
     public int getItemPosition(Object object) {
-        // 开始逐个刷新item
-        if (mChildCount > 0) {
-            mChildCount--;
-            return POSITION_NONE;
-        }
-        return super.getItemPosition(object);
+        return POSITION_NONE;
     }
 
-    @Override
-    public void notifyDataSetChanged() {
-        mChildCount = getCount();
-        super.notifyDataSetChanged();
-    }
-
-    public Object getItemType(int position){
+    public Object getItemType(int position) {
         return -1; // default
     }
 
@@ -95,37 +93,30 @@ abstract class BasePagerAdapter<T> extends PagerAdapter {
     protected PagerCache<T> getCache() {
         return mCache;
     }
-    
-    /**
-     * @return obj中的view对象
-     */
-    protected abstract View getViewFromItem(T item);
 
     /**
-     * 得到初始化后的item中的view
-     */
-    protected abstract View getWillBeAddedView(T item, int position);
-    
-    /**
-     * 当{@link ViewPager#getOffscreenPageLimit()}缓存的大小不够时，会移出最早显示的item
+     * 这里要实现一个从item拿到view的规则
      *
-     * @return 被移除的item中view的对象（如果item是view那么直接返回即可）
+     * @param item     包含view的item对象
+     * @param position item所处的位置
+     * @return item中的view对象
      */
-    protected abstract View getWillBeDestroyedView(T item, int position);
+    protected abstract
+    @NonNull
+    View getViewFromItem(T item, int position);
 
     /**
      * 当缓存中无法得到所需item时才会调用
+     *
+     * @return 需要放入容器的view
      */
-    protected abstract T onCreateItem(ViewGroup container, int position);
-
-
-
+    protected abstract T createItem(ViewPager viewPager, int position);
 
     ///////////////////////////////////////////////////////////////////////////
     // 缓存类
     ///////////////////////////////////////////////////////////////////////////
 
-    public static class PagerCache<T> {
+    private static class PagerCache<T> {
 
         private Map<Object, Queue<T>> mCacheMap;
 
@@ -133,20 +124,23 @@ abstract class BasePagerAdapter<T> extends PagerAdapter {
             mCacheMap = new ArrayMap<>();
         }
 
-        public T getItem(Object key) {
-            Queue<T> queue;
-            if ((queue = mCacheMap.get(key)) != null) {
-                return queue.poll(); // 如果拿不到也会返回null
-            } else {
-                return null;
-            }
+        /**
+         * @param type item type
+         * @return cache中的item，如果拿不到就返回null
+         */
+        public T getItem(Object type) {
+            Queue<T> queue = mCacheMap.get(type);
+            return queue != null ? queue.poll() : null;
         }
 
-        public void putItem(Object key, T item) {
+        /**
+         * @param type item's type
+         */
+        public void putItem(Object type, T item) {
             Queue<T> queue;
-            if ((queue = mCacheMap.get(key)) == null) {
+            if ((queue = mCacheMap.get(type)) == null) {
                 queue = new LinkedList<>();
-                mCacheMap.put(key, queue);
+                mCacheMap.put(type, queue);
             }
             queue.offer(item);
         }

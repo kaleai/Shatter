@@ -2,7 +2,6 @@ package kale.ui.uiblock.iface;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 
 /**
  * @author Jack Tony
@@ -12,7 +11,7 @@ public interface ActivityLifecycle {
 
     void onDestroy();
 
-    void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState);
+    void onSaveInstanceState(Bundle outState);
 
     void onRestoreInstanceState(Bundle savedInstanceState);
 

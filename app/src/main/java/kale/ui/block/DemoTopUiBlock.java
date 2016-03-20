@@ -1,34 +1,34 @@
-package kale.ui;
+package kale.ui.block;
 
 import android.view.View;
 import android.widget.TextView;
 
 import butterknife.Bind;
 import butterknife.ButterKnife;
-import kale.ui.uiblock.UIBlock;
+import kale.ui.R;
+import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoTopUIBlock extends UIBlock {
+public class DemoTopUiBlock extends UiBlock {
 
     @Bind(R.id.top_tv)
     TextView mTopTv;
 
     @Override
-    public int getRootViewId() {
-        return R.id.top_ub;
+    protected int getLayoutResId() {
+        return R.layout.demo_activity;
     }
 
     @Override
-    public void onBindViews(View rootView) {
+    public void bindViews(View rootView) {
         ButterKnife.bind(this, getRootView());
-        //mTopTv = getView(R.id.top_tv);
     }
 
     @Override
-    public void onSetViews() {
+    public void setViews() {
         String content = mTopTv.getText().toString();
         mTopTv.setText(content + " :)");
     }

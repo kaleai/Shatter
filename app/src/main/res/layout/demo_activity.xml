@@ -15,6 +15,7 @@
         android:layout_width="match_parent"
         android:layout_height="100dp"
         android:background="#ff9800"
+        android:contentDescription="这里是viewPager"
         />
 
     <!-- 使用普通的布局 -->
@@ -36,6 +37,7 @@
             android:layout_gravity="center"
             android:gravity="center"
             android:text="This is a UI Block"
+            android:contentDescription="这里的文字会被加上:)"
             android:textSize="30sp"
             />
 
@@ -69,7 +71,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:gravity="center"
-                android:text="文字会被代码修改"
+                android:text="文字会被代码动态修改"
                 android:textSize="30sp"
                 />
             <!-- 也支持include -->

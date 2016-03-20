@@ -1,4 +1,4 @@
-# UIBlock  
+# UiBlock  
 代替fragment的轻量级解耦UI的类  
 
 ## 添加依赖  
@@ -15,7 +15,7 @@ repositories {
 
 ```  
 dependencies {
-		compile 'com.github.tianzhijiexian:UIBlock:1.0.1'
+		compile 'com.github.tianzhijiexian:UiBlock:1.0.1'
 }    
 ```   
 
@@ -31,8 +31,8 @@ import android.os.PersistableBundle;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
 
-import kale.ui.uiblock.ContainUIBlockActivity;
-import kale.ui.uiblock.UIBlockManager;
+import kale.ui.uiblock.iface.ContainUIBlockActivity;
+import kale.ui.uiblock.UiBlockManager;
 
 /**
  * @author Jack Tony
@@ -152,7 +152,7 @@ public class BaseActivity extends AppCompatActivity implements ContainUIBlockAct
 ![](./demo/top.png)    
 比如我这里只想把顶部的这个linearLayout的逻辑独立出来，但不想要独立写一个xml布局文件。要完成这个功能，我只需要建立一个UIBlock：  
 ```JAVA
-public class DemoTopUIBlock extends UIBlock{
+public class DemoTopUIBlock extends UiBlock{
 
     @Override
     public int getRootViewId() {
@@ -185,7 +185,7 @@ public class DemoTopUIBlock extends UIBlock{
 然后建立相应的UIBlock：  
 
 ```JAVA
-public class DemoBottomUIBlock extends UIBlock{
+public class DemoBottomUIBlock extends UiBlock{
 
     @Override
     public int getRootViewId() {
@@ -223,7 +223,7 @@ public class DemoBottomUIBlock extends UIBlock{
 ![](./demo/middle.png)     
 上面的代码中，LinearLayout中嵌套了一个LinearLayout，我希望外面的LinearLayout被一个UIBlock控制，内部的LinearLayout被另一个UIBlock控制，形成嵌套。废话不说，上外层的代码：
 ```JAVA
-public class DemoMiddleUIBlock extends UIBlock{
+public class DemoMiddleUIBlock extends UiBlock{
 
     @Override
     public int getRootViewId() {
