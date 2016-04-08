@@ -1,9 +1,15 @@
 # UiBlock  
-代替fragment的轻量级解耦UI的类  
+[![](https://jitpack.io/v/tianzhijiexian/UIBlock.svg)](https://jitpack.io/#tianzhijiexian/UIBlock)
+
+代替fragment的轻量级解耦Activity的类  
+
+之前用fragment来降低activity的复杂度，但因此带来的各种奇葩问题让我们头疼。因此，我利用UIBlock实现了类似的功能，但复杂度远远降低。其本质上就是自定义view的实现。   
+
+注意：UiBlock的所有生命周期和activity完全保持一致  
 
 ## 添加依赖  
-1.在项目外层的build.gradle中添加JitPack仓库
-  
+在项目外层的build.gradle中添加JitPack仓库：
+
 ```  
 repositories {
 	maven {
@@ -11,248 +17,164 @@ repositories {
 	}
 }
 ```    
-2.在用到的项目中添加依赖  
+在用到的项目中添加依赖：  
+>	compile 'com.github.tianzhijiexian:UiBlock:[Latest release](https://github.com/tianzhijiexian/UIBlock/releases)'
 
-```  
-dependencies {
-		compile 'com.github.tianzhijiexian:UiBlock:1.0.1'
-}    
-```   
+在用到的项目中添加：
+```
+android.libraryVariants.all { variant ->
+    LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)
+    JavaCompile javaCompile = variant.javaCompile
+    javaCompile.doLast {
+        String[] args = ["-showWeaveInfo",
+                         "-1.5",
+                         "-inpath", javaCompile.destinationDir.toString(),
+                         "-aspectpath", javaCompile.classpath.asPath,
+                         "-d", javaCompile.destinationDir.toString(),
+                         "-classpath", javaCompile.classpath.asPath,
+                         "-bootclasspath", plugin.project.android.bootClasspath.join(
+                File.pathSeparator)]
+
+        MessageHandler handler = new MessageHandler(true);
+        new Main().run(args, handler)
+    }
+}
+```
 
 ## 准备工作  
-在项目中建立一个BaseActivity，让它实现ContainUIBlockActivity接口：  
+在项目中的BaseActivity(如果没有请自行建立)，让它实现`UIBlockActivity`接口：  
 
 ```JAVA
-package kale.ui.base;
+public class BaseActivity extends AppCompatActivity implements UIBlockActivity {
 
-import android.content.Intent;
-import android.os.Bundle;
-import android.os.PersistableBundle;
-import android.support.annotation.CallSuper;
-import android.support.v7.app.AppCompatActivity;
-
-import kale.ui.uiblock.iface.ContainUIBlockActivity;
-import kale.ui.uiblock.UiBlockManager;
-
-/**
- * @author Jack Tony
- * @date 2015/9/21
- */
-public class BaseActivity extends AppCompatActivity implements ContainUIBlockActivity {
-
-    private UIBlockManager mUIBlockManager;
+    private UiBlockManager mUiBlockManager;
 
     @Override
-    public UIBlockManager getUIBlockManager() {
-        if (mUIBlockManager == null) {
-            mUIBlockManager = new UIBlockManager(this);
+    public UiBlockManager getUiBlockManager() {
+        if (mUiBlockManager == null) {
+            mUiBlockManager = new UiBlockManager(this);
         }
-        return mUIBlockManager;
+        return mUiBlockManager;
     }
 
-    @CallSuper
+		// 下方均为activity的默认实现
+
     @Override
-    public void onSaveInstanceState(Bundle outState, PersistableBundle outPersistentState) {
-        super.onSaveInstanceState(outState, outPersistentState);
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onSaveInstanceState(outState, outPersistentState);
-        }
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
     }
 
-    @CallSuper
     @Override
     public void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onRestoreInstanceState(savedInstanceState);
-        }
     }
 
-    @CallSuper
     @Override
     public void onStart() {
         super.onStart();
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onStart();
-        }
     }
 
-    @CallSuper
     @Override
     public void onResume() {
         super.onResume();
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onResume();
-        }
     }
 
-    @CallSuper
     @Override
     public void onPause() {
         super.onPause();
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onPause();
-        }
     }
 
-    @CallSuper
     @Override
     public void onStop() {
         super.onStop();
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onStop();
-        }
     }
 
-    @CallSuper
     @Override
     public void onRestart() {
         super.onRestart();
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onRestart();
-        }
     }
 
-    @CallSuper
     @Override
     public void onDestroy() {
         super.onDestroy();
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onDestroy();
-        }
-    }
-    
-    @CallSuper
-    @Override
-    public void onBackPressed() {
-        if (mUIBlockManager != null) {
-            if (!mUIBlockManager.onBackPressed()) {
-                super.onBackPressed();
-            }
-        }
     }
 
-    @CallSuper
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (mUIBlockManager != null) {
-            mUIBlockManager.onActivityResult(requestCode, resultCode, data);
-        }
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
 }
-
 ```     
-可以看到这里面就是在activity的回调时调用mUIBlockManager的对应的方法。这里其实还有一个思路就是用（registerActivityLifecycleCallbacks）这个方法，但是因为application只能设置一个监听，如果开发者在自己的应用中也用了这个回调，我这里就监听不到了。其次就是hook，但这里可能要引入一个框架，故没尝试。因此，还是采用比较简单粗暴的手动在生命周期中调用相应方法的办法。  
+在这里写出activity默认的生命周期和`getUiBlockManager()`方法。这里写出默认的生命周期方法的目的是给UiBlock的生命周期做钩子。
 
 ## 使用情形  
-**1. 简单划分UI逻辑，降低Activity复杂度**  
-我们之前用fragment来拆分UI的逻辑的办法来提升程序可读性，降低activity的复杂度。但因此带来的是使用fragment出现的各种奇葩问题和fragment的复杂度。因此，我利用UIBlock实现了类似的功能，但复杂度远远降低。   
-![](./demo/top.png)    
-比如我这里只想把顶部的这个linearLayout的逻辑独立出来，但不想要独立写一个xml布局文件。要完成这个功能，我只需要建立一个UIBlock：  
+**1. 简单划分UI逻辑**  
+
+![](./images/demo01.png)  
+
+这里的ui界面可以明显看出是由上下两个部分组成的，如果我认为下方的操作很复杂，整个界面的activity很臃肿。利用UiBlock就可以把下半部分的逻辑独立出来，也不用写一个xml布局文件。
+
+简单例子：
 ```JAVA
-public class DemoTopUIBlock extends UiBlock{
+public class TextUIBlock extends UiBlock{
 
     @Override
-    public int getRootViewId() {
-        return R.id.top_ub;
+    public int getLayoutResId() {
+        return R.layout.demo_uiblock;
     }
 
-    TextView mTopTv;
+    TextView text;
 
     @Override
     protected void bindViews() {
-        mTopTv = getView(R.id.top_tv);
+        text = getView(R.id.tv);
     }
 
     @Override
     protected void setViews() {
-        String content = mTopTv.getText().toString();
-        mTopTv.setText(content + " :)");
+        mTopTv.setText("Share");
     }
-    
 }
 ```   
-接着，在activity中`getUIBlockManager().add(new DemoTopUIBlock())`，这样就使得这个linearLayout的逻辑转交给了UIBlock。  
+接着，在activity通过`getUiBlockManager().add(R.id.share_linearlayout, new TextUIBlock())`把UiBlock绑定到activity上。  
 
-**2. 复用有相似界面和相似逻辑的UI**  
-复用UI是很常见的需求，但这里我的意见是：多复用UI组件，而不是复用activity。因为如果activity被多次复用，可能会因为后面设计师的界面分化，造成维护的难度。   
-题外话说完了，来看看如何利用UIBlock做这样的复用吧。这样的复用很简单，直接用现成的`<include/>`标签即可，毫无技术性。   
-![](./demo/bottom.png)     
-来看看被include的布局长啥样（这里用到了`tools:showIn`这个小技巧）：
-![](./demo/inner_layout.png)    
-然后建立相应的UIBlock：  
+**2. 复用UI区块**  
 
-```JAVA
-public class DemoBottomUIBlock extends UiBlock{
+![](./images/demo02.png)
 
-    @Override
-    public int getRootViewId() {
-        return R.id.bottom_ub;
-    }
+复用UI是很常见的需求，我的建议是：多复用UI组件，而不是复用activity。因为如果activity被多次复用，可能会因为后面设计师的界面分化，造成维护的难度。   
 
-    private EditText mBottomEt;
-    private Button mBottomBtn;
-    
-    @Override
-    protected void bindViews() {
-        mBottomEt = getView(R.id.bottom_et);
-        mBottomBtn = getView(R.id.bottom_btn);
-    }
+UiBlock可以用来做ui区块的复用：  
+1. 建立一个要复用layout文件   
+2. 建立对应的UiBlock  
+3. 通过`include`将layout文件放入activity的xml中  
+4. 调用UiBlockManager的add方法进行挂载(id就是include标签的id)  
 
-    @Override
-    protected void setViews() {
-        mBottomBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                getActivity(DemoActivity.class).changeText();
-            }
-        });
-    }
+**3. 嵌套使用UiBlock**  
 
-    public void onTextChangeCompleted(@NonNull String text) {
-        mBottomEt.setText(text);
-    }
-}
-```  
-最后，在activity中引入这部分逻辑：`getUIBlockManager().add(new DemoBottomUIBlock())`  
+![](./images/demo03.png)
 
-**3. 嵌套使用UIBlock**  
-之前`豪哥（大神）`提出过这样的需求，activity中套fragment，这个fragment中又套了一个fragment，这种嵌套的问题在fragment的世界中真是令人头疼。现在我们看看如何用UIBlock来简单解决这个问题。  
-![](./demo/middle.png)     
-上面的代码中，LinearLayout中嵌套了一个LinearLayout，我希望外面的LinearLayout被一个UIBlock控制，内部的LinearLayout被另一个UIBlock控制，形成嵌套。废话不说，上外层的代码：
-```JAVA
-public class DemoMiddleUIBlock extends UiBlock{
+之前`豪哥`有过这样的需求，activity中套fragment，这个fragment中又套了一个fragment，这种嵌套的问题令人头疼，UiBlock可以简单地解决这个问题。  
 
-    @Override
-    public int getRootViewId() {
-        return R.id.middle_ub;
-    }
-
-    @Override
-    protected void bindViews() {
-        getActivity(BaseActivity.class).getUIBlockManager().add(new DemoInnerUIBlock());
-    }
-
-    @Override
-    protected void setViews() {
-        getRootView().setBackgroundColor(0xff65a8b7);
-    }
-} 
-```   
-这里重要的一个方法是：`getActivity()`，可以通过这个方法得到activity的对象，然后直接调用activity的`getUIBlockManager()`来引入内层嵌套的UIBlock就行了。至于DemoInnerUIBlock的代码就不说了，和之前的类似。最后，不要忘记了在activity把这个UIBLock的代码引入进来`getUIBlockManager().add(new DemoMiddleUIBlock());`。   
-
+主要方法：  
+1. 建立两个UiBlock  
+2. 在activity中调用UiBlockManager的add方法挂载外层的UiBlock  
+3. 在外层的UiBlock中调用UiBlockManager的add方法挂载内层的UiBlock  
 
 ### 开发者
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
 
-Jack Tony: <developer_kale@qq.com>  
+Jack Tony: <developer_kale@foxmail.com>  
 
 
 ### License
 
-    Copyright 2015 Jack Tony
+    Copyright 2016 Jack Tony
 
     Licensed under the Apache License, Version 2.0 (the "License");
     you may not use this file except in compliance with the License.
@@ -265,4 +187,3 @@ Jack Tony: <developer_kale@qq.com>
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
     limitations under the License.
-

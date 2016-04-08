@@ -7,9 +7,7 @@ import android.os.Bundle;
  * @author Jack Tony
  * @date 2015/11/22
  */
-public interface ActivityLifecycle {
-
-    void onDestroy();
+public interface Lifecycle {
 
     void onSaveInstanceState(Bundle outState);
 
@@ -25,5 +23,9 @@ public interface ActivityLifecycle {
 
     void onRestart();
 
+    void onDestroy();
+
     void onActivityResult(int requestCode, int resultCode, Intent data);
+
+    void onBackPressed();
 }

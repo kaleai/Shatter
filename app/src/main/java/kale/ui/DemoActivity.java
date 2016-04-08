@@ -4,9 +4,9 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.View;
 
+import kale.ui.base.BaseActivity;
 import kale.ui.block.DemoBottomUiBlock;
 import kale.ui.block.DemoMiddleUiBlock;
 import kale.ui.block.DemoTopUiBlock;
@@ -14,9 +14,8 @@ import kale.ui.block.DemoVpUiBlock;
 import kale.ui.uiblock.UiBlock;
 import kale.ui.uiblock.adapter.CommonUiBlockPagerAdapter;
 import kale.ui.uiblock.adapter.UIBlockPagerAdapter;
-import kale.ui.uiblock.support.AppCompatUiBlockActivity;
 
-public class DemoActivity extends AppCompatUiBlockActivity {
+public class DemoActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +39,7 @@ public class DemoActivity extends AppCompatUiBlockActivity {
                 .add(R.id.top_ub, new DemoTopUiBlock())
                 .add(R.id.middle_ub, new DemoMiddleUiBlock());
 
-        findViewById(R.id.noty_btn).setOnClickListener(new View.OnClickListener() {
+        findViewById(R.id.notify_btn).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 pagerAdapter.notifyDataSetChanged();
@@ -56,7 +55,9 @@ public class DemoActivity extends AppCompatUiBlockActivity {
     public void onTheBottomBtnClick() {
         // 被UIBlock调用后会执行具体的业务逻辑
         // activity调用UIBlock，这里可以调用具体的业务逻辑，原则上是外部知晓内部，内部不知晓外部。
-        DemoBottomUiBlock uiBlock = (DemoBottomUiBlock) getUiBlockManager().get(DemoBottomUiBlock.TAG_BOTTOM);
+        DemoBottomUiBlock uiBlock = (DemoBottomUiBlock) getUiBlockManager()
+                .findUiBlockByTag(DemoBottomUiBlock.TAG_BOTTOM);
+        
         assert uiBlock != null;
         uiBlock.onTextChangeCompleted("Text from activity");
     }
@@ -78,7 +79,6 @@ public class DemoActivity extends AppCompatUiBlockActivity {
                 @NonNull
                 @Override
                 public UiBlock createItem(Object type) {
-                    Log.d("ddd", "createItem: 得到新的");
                     return new DemoVpUiBlock();
                 }
             };
@@ -93,7 +93,6 @@ public class DemoActivity extends AppCompatUiBlockActivity {
                 @NonNull
                 @Override
                 public UiBlock createItem(Object type) {
-                    Log.d("ddd", "createItem: 得到新的");
                     return new DemoVpUiBlock();
                 }
             };

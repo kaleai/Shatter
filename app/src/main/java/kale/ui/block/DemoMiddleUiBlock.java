@@ -18,7 +18,7 @@ public class DemoMiddleUiBlock extends UiBlock {
 
     @Override
     public void bindViews(View rootView) {
-        getManager().add(R.id.inner_tv, new DemoInnerUiBlock());
+        getUiBlockManager().add(R.id.inner_tv, new DemoInnerUiBlock());
     }
 
     @Override

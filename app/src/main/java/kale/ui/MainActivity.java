@@ -4,13 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import kale.ui.uiblock.support.AppCompatUiBlockActivity;
+import kale.ui.base.BaseActivity;
 
 /**
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class MainActivity extends AppCompatUiBlockActivity {
+public class MainActivity extends BaseActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,6 +24,6 @@ public class MainActivity extends AppCompatUiBlockActivity {
                 startActivity(new Intent(MainActivity.this, DemoActivity.class));
             }
         });
-
     }
+
 }

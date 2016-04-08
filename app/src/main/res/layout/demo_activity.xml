@@ -1,106 +1,108 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity"
+    android:padding="@dimen/activity_vertical_margin"
     >
 
-    <android.support.v4.view.ViewPager
-        android:id="@+id/top_vp"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:background="#ff9800"
-        android:contentDescription="这里是viewPager"
-        />
-
-    <!-- 使用普通的布局 -->
     <LinearLayout
-        android:id="@+id/top_ub"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_below="@+id/top_vp"
-        android:layout_marginTop="16dp"
-        android:background="#009688"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
         >
 
-        <TextView
-            android:id="@+id/top_tv"
+        <android.support.v4.view.ViewPager
+            android:id="@+id/top_vp"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:gravity="center"
-            android:text="This is a UI Block"
-            android:contentDescription="这里的文字会被加上:)"
-            android:textSize="30sp"
+            android:layout_height="100dp"
+            android:background="#ff9800"
+            android:contentDescription="这里是viewPager"
             />
 
-    </LinearLayout>
-
-    <!-- 嵌套 -->
-    <LinearLayout
-        android:id="@+id/middle_ub"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_below="@+id/top_ub"
-        android:layout_marginTop="16dp"
-        android:padding="12dp"
-        android:background="#9e9e9e"
-        android:contentDescription="这里的背景会被代码修改"
-        >
-
+        <!-- 使用普通的布局 -->
         <LinearLayout
-            android:id="@+id/inner_ub"
+            android:id="@+id/top_ub"
             android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_gravity="center"
-            android:background="#00bcd4"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/top_vp"
+            android:layout_marginTop="16dp"
+            android:background="#009688"
             >
 
             <TextView
-                android:id="@+id/inner_tv"
+                android:id="@+id/top_tv"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:contentDescription="这里的文字会被加上:)"
                 android:gravity="center"
-                android:text="文字会被代码动态修改"
+                android:text="This is a UI Block"
                 android:textSize="30sp"
                 />
-            <!-- 也支持include -->
-            <!-- <include android:id="@+id/inner_tv" 
-                 layout="@layout/demo_inner_uiblock"/>-->
 
         </LinearLayout>
 
+        <!-- 嵌套 -->
+        <LinearLayout
+            android:id="@+id/middle_ub"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_below="@+id/top_ub"
+            android:layout_marginTop="16dp"
+            android:background="#9e9e9e"
+            android:contentDescription="这里的背景会被代码修改"
+            android:padding="12dp"
+            >
+
+            <LinearLayout
+                android:id="@+id/inner_ub"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:layout_gravity="center"
+                android:background="#00bcd4"
+                >
+
+                <TextView
+                    android:id="@+id/inner_tv"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:gravity="center"
+                    android:text="文字会被代码动态修改"
+                    android:textSize="30sp"
+                    />
+                <!-- 也支持include -->
+                <!-- <include android:id="@+id/inner_tv" 
+                     layout="@layout/demo_inner_uiblock"/>-->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+        <!-- 使用include -->
+        <include
+            android:id="@+id/bottom_ub"
+            layout="@layout/demo_uiblock"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/middle_ub"
+            android:layout_marginTop="16dp"
+            />
+
+        <Button
+            android:id="@+id/notify_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:text="button"
+            />
+
     </LinearLayout>
-
-    <!-- 使用include -->
-    <include
-        android:id="@+id/bottom_ub"
-        layout="@layout/demo_uiblock"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_marginTop="16dp"
-        android:layout_below="@+id/middle_ub"
-        />
-
-    <Button
-        android:id="@+id/noty_btn"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/bottom_ub"
-        android:layout_centerHorizontal="true"
-        android:text="button"
-        />
-    
-</RelativeLayout>
+</ScrollView>

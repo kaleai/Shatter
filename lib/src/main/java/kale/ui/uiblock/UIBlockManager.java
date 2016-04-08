@@ -7,20 +7,19 @@ import android.support.annotation.CheckResult;
 import android.support.annotation.IdRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.text.TextUtils;
 import android.view.View;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import kale.ui.uiblock.iface.ActivityLifecycle;
+import kale.ui.uiblock.iface.Lifecycle;
 import lombok.Getter;
 
 /**
  * @author Jack Tony
  * @date 2015/6/28
  */
-public class UiBlockManager implements ActivityLifecycle {
+public class UiBlockManager implements Lifecycle {
 
     private List<UiBlock> mUiBlockList = new ArrayList<>();
 
@@ -32,6 +31,7 @@ public class UiBlockManager implements ActivityLifecycle {
     }
 
     public UiBlockManager add(@IdRes int containViewId, @NonNull UiBlock block) {
+        block.setContainId(containViewId);
         return add(activity.findViewById(containViewId), block);
     }
 
@@ -53,17 +53,25 @@ public class UiBlockManager implements ActivityLifecycle {
     @CheckResult
     public
     @Nullable
-    UiBlock get(@Nullable String tag) {
-        if (tag == null) {
-            return null;
-        } else {
-            for (UiBlock block : mUiBlockList) {
-                if (TextUtils.equals(block.getTag(), tag)) {
-                    return block;
-                }
+    UiBlock findUiBlockByTag(@NonNull String tag) {
+        for (UiBlock block : mUiBlockList) {
+            if (tag.equals(block.getTag())) {
+                return block;
             }
-            return null;
         }
+        return null;
+    }
+
+    @CheckResult
+    public
+    @Nullable
+    UiBlock findUiBlockByContainId(int id) {
+        for (UiBlock block : mUiBlockList) {
+            if (block.getContainId() == id) {
+                return block;
+            }
+        }
+        return null;
     }
 
     @CheckResult
@@ -102,23 +110,18 @@ public class UiBlockManager implements ActivityLifecycle {
         callUiBlock(UiBlock::onRestart);
     }
 
-    public void onDestroy() {
-        callUiBlock(UiBlock::onDestroy);
-        mUiBlockList.clear();
-        mUiBlockList = null;
-    }
-
-    public boolean onBackPressed() {
-        for (UiBlock UiBlock : mUiBlockList) {
-            if (UiBlock.onBackPressed()) {
-                return true;
-            }
-        }
-        return false;
+    public void onBackPressed() {
+        callUiBlock(UiBlock::onBackPressed);
     }
 
     public void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
         callUiBlock(UiBlock -> UiBlock.onActivityResult(requestCode, resultCode, data));
+    }
+
+    public void onDestroy() {
+        callUiBlock(UiBlock::onDestroy);
+        mUiBlockList.clear();
+        mUiBlockList = null;
     }
 
     //// 回调 end -------------------

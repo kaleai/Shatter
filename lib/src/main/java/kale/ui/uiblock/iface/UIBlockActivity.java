@@ -3,10 +3,10 @@ package kale.ui.uiblock.iface;
 import kale.ui.uiblock.UiBlockManager;
 
 /**
- * @author Jack Tony
+ * @author kale
  * @date 2015/10/8
  */
-public interface ContainUIBlockActivity  {
+public interface UIBlockActivity extends Lifecycle {
 
     UiBlockManager getUiBlockManager();
 

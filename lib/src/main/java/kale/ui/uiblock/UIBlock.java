@@ -9,19 +9,20 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import kale.ui.uiblock.iface.ActivityLifecycle;
-import kale.ui.uiblock.iface.ContainUIBlockActivity;
+import kale.ui.uiblock.iface.Lifecycle;
+import kale.ui.uiblock.iface.UIBlockActivity;
 import lombok.Getter;
 import lombok.Setter;
 
 /**
  * @author Jack Tony
  * @date 2015/6/15
- * 1.需要在界面销毁时把回调停止
+ * 需要在界面销毁时把回调停止
  */
-public abstract class UiBlock implements ActivityLifecycle {
+public abstract class UiBlock implements Lifecycle {
 
-    @Getter@Setter
+    @Getter
+    @Setter
     private View rootView;
 
     @Getter
@@ -30,14 +31,18 @@ public abstract class UiBlock implements ActivityLifecycle {
     // 当前是否对用户可见
     @Getter
     private boolean visibleToUser = true;
-    
+
+    @Setter
+    @Getter
+    private int containId;
+
     protected void attachActivity(Activity activity) {
         onAttach(activity);
         if (rootView instanceof ViewPager) {
             rootView = LayoutInflater.from(activity).inflate(getLayoutResId(), null);
         }
         rootView = resetRootView(rootView, activity);
-        
+
         bindViews(rootView);
         beforeSetViews();
         setViews();
@@ -67,8 +72,8 @@ public abstract class UiBlock implements ActivityLifecycle {
         return oldRootView;
     }
 
-    public UiBlockManager getManager() {
-        return ((ContainUIBlockActivity) activity).getUiBlockManager();
+    public UiBlockManager getUiBlockManager() {
+        return ((UIBlockActivity) activity).getUiBlockManager();
     }
 
     public void onVisibleToUser(boolean isVisible) {
@@ -80,20 +85,18 @@ public abstract class UiBlock implements ActivityLifecycle {
     }
 
     // @formatter:off
-    /**
-     * @return true if you want to shield back key
-     */
-    protected boolean onBackPressed() {return false;}
-    public void onSaveInstanceState(Bundle outState) {}
-    public void onRestoreInstanceState(Bundle savedInstanceState) {}
-    public void onStart() {}
-    public void onResume() {}
-    public void onPause() {}
-    public void onStop() {}
-    public void onRestart() {}
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {}
+    @Override public void onSaveInstanceState(Bundle outState) {}
+    @Override public void onRestoreInstanceState(Bundle savedInstanceState) {}
+    @Override public void onStart() {}
+    @Override public void onResume() {}
+    @Override public void onPause() {}
+    @Override public void onStop() {}
+    @Override public void onRestart() {}
+    @Override public void onBackPressed() {}
+    @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {}
     // @formatter:on
 
+    @Override
     public void onDestroy() {
         activity = null;
         rootView = null;
@@ -103,7 +106,7 @@ public abstract class UiBlock implements ActivityLifecycle {
         try {
             return (E) rootView.findViewById(id);
         } catch (ClassCastException ex) {
-            Log.e(UiBlock.class.getSimpleName(), "Could not cast View to concrete class.", ex);
+            Log.e("UiBlock", "Could not cast View to concrete class.", ex);
             throw ex;
         }
     }
