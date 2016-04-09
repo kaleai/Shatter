@@ -5,13 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
 import kale.ui.uiblock.UiBlockManager;
-import kale.ui.uiblock.iface.UIBlockActivity;
+import kale.ui.uiblock.iface.UiBlockActivity;
 
 /**
  * @author Kale
  * @date 2016/4/8
  */
-public class BaseActivity extends AppCompatActivity implements UIBlockActivity {
+public class BaseActivity extends AppCompatActivity implements UiBlockActivity {
 
     private UiBlockManager mUiBlockManager;
 

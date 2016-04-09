@@ -35,10 +35,10 @@ repositories {
 	compile 'com.github.tianzhijiexian:UiBlock:[Latest release](https://github.com/tianzhijiexian/UIBlock/releases)'
 
 ## 准备工作  
-在项目中的BaseActivity(如果没有请自行建立)，让它实现`UIBlockActivity`接口：  
+在项目中的BaseActivity(如果没有请自行建立)，让它实现`UiBlockActivity`接口：  
 
 ```JAVA
-public class BaseActivity extends AppCompatActivity implements UIBlockActivity {
+public class BaseActivity extends AppCompatActivity implements UiBlockActivity {
 
     private UiBlockManager mUiBlockManager;
 
@@ -114,7 +114,7 @@ public class BaseActivity extends AppCompatActivity implements UIBlockActivity {
 
 1.建立UiBlock：
 ```JAVA
-public class TextUIBlock extends UiBlock{
+public class TextUiBlock extends UiBlock{
 
     @Override
     public int getLayoutResId() {
@@ -135,7 +135,7 @@ public class TextUIBlock extends UiBlock{
 }
 ```   
 2.挂载到Activity上：  
-在activity中，通过`getUiBlockManager().add(R.id.share_linearlayout, new TextUIBlock())`把UiBlock绑定到activity上。  
+在activity中，通过`getUiBlockManager().add(R.id.share_linearlayout, new TextUiBlock())`把UiBlock绑定到activity上。  
 
 **2. 复用UI区块**  
 

@@ -9,7 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 
 import kale.ui.uiblock.UiBlockManager;
-import kale.ui.uiblock.iface.UIBlockActivity;
+import kale.ui.uiblock.iface.UiBlockActivity;
 
 /**
  * @author Kale
@@ -18,13 +18,13 @@ import kale.ui.uiblock.iface.UIBlockActivity;
 @Aspect
 public class UiBlockActivityAspect {
 
-    @Pointcut("execution(* kale.ui.uiblock.iface.UIBlockActivity..on*(..))")
+    @Pointcut("execution(* kale.ui.uiblock.iface.UiBlockActivity..on*(..))")
     public void onXXX() {
     }
 
     @After("onXXX()")
     public void callManagerMethods(JoinPoint point) {
-        UIBlockActivity activity = (UIBlockActivity) point.getThis();
+        UiBlockActivity activity = (UiBlockActivity) point.getThis();
         UiBlockManager manager = activity.getUiBlockManager();
         if (manager == null) {
             return;

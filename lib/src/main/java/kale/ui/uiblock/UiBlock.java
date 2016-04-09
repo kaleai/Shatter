@@ -10,7 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import kale.ui.uiblock.iface.Lifecycle;
-import kale.ui.uiblock.iface.UIBlockActivity;
+import kale.ui.uiblock.iface.UiBlockActivity;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -73,7 +73,7 @@ public abstract class UiBlock implements Lifecycle {
     }
 
     public UiBlockManager getUiBlockManager() {
-        return ((UIBlockActivity) activity).getUiBlockManager();
+        return ((UiBlockActivity) activity).getUiBlockManager();
     }
 
     public void onVisibleToUser(boolean isVisible) {

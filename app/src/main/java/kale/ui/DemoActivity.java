@@ -15,7 +15,7 @@ import kale.ui.block.DemoTopUiBlock;
 import kale.ui.block.DemoVpUiBlock;
 import kale.ui.uiblock.UiBlock;
 import kale.ui.uiblock.adapter.CommonUiBlockPagerAdapter;
-import kale.ui.uiblock.adapter.UIBlockPagerAdapter;
+import kale.ui.uiblock.adapter.UiBlockPagerAdapter;
 
 public class DemoActivity extends BaseActivity {
 
@@ -69,7 +69,7 @@ public class DemoActivity extends BaseActivity {
 
     private PagerAdapter getAdapter(boolean b) {
         if (b) {
-            return new UIBlockPagerAdapter(getUiBlockManager()) {
+            return new UiBlockPagerAdapter(getUiBlockManager()) {
 
                 @Override
                 public Object getItemType(int position) {

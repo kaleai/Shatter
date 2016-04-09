@@ -15,7 +15,7 @@ import lombok.Setter;
  * @date 2015/11/27
  * 如果在viewpager中的UIBlock有数据源，那么可以用这个做处理
  */
-public abstract class CommonUiBlockPagerAdapter<T> extends UIBlockPagerAdapter {
+public abstract class CommonUiBlockPagerAdapter<T> extends UiBlockPagerAdapter {
 
     @Setter @Getter
     private List<T> data;

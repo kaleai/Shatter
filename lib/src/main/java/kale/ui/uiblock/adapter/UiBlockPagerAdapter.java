@@ -13,17 +13,17 @@ import kale.ui.uiblock.UiBlockManager;
  * @date 2015/11/21
  * 这个类不关心缓存，仅仅做一般的操作。比如得到view，返回view
  */
-public abstract class UIBlockPagerAdapter extends BasePagerAdapter<UiBlock> {
+public abstract class UiBlockPagerAdapter extends BasePagerAdapter<UiBlock> {
 
     private final UiBlockManager mManager;
 
     private boolean mIsLazy = false;
 
-    public UIBlockPagerAdapter(UiBlockManager manager) {
+    public UiBlockPagerAdapter(UiBlockManager manager) {
         this(manager, false);
     }
 
-    public UIBlockPagerAdapter(UiBlockManager manager, boolean isLazy) {
+    public UiBlockPagerAdapter(UiBlockManager manager, boolean isLazy) {
         super();
         mManager = manager;
         mIsLazy = isLazy;
