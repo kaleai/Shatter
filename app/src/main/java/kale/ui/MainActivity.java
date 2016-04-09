@@ -4,8 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
-import kale.ui.base.BaseActivity;
-
 /**
  * @author Jack Tony
  * @date 2015/9/22

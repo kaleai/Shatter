@@ -1,12 +1,14 @@
 package kale.ui;
 
+import com.squareup.leakcanary.LeakCanary;
+
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import kale.ui.base.BaseActivity;
+import kale.ui.model.DataManager;
 import kale.ui.block.DemoBottomUiBlock;
 import kale.ui.block.DemoMiddleUiBlock;
 import kale.ui.block.DemoTopUiBlock;
@@ -20,6 +22,9 @@ public class DemoActivity extends BaseActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        LeakCanary.install(getApplication());
+        
         setContentView(R.layout.demo_activity);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.top_vp);
 

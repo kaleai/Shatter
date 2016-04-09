@@ -1,4 +1,4 @@
-package kale.ui.base;
+package kale.ui;
 
 import android.content.Intent;
 import android.os.Bundle;

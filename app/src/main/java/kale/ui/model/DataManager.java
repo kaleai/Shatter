@@ -1,4 +1,4 @@
-package kale.ui;
+package kale.ui.model;
 
 import java.util.ArrayList;
 import java.util.List;

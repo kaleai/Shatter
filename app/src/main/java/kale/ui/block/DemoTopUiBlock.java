@@ -3,8 +3,6 @@ package kale.ui.block;
 import android.view.View;
 import android.widget.TextView;
 
-import butterknife.Bind;
-import butterknife.ButterKnife;
 import kale.ui.R;
 import kale.ui.uiblock.UiBlock;
 
@@ -14,7 +12,6 @@ import kale.ui.uiblock.UiBlock;
  */
 public class DemoTopUiBlock extends UiBlock {
 
-    @Bind(R.id.top_tv)
     TextView mTopTv;
 
     @Override
@@ -24,7 +21,7 @@ public class DemoTopUiBlock extends UiBlock {
 
     @Override
     public void bindViews(View rootView) {
-        ButterKnife.bind(this, getRootView());
+        mTopTv = getView(R.id.top_tv);
     }
 
     @Override
