@@ -1,1 +1,2 @@
-include ':app', ':lib', ':uiblock-plugin'
+include ':app', ':lib'
+// include ':aspect-plugin'
