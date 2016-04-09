@@ -1,9 +1,7 @@
 # UiBlock  
 [![](https://jitpack.io/v/tianzhijiexian/UIBlock.svg)](https://jitpack.io/#tianzhijiexian/UIBlock)
 
-代替fragment的轻量级解耦Activity的类  
-
-之前用fragment来降低activity的复杂度，但因此带来的各种奇葩问题让我们头疼。UIBlock实现了fragment的类似功能，但复杂度极低，本质上就是自定义view的原理。    
+之前用fragment来降低activity的复杂度，但fragment带来的各种奇葩问题让我头疼。UiBlock实现了fragment的部分功能，复杂度极低，本质上就是一个自定义view。  
 
 注意：UiBlock的所有生命周期和activity完全保持一致  
 
@@ -168,6 +166,9 @@ UiBlock可以用来做ui区块的复用：
 1. 建立两个UiBlock  
 2. 在activity中调用UiBlockManager的add方法挂载外层的UiBlock  
 3. 在外层的UiBlock中调用UiBlockManager的add方法挂载内层的UiBlock  
+
+## 详细文档
+https://jitpack.io/com/github/tianzhijiexian/UiBlock/1.0.2/javadoc/
 
 ### 开发者
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
