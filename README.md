@@ -3,7 +3,7 @@
 
 代替fragment的轻量级解耦Activity的类  
 
-之前用fragment来降低activity的复杂度，但因此带来的各种奇葩问题让我们头疼。因此，我利用UIBlock实现了类似的功能，但复杂度远远降低。其本质上就是自定义view的实现。   
+之前用fragment来降低activity的复杂度，但因此带来的各种奇葩问题让我们头疼。UIBlock实现了fragment的类似功能，但复杂度极低，本质上就是自定义view的原理。    
 
 注意：UiBlock的所有生命周期和activity完全保持一致  
 
@@ -11,35 +11,28 @@
 在项目外层的build.gradle中添加JitPack仓库：
 
 ```  
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url "https://jitpack.io"
+        }
+    }
+    dependencies {
+		// ...
+        classpath 'com.github.tianzhijiexian:AspectPlugin:1.0.0'
+    }
+}
+
 repositories {
 	maven {
 		url "https://jitpack.io"
 	}
 }
 ```    
-在用到的项目中添加依赖：  
->	compile 'com.github.tianzhijiexian:UiBlock:[Latest release](https://github.com/tianzhijiexian/UIBlock/releases)'
-
-在用到的项目中添加：
-```
-android.libraryVariants.all { variant ->
-    LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)
-    JavaCompile javaCompile = variant.javaCompile
-    javaCompile.doLast {
-        String[] args = ["-showWeaveInfo",
-                         "-1.5",
-                         "-inpath", javaCompile.destinationDir.toString(),
-                         "-aspectpath", javaCompile.classpath.asPath,
-                         "-d", javaCompile.destinationDir.toString(),
-                         "-classpath", javaCompile.classpath.asPath,
-                         "-bootclasspath", plugin.project.android.bootClasspath.join(
-                File.pathSeparator)]
-
-        MessageHandler handler = new MessageHandler(true);
-        new Main().run(args, handler)
-    }
-}
-```
+在用到的项目中添加依赖和插件：  
+> apply plugin: 'aspect-plugin'   
+	compile 'com.github.tianzhijiexian:UiBlock:[Latest release](https://github.com/tianzhijiexian/UIBlock/releases)'
 
 ## 准备工作  
 在项目中的BaseActivity(如果没有请自行建立)，让它实现`UIBlockActivity`接口：  
@@ -57,7 +50,7 @@ public class BaseActivity extends AppCompatActivity implements UIBlockActivity {
         return mUiBlockManager;
     }
 
-		// 下方均为activity的默认实现
+	// 下方均为activity的默认实现
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
@@ -110,16 +103,16 @@ public class BaseActivity extends AppCompatActivity implements UIBlockActivity {
     }
 }
 ```     
-在这里写出activity默认的生命周期和`getUiBlockManager()`方法。这里写出默认的生命周期方法的目的是给UiBlock的生命周期做钩子。
+在这里要写出activity默认的生命周期和`getUiBlockManager()`方法。写出默认的生命周期方法后就可以通过`AspectJ`来触发UiBlock的生命周期。
 
 ## 使用情形  
 **1. 简单划分UI逻辑**  
 
 ![](./images/demo01.png)  
 
-这里的ui界面可以明显看出是由上下两个部分组成的，如果我认为下方的操作很复杂，整个界面的activity很臃肿。利用UiBlock就可以把下半部分的逻辑独立出来，也不用写一个xml布局文件。
+这里的ui界面可以明显看出是由上下两个部分组成的。如果下方ui区块的代码很复杂，那么就可以利用UiBlock把下半部分的逻辑独立出来，并且不用写额外的xml布局文件。
 
-简单例子：
+1.建立UiBlock：
 ```JAVA
 public class TextUIBlock extends UiBlock{
 
@@ -141,13 +134,14 @@ public class TextUIBlock extends UiBlock{
     }
 }
 ```   
-接着，在activity通过`getUiBlockManager().add(R.id.share_linearlayout, new TextUIBlock())`把UiBlock绑定到activity上。  
+2.挂载到Activity上：  
+在activity中，通过`getUiBlockManager().add(R.id.share_linearlayout, new TextUIBlock())`把UiBlock绑定到activity上。  
 
 **2. 复用UI区块**  
 
 ![](./images/demo02.png)
 
-复用UI是很常见的需求，我的建议是：多复用UI组件，而不是复用activity。因为如果activity被多次复用，可能会因为后面设计师的界面分化，造成维护的难度。   
+复用UI是很常见的需求，我的建议是：多复用UI组件，而不是复用整个activity。因为如果activity被多次复用，一旦后期界面需求分化，就会造成维护难度。  
 
 UiBlock可以用来做ui区块的复用：  
 1. 建立一个要复用layout文件   
@@ -155,11 +149,20 @@ UiBlock可以用来做ui区块的复用：
 3. 通过`include`将layout文件放入activity的xml中  
 4. 调用UiBlockManager的add方法进行挂载(id就是include标签的id)  
 
+```
+<include
+    android:id="@+id/uiblock_layout"
+    layout="@layout/demo_uiblock"
+    android:layout_width="match_parent"
+    android:layout_height="100dp"
+    />
+```
+
 **3. 嵌套使用UiBlock**  
 
-![](./images/demo03.png)
+![](./images/demo03.jpg)
 
-之前`豪哥`有过这样的需求，activity中套fragment，这个fragment中又套了一个fragment，这种嵌套的问题令人头疼，UiBlock可以简单地解决这个问题。  
+之前`豪哥`遇到过这样的情况：activity中套fragment，这个fragment中又套了一个fragment。UiBlock可以很简单地解决这个问题。  
 
 主要方法：  
 1. 建立两个UiBlock  
@@ -170,7 +173,6 @@ UiBlock可以用来做ui区块的复用：
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
 
 Jack Tony: <developer_kale@foxmail.com>  
-
 
 ### License
 
