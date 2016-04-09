@@ -1,8 +1,3 @@
-import com.android.build.gradle.LibraryPlugin
-import org.aspectj.bridge.IMessage
-import org.aspectj.bridge.MessageHandler
-import org.aspectj.tools.ajc.Main
-
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
 
@@ -13,10 +8,15 @@ android {
     defaultConfig {
         minSdkVersion 14
         targetSdkVersion 23
-        versionCode 2
-        versionName "1.0.1"
     }
 
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+    
     compileOptions {
         encoding "UTF-8"
         sourceCompatibility JavaVersion.VERSION_1_8
@@ -25,12 +25,18 @@ android {
 }
 
 dependencies {
-    // compile 'com.android.support:support-annotations:23.1.0'
     provided 'com.android.support:appcompat-v7:23.1.1'
     provided "org.projectlombok:lombok:1.12.6"
 
     compile 'org.aspectj:aspectjrt:1.8.1'
 }
+
+import com.android.build.gradle.LibraryPlugin
+import org.aspectj.bridge.IMessage
+import org.aspectj.bridge.MessageHandler
+import org.aspectj.tools.ajc.Main
+
+final def log = project.logger
 
 android.libraryVariants.all { variant ->
     LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)
@@ -46,6 +52,24 @@ android.libraryVariants.all { variant ->
                 File.pathSeparator)]
 
         MessageHandler handler = new MessageHandler(true);
-        new Main().run(args, handler)
+        new Main().run(args, handler);
+        for (IMessage message : handler.getMessages(null, true)) {
+            switch (message.getKind()) {
+                case IMessage.ABORT:
+                case IMessage.ERROR:
+                case IMessage.FAIL:
+                    log.error message.message, message.thrown
+                    break;
+                case IMessage.WARNING:
+                    log.warn message.message, message.thrown
+                    break;
+                case IMessage.INFO:
+                    log.info message.message, message.thrown
+                    break;
+                case IMessage.DEBUG:
+                    log.debug message.message, message.thrown
+                    break;
+            }
+        }
     }
 }
