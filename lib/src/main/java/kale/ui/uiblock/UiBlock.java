@@ -48,14 +48,15 @@ public abstract class UiBlock implements Lifecycle {
         setViews();
     }
 
+    /**
+     * 被挂载到Activity时的回调方法
+     */
     protected void onAttach(Activity activity) {
         this.activity = activity;
     }
 
     // @formatter:off
     /**
-     * 仅仅是为了查找问题方便而强制书写的
-     *
      * @return uiBlock对应的layout文件id
      */
     protected abstract @LayoutRes int getLayoutResId();
@@ -68,18 +69,34 @@ public abstract class UiBlock implements Lifecycle {
     public void handleData(Object model, int position) {}
     // @formatter:on
 
+    /**
+     * 重置UiBlock的容器
+     */
     protected View resetRootView(View oldRootView, Activity activity) {
         return oldRootView;
     }
 
+    /**
+     * 得到的{@link UiBlockManager}和当前容纳UiBlock的Activity中的{@link UiBlockManager}是同一个对象
+     */
     public UiBlockManager getUiBlockManager() {
         return ((UiBlockActivity) activity).getUiBlockManager();
     }
 
+    /**
+     * 对用户可见的时的回调，可用作懒加载<br>
+     *
+     * @param isVisible 是否可见
+     */
     public void onVisibleToUser(boolean isVisible) {
         visibleToUser = isVisible;
     }
 
+    /**
+     * 定义后可通过{@link UiBlockManager#findUiBlockByTag(String)}来找到{@link UiBlock}
+     *
+     * @return 自定义的tag，默认是当前类名
+     */
     public String getTag() {
         return getClass().getSimpleName();
     }
@@ -102,6 +119,9 @@ public abstract class UiBlock implements Lifecycle {
         rootView = null;
     }
 
+    /**
+     * findViewById的简化方法
+     */
     protected final <E extends View> E getView(int id) {
         try {
             return (E) rootView.findViewById(id);

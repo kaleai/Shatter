@@ -5,32 +5,25 @@
 
 注意：UiBlock的所有生命周期和activity完全保持一致  
 
-## 添加依赖  
-在项目外层的build.gradle中添加JitPack仓库：
-
+## 引入方式  
+在项目外层的build.gradle中添加[插件](https://github.com/leolin310148/GradleAndroidAspectJPlugin)地址和JitPack仓库：
 ```  
 buildscript {
-    repositories {
-        jcenter()
-        maven {
-            url "https://jitpack.io"
-        }
-    }
     dependencies {
-		// ...
-        classpath 'com.github.tianzhijiexian:AspectPlugin:1.0.0'
+        classpath 'me.leolin:android-aspectj-plugin:1.0.7'
     }
 }
 
-repositories {
-	maven {
-		url "https://jitpack.io"
+allprojects {
+	repositories {
+		// ...
+		maven { url "https://jitpack.io" }
 	}
 }
 ```    
 在用到的项目中添加依赖和插件：  
-> apply plugin: 'aspect-plugin'   
-	compile 'com.github.tianzhijiexian:UiBlock:[Latest release](https://github.com/tianzhijiexian/UIBlock/releases)'
+> compile 'com.github.tianzhijiexian:UiBlock:[Latest release](https://github.com/tianzhijiexian/UIBlock/releases)'  
+apply plugin: 'me.leolin.gradle-android-aspectj'
 
 ## 准备工作  
 在项目中的BaseActivity(如果没有请自行建立)，让它实现`UiBlockActivity`接口：  
@@ -168,7 +161,7 @@ UiBlock可以用来做ui区块的复用：
 3. 在外层的UiBlock中调用UiBlockManager的add方法挂载内层的UiBlock  
 
 ## 详细文档
-https://jitpack.io/com/github/tianzhijiexian/UiBlock/1.0.2/javadoc/
+https://jitpack.io/com/github/tianzhijiexian/UiBlock/-SNAPSHOT/javadoc/
 
 ### 开发者
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)

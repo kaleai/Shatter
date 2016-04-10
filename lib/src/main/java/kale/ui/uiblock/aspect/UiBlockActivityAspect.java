@@ -19,10 +19,10 @@ import kale.ui.uiblock.iface.UiBlockActivity;
 public class UiBlockActivityAspect {
 
     @Pointcut("execution(* kale.ui.uiblock.iface.UiBlockActivity..on*(..))")
-    public void onXXX() {
+    public void on$() {
     }
 
-    @After("onXXX()")
+    @After("on$()")
     public void callManagerMethods(JoinPoint point) {
         UiBlockActivity activity = (UiBlockActivity) point.getThis();
         UiBlockManager manager = activity.getUiBlockManager();

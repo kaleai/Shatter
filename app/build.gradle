@@ -1,5 +1,5 @@
 apply plugin: 'com.android.application'
-apply plugin: 'aspect-plugin'
+apply plugin: 'me.leolin.gradle-android-aspectj'
 
 android {
     compileSdkVersion 23

@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'me.tatarka.retrolambda'
+apply plugin: 'me.leolin.gradle-android-aspectj'
 
 android {
     compileSdkVersion 23
@@ -27,51 +28,7 @@ android {
 dependencies {
     provided 'com.android.support:appcompat-v7:23.1.1'
     provided "org.projectlombok:lombok:1.12.6"
-
     compile 'org.aspectj:aspectjrt:1.8.1'
-}
-
-import com.android.build.gradle.LibraryPlugin
-import org.aspectj.bridge.IMessage
-import org.aspectj.bridge.MessageHandler
-import org.aspectj.tools.ajc.Main
-
-final def log = project.logger
-
-android.libraryVariants.all { variant ->
-    LibraryPlugin plugin = project.plugins.getPlugin(LibraryPlugin)
-    JavaCompile javaCompile = variant.javaCompile
-    javaCompile.doLast {
-        String[] args = ["-showWeaveInfo",
-                         "-1.5",
-                         "-inpath", javaCompile.destinationDir.toString(),
-                         "-aspectpath", javaCompile.classpath.asPath,
-                         "-d", javaCompile.destinationDir.toString(),
-                         "-classpath", javaCompile.classpath.asPath,
-                         "-bootclasspath", plugin.project.android.bootClasspath.join(
-                File.pathSeparator)]
-
-        MessageHandler handler = new MessageHandler(true);
-        new Main().run(args, handler);
-        for (IMessage message : handler.getMessages(null, true)) {
-            switch (message.getKind()) {
-                case IMessage.ABORT:
-                case IMessage.ERROR:
-                case IMessage.FAIL:
-                    log.error message.message, message.thrown
-                    break;
-                case IMessage.WARNING:
-                    log.warn message.message, message.thrown
-                    break;
-                case IMessage.INFO:
-                    log.info message.message, message.thrown
-                    break;
-                case IMessage.DEBUG:
-                    log.debug message.message, message.thrown
-                    break;
-            }
-        }
-    }
 }
 
 // build a jar with source files
@@ -85,6 +42,16 @@ task javadoc(type: Javadoc) {
     source = android.sourceSets.main.java.sourceFiles
     classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
     classpath += configurations.compile
+}
+
+javadoc {
+    options {
+        encoding "UTF-8"
+        charSet 'UTF-8'
+        author true
+        version true
+        links "http://docs.oracle.com/javase/7/docs/api"
+    }
 }
 
 // build a jar with javadoc
