@@ -8,6 +8,9 @@ import org.aspectj.lang.annotation.Pointcut;
 import android.content.Intent;
 import android.os.Bundle;
 
+import java.util.List;
+
+import kale.ui.uiblock.UiBlock;
 import kale.ui.uiblock.UiBlockManager;
 import kale.ui.uiblock.iface.UiBlockActivity;
 
@@ -16,7 +19,7 @@ import kale.ui.uiblock.iface.UiBlockActivity;
  * @date 2016/4/7
  */
 @Aspect
-public class UiBlockActivityAspect {
+/*package*/ public class UiBlockActivityAspect {
 
     @Pointcut("execution(* kale.ui.uiblock.iface.UiBlockActivity..on*(..))")
     public void on$() {
@@ -30,40 +33,56 @@ public class UiBlockActivityAspect {
             return;
         }
 
+        List<UiBlock> blocks = manager.getUiBlockList();
+
         Object[] args = point.getArgs();
         switch (point.getSignature().getName()) {
             case "onSaveInstanceState":
-                manager.onSaveInstanceState((Bundle) args[0]);
+                callBlocks(blocks, UiBlock -> UiBlock.onSaveInstanceState((Bundle) args[0]));
                 break;
             case "onRestoreInstanceState":
-                manager.onRestoreInstanceState((Bundle) args[0]);
+                callBlocks(blocks, UiBlock -> UiBlock.onRestoreInstanceState(((Bundle) args[0])));
                 break;
             case "onStart":
-                manager.onStart();
+                callBlocks(blocks, UiBlock::onStart);
                 break;
             case "onResume":
-                manager.onResume();
+                callBlocks(blocks, UiBlock::onResume);
                 break;
             case "onPause":
-                manager.onPause();
+                callBlocks(blocks, UiBlock::onPause);
                 break;
             case "onStop":
-                manager.onStop();
+                callBlocks(blocks, UiBlock::onStop);
                 break;
             case "onRestart":
-                manager.onRestart();
+                callBlocks(blocks, UiBlock::onRestart);
                 break;
             case "onDestroy":
+                callBlocks(blocks, UiBlock::onDestroy);
                 manager.onDestroy();
                 break;
             case "onBackPressed":
-                manager.onBackPressed();
+                callBlocks(blocks, UiBlock::onBackPressed);
                 break;
             case "onActivityResult":
-                manager.onActivityResult(Integer.parseInt(args[0].toString()), 
-                        Integer.parseInt(args[1].toString()), (Intent) args[2]);
+                callBlocks(blocks, UiBlock ->
+                        UiBlock.onActivityResult(Integer.parseInt(args[0].toString()),
+                                Integer.parseInt(args[1].toString()), (Intent) args[2]));
                 break;
         }
+    }
+
+    private void callBlocks(List<UiBlock> blocks, final Callback callback) {
+        for (int i = 0, size = blocks.size(); i < size; i++) {
+            callback.onCall(blocks.get(i));
+        }
+    }
+
+    private interface Callback {
+
+        void onCall(UiBlock UiBlock);
+
     }
 
 }

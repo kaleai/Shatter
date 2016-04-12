@@ -14,8 +14,8 @@ import kale.ui.block.DemoMiddleUiBlock;
 import kale.ui.block.DemoTopUiBlock;
 import kale.ui.block.DemoVpUiBlock;
 import kale.ui.uiblock.UiBlock;
-import kale.ui.uiblock.adapter.CommonUiBlockPagerAdapter;
-import kale.ui.uiblock.adapter.UiBlockPagerAdapter;
+import kale.adapter.CommonUiBlockPagerAdapter;
+import kale.adapter.UiBlockPagerAdapter;
 
 public class DemoActivity extends BaseActivity {
 

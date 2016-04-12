@@ -55,32 +55,19 @@ public abstract class UiBlock implements Lifecycle {
         this.activity = activity;
     }
 
-    // @formatter:off
-    /**
-     * @return uiBlock对应的layout文件id
-     */
-    protected abstract @LayoutRes int getLayoutResId();
-    protected abstract void bindViews(View rootView);
-    protected void beforeSetViews() {}
-    protected abstract void setViews();
-     /**
-     * 在viewpager中更新数据时才会用到的方法，一般情况下不需要使用
-     */
-    public void handleData(Object model, int position) {}
-    // @formatter:on
-
-    /**
-     * 重置UiBlock的容器
-     */
-    protected View resetRootView(View oldRootView, Activity activity) {
-        return oldRootView;
-    }
-
     /**
      * 得到的{@link UiBlockManager}和当前容纳UiBlock的Activity中的{@link UiBlockManager}是同一个对象
      */
     public UiBlockManager getUiBlockManager() {
         return ((UiBlockActivity) activity).getUiBlockManager();
+    }
+
+    /**
+     * 重置UiBlock的容器
+     */
+    @Deprecated
+    protected View resetRootView(View oldRootView, Activity activity) {
+        return oldRootView;
     }
 
     /**
@@ -102,6 +89,19 @@ public abstract class UiBlock implements Lifecycle {
     }
 
     // @formatter:off
+    /**
+     * @return uiBlock对应的layout文件id
+     */
+    protected abstract @LayoutRes int getLayoutResId();
+    protected abstract void bindViews(View rootView);
+    protected void beforeSetViews() {}
+    protected abstract void setViews();
+     /**
+     * 在viewpager中更新数据时才会用到的方法，一般情况下不需要使用
+     */
+    public void handleData(Object model, int position) {}
+    
+    // --- life ---
     @Override public void onSaveInstanceState(Bundle outState) {}
     @Override public void onRestoreInstanceState(Bundle savedInstanceState) {}
     @Override public void onStart() {}

@@ -1,4 +1,4 @@
-package kale.ui.uiblock.adapter;
+package kale.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;

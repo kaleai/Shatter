@@ -38,6 +38,24 @@ public class DemoInnerUiBlock extends UiBlock {
     }
 
     @Override
+    public void onResume() {
+        super.onResume();
+        Log.d(TAG, "onResume: ");
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        Log.d(TAG, "onPause: ");
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
+    }
+    
+    @Override
     public void onStop() {
         super.onStop();
         Log.d(TAG, "onStop: ");
@@ -47,12 +65,6 @@ public class DemoInnerUiBlock extends UiBlock {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy: ");
-    }
-
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        Log.d(TAG, "onSaveInstanceState() called with: " + "outState = [" + outState + "]");
     }
 
     @Override
