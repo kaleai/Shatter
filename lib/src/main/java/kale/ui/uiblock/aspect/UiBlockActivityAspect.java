@@ -21,6 +21,10 @@ import kale.ui.uiblock.iface.UiBlockActivity;
 @Aspect
 /*package*/ public class UiBlockActivityAspect {
 
+    private String oldActivityName;
+
+    private String oldMethod;
+    
     @Pointcut("execution(* kale.ui.uiblock.iface.UiBlockActivity..on*(..))")
     public void on$() {
     }
@@ -28,6 +32,15 @@ import kale.ui.uiblock.iface.UiBlockActivity;
     @After("on$()")
     public void callManagerMethods(JoinPoint point) {
         UiBlockActivity activity = (UiBlockActivity) point.getThis();
+        String methodName = point.getSignature().getName();
+        
+        if (activity.toString().equals(oldActivityName) && methodName.equals(oldMethod)) {
+            return;
+        } else {
+            oldActivityName = activity.toString();
+            oldMethod = methodName;
+        }
+        
         UiBlockManager manager = activity.getInternalManager();
         if (manager == null) {
             return;
@@ -36,7 +49,7 @@ import kale.ui.uiblock.iface.UiBlockActivity;
         List<UiBlock> blocks = manager.getUiBlockList();
 
         Object[] args = point.getArgs();
-        switch (point.getSignature().getName()) {
+        switch (methodName) {
             case "onSaveInstanceState":
                 callBlocks(blocks, UiBlock -> UiBlock.onSaveInstanceState((Bundle) args[0]));
                 break;

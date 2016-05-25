@@ -23,7 +23,7 @@ public class DemoInnerUiBlock extends UiBlock {
 
     @Override
     public void bindViews(View rootView) {
-        
+        Log.d(TAG, "bindViews: ");
     }
 
     @Override

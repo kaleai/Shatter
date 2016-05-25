@@ -8,14 +8,14 @@ import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 
-import kale.ui.model.DataManager;
+import kale.adapter.CommonUiBlockPagerAdapter;
+import kale.adapter.UiBlockPagerAdapter;
 import kale.ui.block.DemoBottomUiBlock;
 import kale.ui.block.DemoMiddleUiBlock;
 import kale.ui.block.DemoTopUiBlock;
 import kale.ui.block.DemoVpUiBlock;
+import kale.ui.model.DataManager;
 import kale.ui.uiblock.UiBlock;
-import kale.adapter.CommonUiBlockPagerAdapter;
-import kale.adapter.UiBlockPagerAdapter;
 
 public class DemoActivity extends BaseActivity {
 
@@ -50,6 +50,22 @@ public class DemoActivity extends BaseActivity {
                 pagerAdapter.notifyDataSetChanged();
             }
         });
+        //startActivity(new Intent(this, TestActivity.class));
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
     }
 
     /**
