@@ -28,7 +28,7 @@ import kale.ui.uiblock.iface.UiBlockActivity;
     @After("on$()")
     public void callManagerMethods(JoinPoint point) {
         UiBlockActivity activity = (UiBlockActivity) point.getThis();
-        UiBlockManager manager = activity.getUiBlockManager();
+        UiBlockManager manager = activity.getInternalManager();
         if (manager == null) {
             return;
         }

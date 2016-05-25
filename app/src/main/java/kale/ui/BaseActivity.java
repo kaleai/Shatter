@@ -24,6 +24,11 @@ public class BaseActivity extends AppCompatActivity implements UiBlockActivity {
     }
 
     @Override
+    public UiBlockManager getInternalManager() {
+        return mUiBlockManager;
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }

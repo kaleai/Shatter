@@ -40,7 +40,12 @@ public class BaseActivity extends AppCompatActivity implements UiBlockActivity {
         }
         return mUiBlockManager;
     }
-
+    
+    @Override
+    public UiBlockManager getInternalManager() {
+        return mUiBlockManager;
+    }
+    
 	// 下方均为activity的默认实现
 
     @Override

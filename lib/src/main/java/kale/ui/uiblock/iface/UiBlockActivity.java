@@ -9,4 +9,6 @@ import kale.ui.uiblock.UiBlockManager;
 public interface UiBlockActivity extends Lifecycle{
 
     UiBlockManager getUiBlockManager();
+
+    UiBlockManager getInternalManager();
 }
