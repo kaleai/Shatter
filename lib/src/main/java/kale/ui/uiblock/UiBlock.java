@@ -28,7 +28,9 @@ public abstract class UiBlock implements Lifecycle {
     @Getter
     private Activity activity;
 
-    // 当前是否对用户可见
+    /**
+     * 当前是否对用户可见
+     */
     @Getter
     private boolean visibleToUser = true;
 

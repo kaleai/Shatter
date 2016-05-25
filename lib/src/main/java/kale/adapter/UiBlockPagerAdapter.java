@@ -5,7 +5,6 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import kale.adapter.BasePagerAdapter;
 import kale.ui.uiblock.UiBlock;
 import kale.ui.uiblock.UiBlockManager;
 
@@ -14,7 +13,7 @@ import kale.ui.uiblock.UiBlockManager;
  * @date 2015/11/21
  * 这个类不关心缓存，仅仅做一般的操作。比如得到view，返回view
  */
-public abstract class UiBlockPagerAdapter extends BasePagerAdapter<UiBlock> {
+public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlock> {
 
     private final UiBlockManager mManager;
 

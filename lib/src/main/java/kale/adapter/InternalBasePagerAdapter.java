@@ -20,7 +20,7 @@ import kale.ui.uiblock.R;
  * 如果调用{@link #notifyDataSetChanged()}来更新，
  * 它会自动调用{@link #instantiateItem(ViewGroup, int)}重新new出需要的item，算是完全初始化一次。
  */
-public abstract class BasePagerAdapter<T> extends PagerAdapter {
+abstract class InternalBasePagerAdapter<T> extends PagerAdapter {
 
     protected T currentItem = null;
     
@@ -29,7 +29,7 @@ public abstract class BasePagerAdapter<T> extends PagerAdapter {
      */
     private final PagerCache<T> mCache;
 
-    public BasePagerAdapter() {
+    public InternalBasePagerAdapter() {
         mCache = new PagerCache<>();
     }
 
