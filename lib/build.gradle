@@ -28,7 +28,6 @@ android {
 dependencies {
     provided 'com.android.support:appcompat-v7:23.4.0'
     provided "org.projectlombok:lombok:1.12.6"
-    compile 'org.aspectj:aspectjrt:1.8.1'
 }
 
 // build a jar with source files

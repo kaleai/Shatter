@@ -21,11 +21,7 @@ public abstract class CommonUiBlockPagerAdapter<T> extends UiBlockPagerAdapter {
     private List<T> data;
 
     public CommonUiBlockPagerAdapter(UiBlockManager manager, @Nullable List<T> data) {
-        this(manager, false, data);
-    }
-
-    public CommonUiBlockPagerAdapter(UiBlockManager manager, boolean isLazy, @Nullable List<T> data) {
-        super(manager, isLazy);
+        super(manager);
         if (this.data == null) {
             this.data = new ArrayList<>();
         }

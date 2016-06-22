@@ -17,17 +17,20 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
 
     private final UiBlockManager mManager;
 
-    private boolean mIsLazy = false;
+//    private boolean mIsLazy = false;
 
     public UiBlockPagerAdapter(UiBlockManager manager) {
-        this(manager, false);
+        super();
+        mManager = manager;
     }
 
+/*
     public UiBlockPagerAdapter(UiBlockManager manager, boolean isLazy) {
         super();
         mManager = manager;
-        mIsLazy = isLazy;
+//        mIsLazy = isLazy;
     }
+*/
 
     @NonNull
     @Override
@@ -38,15 +41,17 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
     @Override
     public UiBlock instantiateItem(ViewGroup container, int position) {
         UiBlock block = super.instantiateItem(container, position);
+/*
         if (!mIsLazy) {
             setVisibleToUser(block, position);
         }
+*/
         return block;
     }
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
-        if (mIsLazy && object != currentItem) { // 支持懒加载
+        if (object != currentItem) { // 支持懒加载
             setVisibleToUser(((UiBlock) object), position);
         }
         super.setPrimaryItem(container, position, object);
