@@ -71,6 +71,8 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
     @Override
     protected UiBlock createItem(ViewPager viewPager, int position) {
         UiBlock uiBlock = createItem(getItemType(position));
+        uiBlock.onStart();
+        uiBlock.onResume();
         mManager.add(viewPager, uiBlock);
         return uiBlock;
     }

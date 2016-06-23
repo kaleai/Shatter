@@ -19,6 +19,8 @@ import kale.ui.uiblock.UiBlock;
 
 public class DemoActivity extends BaseActivity {
 
+    private static final String TAG = "DemoActivity";
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,6 +53,11 @@ public class DemoActivity extends BaseActivity {
             }
         });
         //startActivity(new Intent(this, TestActivity.class));
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
     }
 
     @Override
