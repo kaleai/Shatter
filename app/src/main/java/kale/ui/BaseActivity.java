@@ -29,6 +29,11 @@ public class BaseActivity extends AppCompatActivity implements UiBlockActivity {
     }
 
     @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+    }
+
+    @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
     }

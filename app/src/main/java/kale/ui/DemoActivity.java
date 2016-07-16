@@ -2,10 +2,12 @@ package kale.ui;
 
 import com.squareup.leakcanary.LeakCanary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.View;
 
 import kale.adapter.CommonUiBlockPagerAdapter;
@@ -56,23 +58,33 @@ public class DemoActivity extends BaseActivity {
     }
 
     @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent: ");
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
+        Log.d(TAG, "onStart: ");
     }
 
     @Override
     public void onResume() {
         super.onResume();
+        Log.d(TAG, "onResume: ");
     }
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
+        Log.d(TAG, "onSaveInstanceState: ");
     }
 
     @Override
     public void onPause() {
         super.onPause();
+        Log.d(TAG, "onPause: ");
     }
 
     /**

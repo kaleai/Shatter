@@ -1,5 +1,6 @@
 package kale.ui.block;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -29,6 +30,12 @@ public class DemoInnerUiBlock extends UiBlock {
     @Override
     public void setViews() {
         ((TextView) getView(R.id.inner_tv)).setText(R.string.test_text);
+    }
+
+    @Override
+    public void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        Log.d(TAG, "onNewIntent: ");
     }
 
     @Override

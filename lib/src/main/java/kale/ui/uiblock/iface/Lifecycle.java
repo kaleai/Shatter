@@ -9,6 +9,8 @@ import android.os.Bundle;
  */
 public interface Lifecycle {
 
+    void onNewIntent(Intent intent);
+
     void onSaveInstanceState(Bundle outState);
 
     void onRestoreInstanceState(Bundle savedInstanceState);

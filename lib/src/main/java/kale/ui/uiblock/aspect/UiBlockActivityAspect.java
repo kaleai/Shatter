@@ -24,7 +24,7 @@ import kale.ui.uiblock.iface.UiBlockActivity;
     private String oldActivityName;
 
     private String oldMethod;
-    
+
     @Pointcut("execution(* kale.ui.uiblock.iface.UiBlockActivity..on*(..))")
     public void on$() {
     }
@@ -33,14 +33,14 @@ import kale.ui.uiblock.iface.UiBlockActivity;
     public void callManagerMethods(JoinPoint point) {
         UiBlockActivity activity = (UiBlockActivity) point.getThis();
         String methodName = point.getSignature().getName();
-        
+
         if (activity.toString().equals(oldActivityName) && methodName.equals(oldMethod)) {
             return;
         } else {
             oldActivityName = activity.toString();
             oldMethod = methodName;
         }
-        
+
         UiBlockManager manager = activity.getInternalManager();
         if (manager == null) {
             return;
@@ -50,6 +50,9 @@ import kale.ui.uiblock.iface.UiBlockActivity;
 
         Object[] args = point.getArgs();
         switch (methodName) {
+            case "onNewIntent":
+                callBlocks(blocks, UiBlock -> UiBlock.onNewIntent((Intent) args[0]));
+                break;
             case "onSaveInstanceState":
                 callBlocks(blocks, UiBlock -> UiBlock.onSaveInstanceState((Bundle) args[0]));
                 break;
@@ -72,7 +75,7 @@ import kale.ui.uiblock.iface.UiBlockActivity;
                 callBlocks(blocks, UiBlock::onRestart);
                 break;
             case "onDestroy":
-                callBlocks(blocks, UiBlock::onDestroy);
+                callBlocks(blocks, UiBlock::doDestroy);
                 manager.onDestroy();
                 break;
             case "onBackPressed":

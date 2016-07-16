@@ -110,16 +110,19 @@ public abstract class UiBlock implements Lifecycle {
     @Override public void onResume() {}
     @Override public void onPause() {}
     @Override public void onStop() {}
+    @Override public void onDestroy() {}
     @Override public void onRestart() {}
     @Override public void onBackPressed() {}
+    @Override public void onNewIntent(Intent intent) {}
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {}
     // @formatter:on
 
-    @Override
-    public void onDestroy() {
+    public void doDestroy() {
+        onDestroy();
         activity = null;
         rootView = null;
     }
+    
 
     /**
      * findViewById的简化方法

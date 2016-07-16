@@ -17,36 +17,15 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
 
     private final UiBlockManager mManager;
 
-//    private boolean mIsLazy = false;
-
     public UiBlockPagerAdapter(UiBlockManager manager) {
         super();
         mManager = manager;
     }
 
-/*
-    public UiBlockPagerAdapter(UiBlockManager manager, boolean isLazy) {
-        super();
-        mManager = manager;
-//        mIsLazy = isLazy;
-    }
-*/
-
     @NonNull
     @Override
     protected View getViewFromItem(UiBlock item, int position) {
         return item.getRootView();
-    }
-
-    @Override
-    public UiBlock instantiateItem(ViewGroup container, int position) {
-        UiBlock block = super.instantiateItem(container, position);
-/*
-        if (!mIsLazy) {
-            setVisibleToUser(block, position);
-        }
-*/
-        return block;
     }
 
     @Override
@@ -71,8 +50,6 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
     @Override
     protected UiBlock createItem(ViewPager viewPager, int position) {
         UiBlock uiBlock = createItem(getItemType(position));
-        uiBlock.onStart();
-        uiBlock.onResume();
         mManager.add(viewPager, uiBlock);
         return uiBlock;
     }
