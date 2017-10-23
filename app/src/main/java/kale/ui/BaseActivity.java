@@ -2,30 +2,31 @@ package kale.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import kale.ui.uiblock.UiBlockManager;
-import kale.ui.uiblock.iface.UiBlockActivity;
+import kale.ui.uimodule.UiModuleActivity;
+import kale.ui.uimodule.UiModuleManager;
 
 /**
  * @author Kale
  * @date 2016/4/8
  */
-public class BaseActivity extends AppCompatActivity implements UiBlockActivity {
+public class BaseActivity extends AppCompatActivity implements UiModuleActivity {
 
-    private UiBlockManager mUiBlockManager;
+    private UiModuleManager mUiModuleManager;
 
-    @Override
-    public UiBlockManager getUiBlockManager() {
-        if (mUiBlockManager == null) {
-            mUiBlockManager = new UiBlockManager(this);
+    public UiModuleManager getUiModuleManager() {
+        if (mUiModuleManager == null) {
+            mUiModuleManager = new UiModuleManager(this);
         }
-        return mUiBlockManager;
+        return mUiModuleManager;
     }
 
     @Override
-    public UiBlockManager getInternalManager() {
-        return mUiBlockManager;
+    protected void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+//        ReportFragment.injectIfNeededIn(this);
     }
 
     @Override

@@ -1,19 +1,18 @@
-package kale.ui.block;
+package kale.ui.uimodule;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.R;
-import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class DemoVpUiBlock extends UiBlock {
+public class VpUiModule extends UiModule {
 
-    private static final String TAG = "DemoVpUiBlock";
+    private static final String TAG = "VpUiModule";
     
     @Override
     protected int getLayoutResId() {

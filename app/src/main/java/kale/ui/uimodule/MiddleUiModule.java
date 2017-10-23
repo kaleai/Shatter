@@ -1,15 +1,14 @@
-package kale.ui.block;
+package kale.ui.uimodule;
 
 import android.view.View;
 
 import kale.ui.R;
-import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class DemoMiddleUiBlock extends UiBlock {
+public class MiddleUiModule extends UiModule {
 
     @Override
     protected int getLayoutResId() {
@@ -18,7 +17,7 @@ public class DemoMiddleUiBlock extends UiBlock {
 
     @Override
     public void bindViews(View rootView) {
-        getUiBlockManager().add(R.id.inner_tv, new DemoInnerUiBlock());
+        getUiBlockManager().add(R.id.inner_tv, new InnerUiModule());
     }
 
     @Override

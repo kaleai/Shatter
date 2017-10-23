@@ -1,16 +1,15 @@
-package kale.ui.uiblock;
+package kale.ui.uimodule;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewPager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 
-import kale.ui.uiblock.iface.Lifecycle;
-import kale.ui.uiblock.iface.UiBlockActivity;
+import kale.ui.uimodule.lifecycle.Lifecycle;
+import kale.ui.uimodule.lifecycle.ReportFragment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -19,7 +18,7 @@ import lombok.Setter;
  * @date 2015/6/15
  * 需要在界面销毁时把回调停止
  */
-public abstract class UiBlock implements Lifecycle {
+public abstract class UiModule implements Lifecycle {
 
     @Getter
     @Setter
@@ -45,11 +44,15 @@ public abstract class UiBlock implements Lifecycle {
         }
         rootView = resetRootView(rootView, activity);
 
-        bindViews(rootView);
-        beforeSetViews();
-        setViews();
+        onCreate();
     }
 
+    protected void onCreate() {
+        bindViews(rootView);
+        onViewCreated();
+        setViews();
+    }
+    
     /**
      * 被挂载到Activity时的回调方法
      */
@@ -58,10 +61,10 @@ public abstract class UiBlock implements Lifecycle {
     }
 
     /**
-     * 得到的{@link UiBlockManager}和当前容纳UiBlock的Activity中的{@link UiBlockManager}是同一个对象
+     * 得到的{@link UiModuleManager}和当前容纳UiBlock的Activity中的{@link UiModuleManager}是同一个对象
      */
-    public UiBlockManager getUiBlockManager() {
-        return ((UiBlockActivity) activity).getUiBlockManager();
+    public UiModuleManager getUiBlockManager() {
+        return ((UiModuleActivity) activity).getUiModuleManager();
     }
 
     /**
@@ -82,12 +85,21 @@ public abstract class UiBlock implements Lifecycle {
     }
 
     /**
-     * 定义后可通过{@link UiBlockManager#findUiBlockByTag(String)}来找到{@link UiBlock}
+     * 定义后可通过{@link UiModuleManager#findUiBlockByTag(String)}来找到{@link UiModule}
      *
      * @return 自定义的tag，默认是当前类名
      */
     public String getTag() {
         return getClass().getSimpleName();
+    }
+
+    public void startActivityForResult(Intent intent, int requestCode) {
+        ReportFragment fragment = ReportFragment.get(activity);
+        if (fragment != null) {
+            fragment.startActivityForResult(intent, requestCode);
+        } else {
+            activity.startActivityForResult(intent, requestCode);
+        }
     }
 
     // @formatter:off
@@ -96,7 +108,7 @@ public abstract class UiBlock implements Lifecycle {
      */
     protected abstract @LayoutRes int getLayoutResId();
     protected abstract void bindViews(View rootView);
-    protected void beforeSetViews() {}
+    protected void onViewCreated() {}
     protected abstract void setViews();
      /**
      * 在viewpager中更新数据时才会用到的方法，一般情况下不需要使用
@@ -122,18 +134,13 @@ public abstract class UiBlock implements Lifecycle {
         activity = null;
         rootView = null;
     }
-    
+
 
     /**
      * findViewById的简化方法
      */
     protected final <E extends View> E getView(int id) {
-        try {
-            return (E) rootView.findViewById(id);
-        } catch (ClassCastException ex) {
-            Log.e("UiBlock", "Could not cast View to concrete class.", ex);
-            throw ex;
-        }
+        return rootView.findViewById(id);
     }
 
 }

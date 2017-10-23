@@ -1,4 +1,4 @@
-package kale.ui.uiblock.iface;
+package kale.ui.uimodule.lifecycle;
 
 import android.content.Intent;
 import android.os.Bundle;

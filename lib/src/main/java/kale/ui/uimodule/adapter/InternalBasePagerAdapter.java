@@ -1,4 +1,4 @@
-package kale.adapter;
+package kale.ui.uimodule.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -11,7 +11,7 @@ import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
-import kale.ui.uiblock.R;
+import kale.ui.uimodule.R;
 
 /**
  * @author Jack Tony

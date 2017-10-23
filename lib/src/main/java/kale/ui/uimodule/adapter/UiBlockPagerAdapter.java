@@ -1,42 +1,42 @@
-package kale.adapter;
+package kale.ui.uimodule.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import kale.ui.uiblock.UiBlock;
-import kale.ui.uiblock.UiBlockManager;
+import kale.ui.uimodule.UiModule;
+import kale.ui.uimodule.UiModuleManager;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  * 这个类不关心缓存，仅仅做一般的操作。比如得到view，返回view
  */
-public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlock> {
+public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiModule> {
 
-    private final UiBlockManager mManager;
+    private final UiModuleManager mManager;
 
-    public UiBlockPagerAdapter(UiBlockManager manager) {
+    public UiBlockPagerAdapter(UiModuleManager manager) {
         super();
         mManager = manager;
     }
 
     @NonNull
     @Override
-    protected View getViewFromItem(UiBlock item, int position) {
+    protected View getViewFromItem(UiModule item, int position) {
         return item.getRootView();
     }
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         if (object != currentItem) { // 支持懒加载
-            setVisibleToUser(((UiBlock) object), position);
+            setVisibleToUser(((UiModule) object), position);
         }
         super.setPrimaryItem(container, position, object);
     }
 
-    protected void setVisibleToUser(UiBlock block, int pos) {
+    protected void setVisibleToUser(UiModule block, int pos) {
         block.onVisibleToUser(true);
         if (currentItem != null) {
             currentItem.onVisibleToUser(false);
@@ -48,10 +48,10 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
      */
     @Deprecated
     @Override
-    protected UiBlock createItem(ViewPager viewPager, int position) {
-        UiBlock uiBlock = createItem(getItemType(position));
-        mManager.add(viewPager, uiBlock);
-        return uiBlock;
+    protected UiModule createItem(ViewPager viewPager, int position) {
+        UiModule uiModule = createItem(getItemType(position));
+        mManager.add(viewPager, uiModule);
+        return uiModule;
     }
 
     /**
@@ -59,5 +59,5 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiBlo
      */
     public abstract
     @NonNull
-    UiBlock createItem(Object type);
+    UiModule createItem(Object type);
 }

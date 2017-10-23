@@ -1,4 +1,4 @@
-package kale.ui.block;
+package kale.ui.uimodule;
 
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -6,13 +6,12 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import kale.ui.R;
-import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoBottomUiBlock extends UiBlock {
+public class BottomUiModule extends UiModule {
 
     public static final String TAG_BOTTOM = "Bottom";
     
@@ -20,7 +19,7 @@ public class DemoBottomUiBlock extends UiBlock {
 
     private Button mBottomBtn;
 
-    private DemoBottomUiBlock.Callback mCallback;
+    private BottomUiModule.Callback mCallback;
 
     @Override
     public String getTag() {
@@ -52,7 +51,7 @@ public class DemoBottomUiBlock extends UiBlock {
         mBottomEt.setText(text);
     }
 
-    public DemoBottomUiBlock setCallback(Callback callback) {
+    public BottomUiModule setCallback(Callback callback) {
         mCallback = callback;
         return this;
     }

@@ -1,4 +1,4 @@
-package kale.ui.block;
+package kale.ui.uimodule;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,15 +7,14 @@ import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.R;
-import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/22
  */
-public class DemoInnerUiBlock extends UiBlock {
+public class InnerUiModule extends UiModule {
 
-    private static final String TAG = "DemoInnerUiBlock";
+    private static final String TAG = "InnerUiModule";
     
     @Override
     protected int getLayoutResId() {

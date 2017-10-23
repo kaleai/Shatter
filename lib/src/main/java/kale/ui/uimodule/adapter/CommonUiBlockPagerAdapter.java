@@ -1,12 +1,12 @@
-package kale.adapter;
-
-import android.support.annotation.Nullable;
+package kale.ui.uimodule.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import kale.ui.uiblock.UiBlock;
-import kale.ui.uiblock.UiBlockManager;
+import android.support.annotation.Nullable;
+
+import kale.ui.uimodule.UiModule;
+import kale.ui.uimodule.UiModuleManager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,7 +20,7 @@ public abstract class CommonUiBlockPagerAdapter<T> extends UiBlockPagerAdapter {
     @Setter @Getter
     private List<T> data;
 
-    public CommonUiBlockPagerAdapter(UiBlockManager manager, @Nullable List<T> data) {
+    public CommonUiBlockPagerAdapter(UiModuleManager manager, @Nullable List<T> data) {
         super(manager);
         if (this.data == null) {
             this.data = new ArrayList<>();
@@ -43,7 +43,7 @@ public abstract class CommonUiBlockPagerAdapter<T> extends UiBlockPagerAdapter {
     }
 
     @Override
-    protected void setVisibleToUser(UiBlock block, int position) {
+    protected void setVisibleToUser(UiModule block, int position) {
         super.setVisibleToUser(block, position);
         block.handleData(data.get(position), position);
     }

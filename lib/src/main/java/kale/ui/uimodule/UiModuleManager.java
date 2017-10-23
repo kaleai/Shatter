@@ -1,4 +1,4 @@
-package kale.ui.uiblock;
+package kale.ui.uimodule;
 
 import org.aspectj.lang.JoinPoint;
 
@@ -12,45 +12,46 @@ import android.view.View;
 import java.util.ArrayList;
 import java.util.List;
 
+import kale.ui.uimodule.lifecycle.UiModuleActivityAspect;
 import lombok.Getter;
 
 /**
  * @author Jack Tony
  * @date 2015/6/28
  */
-public class UiBlockManager {
+public class UiModuleManager {
 
-    private List<UiBlock> mUiBlockList = new ArrayList<>();
+    private List<UiModule> mUiModuleList = new ArrayList<>();
 
     @Getter
     protected final Activity activity;
 
-    public UiBlockManager(@NonNull Activity activity) {
+    public UiModuleManager(@NonNull Activity activity) {
         this.activity = activity;
     }
 
-    public UiBlockManager add(@IdRes int containViewId, @NonNull UiBlock block) {
+    public UiModuleManager add(@IdRes int containViewId, @NonNull UiModule block) {
         block.setContainId(containViewId);
         return add(activity.findViewById(containViewId), block);
     }
 
-    public UiBlockManager add(@NonNull View containView, @NonNull UiBlock block) {
+    public UiModuleManager add(@NonNull View containView, @NonNull UiModule block) {
         block.setRootView(containView);
         block.attachActivity(activity);
-        mUiBlockList.add(block);
+        mUiModuleList.add(block);
         return this;
     }
 
-    public void remove(@NonNull UiBlock block) {
+    public void remove(@NonNull UiModule block) {
         block.onDestroy();
-        mUiBlockList.remove(block);
+        mUiModuleList.remove(block);
     }
 
     @CheckResult
     public
     @Nullable
-    UiBlock findUiBlockByTag(@NonNull String tag) {
-        for (UiBlock block : mUiBlockList) {
+    UiModule findUiBlockByTag(@NonNull String tag) {
+        for (UiModule block : mUiModuleList) {
             if (tag.equals(block.getTag())) {
                 return block;
             }
@@ -61,8 +62,8 @@ public class UiBlockManager {
     @CheckResult
     public
     @Nullable
-    UiBlock findUiBlockByContainId(int id) {
-        for (UiBlock block : mUiBlockList) {
+    UiModule findUiBlockByContainId(int id) {
+        for (UiModule block : mUiModuleList) {
             if (block.getContainId() == id) {
                 return block;
             }
@@ -72,16 +73,16 @@ public class UiBlockManager {
 
     @CheckResult
     @NonNull
-    public List<UiBlock> getUiBlockList() {
-        return mUiBlockList;
+    public List<UiModule> getUiModuleList() {
+        return mUiModuleList;
     }
 
     /**
-     * Call by {@link kale.ui.uiblock.aspect.UiBlockActivityAspect#callManagerMethods(JoinPoint)}
+     * Call by {@link UiModuleActivityAspect#callManagerMethods(JoinPoint)}
      */
     public void onDestroy() {
-        mUiBlockList.clear();
-        mUiBlockList = null;
+        mUiModuleList.clear();
+        mUiModuleList = null;
     }
 
 }

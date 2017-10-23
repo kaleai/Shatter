@@ -1,16 +1,15 @@
-package kale.ui.block;
+package kale.ui.uimodule;
 
 import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.R;
-import kale.ui.uiblock.UiBlock;
 
 /**
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class DemoTopUiBlock extends UiBlock {
+public class TopUiModule extends UiModule {
 
     TextView mTopTv;
 
