@@ -1,14 +1,14 @@
-package kale.ui.uimodule.adapter;
+package kale.ui.shatter.adapter;
 
 import android.app.Activity;
 
-import kale.ui.uimodule.UiModule;
+import kale.ui.shatter.Shatter;
 
 /**
  * @author Kale
  * @date 2016/7/4
  */
-public abstract class ViewPagerUiModule extends UiModule {
+public abstract class ViewPagerShatter extends Shatter {
 
     @Override
     protected void attachActivity(Activity activity) {

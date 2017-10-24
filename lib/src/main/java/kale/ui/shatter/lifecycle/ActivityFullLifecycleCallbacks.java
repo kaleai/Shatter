@@ -1,4 +1,4 @@
-package kale.ui.uimodule.lifecycle;
+package kale.ui.shatter.lifecycle;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,7 +7,7 @@ import android.os.Bundle;
  * @author Jack Tony
  * @date 2015/11/22
  */
-public interface Lifecycle {
+public interface ActivityFullLifecycleCallbacks {
 
     void onNewIntent(Intent intent);
 

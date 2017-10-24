@@ -1,12 +1,12 @@
-package kale.ui.uimodule.adapter;
+package kale.ui.shatter.adapter;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import android.support.annotation.Nullable;
 
-import kale.ui.uimodule.UiModule;
-import kale.ui.uimodule.UiModuleManager;
+import kale.ui.shatter.Shatter;
+import kale.ui.shatter.ShatterManager;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -15,12 +15,12 @@ import lombok.Setter;
  * @date 2015/11/27
  * 如果在viewpager中的UIBlock有数据源，那么可以用这个做处理
  */
-public abstract class CommonUiBlockPagerAdapter<T> extends UiBlockPagerAdapter {
+public abstract class CommonShatterPagerAdapter<T> extends ShatterPagerAdapter {
 
     @Setter @Getter
     private List<T> data;
 
-    public CommonUiBlockPagerAdapter(UiModuleManager manager, @Nullable List<T> data) {
+    public CommonShatterPagerAdapter(ShatterManager manager, @Nullable List<T> data) {
         super(manager);
         if (this.data == null) {
             this.data = new ArrayList<>();
@@ -43,7 +43,7 @@ public abstract class CommonUiBlockPagerAdapter<T> extends UiBlockPagerAdapter {
     }
 
     @Override
-    protected void setVisibleToUser(UiModule block, int position) {
+    protected void setVisibleToUser(Shatter block, int position) {
         super.setVisibleToUser(block, position);
         block.handleData(data.get(position), position);
     }

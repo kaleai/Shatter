@@ -1,4 +1,4 @@
-package kale.ui.uimodule;
+package kale.ui.shatter;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -7,9 +7,10 @@ import android.support.annotation.LayoutRes;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 
-import kale.ui.uimodule.lifecycle.Lifecycle;
-import kale.ui.uimodule.lifecycle.ReportFragment;
+import kale.ui.shatter.lifecycle.ActivityFullLifecycleCallbacks;
+import kale.ui.shatter.lifecycle.EventDispatchFragment;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -18,7 +19,9 @@ import lombok.Setter;
  * @date 2015/6/15
  * 需要在界面销毁时把回调停止
  */
-public abstract class UiModule implements Lifecycle {
+public abstract class Shatter implements ActivityFullLifecycleCallbacks {
+
+    public static final int NO_LAYOUT = 0;
 
     @Getter
     @Setter
@@ -39,11 +42,17 @@ public abstract class UiModule implements Lifecycle {
 
     protected void attachActivity(Activity activity) {
         onAttach(activity);
-        if (rootView instanceof ViewPager) {
-            rootView = LayoutInflater.from(activity).inflate(getLayoutResId(), null);
-        }
-        rootView = resetRootView(rootView, activity);
 
+        if (getLayoutResId() != NO_LAYOUT) {
+            if (rootView instanceof ViewPager) {
+                rootView = LayoutInflater.from(activity).inflate(getLayoutResId(), null);
+            } else if (rootView instanceof ViewGroup) {
+                View view = LayoutInflater.from(activity).inflate(getLayoutResId(), null);
+                ((ViewGroup) rootView).addView(view);
+            } else {
+                throw new IllegalArgumentException("ContainView must extends ViewGroup");
+            }
+        }
         onCreate();
     }
 
@@ -52,7 +61,7 @@ public abstract class UiModule implements Lifecycle {
         onViewCreated();
         setViews();
     }
-    
+
     /**
      * 被挂载到Activity时的回调方法
      */
@@ -61,18 +70,10 @@ public abstract class UiModule implements Lifecycle {
     }
 
     /**
-     * 得到的{@link UiModuleManager}和当前容纳UiBlock的Activity中的{@link UiModuleManager}是同一个对象
+     * 得到的{@link ShatterManager}和当前容纳UiBlock的Activity中的{@link ShatterManager}是同一个对象
      */
-    public UiModuleManager getUiBlockManager() {
-        return ((UiModuleActivity) activity).getUiModuleManager();
-    }
-
-    /**
-     * 重置UiBlock的容器
-     */
-    @Deprecated
-    protected View resetRootView(View oldRootView, Activity activity) {
-        return oldRootView;
+    public ShatterManager getShatterManager() {
+        return ((ShatterOwner) activity).getShatterManager();
     }
 
     /**
@@ -85,21 +86,12 @@ public abstract class UiModule implements Lifecycle {
     }
 
     /**
-     * 定义后可通过{@link UiModuleManager#findUiBlockByTag(String)}来找到{@link UiModule}
+     * 定义后可通过{@link ShatterManager#findShatterByTag(String)}来找到{@link Shatter}
      *
      * @return 自定义的tag，默认是当前类名
      */
     public String getTag() {
         return getClass().getSimpleName();
-    }
-
-    public void startActivityForResult(Intent intent, int requestCode) {
-        ReportFragment fragment = ReportFragment.get(activity);
-        if (fragment != null) {
-            fragment.startActivityForResult(intent, requestCode);
-        } else {
-            activity.startActivityForResult(intent, requestCode);
-        }
     }
 
     // @formatter:off
@@ -131,16 +123,29 @@ public abstract class UiModule implements Lifecycle {
 
     public void doDestroy() {
         onDestroy();
+        // after onDestroy()
         activity = null;
         rootView = null;
     }
 
+    public void startActivityForResult(Intent intent, int requestCode) {
+        EventDispatchFragment fragment = EventDispatchFragment.get(activity);
+        if (fragment != null) {
+            fragment.startActivityForResult(intent, requestCode);
+        } else {
+            activity.startActivityForResult(intent, requestCode);
+        }
+    }
 
     /**
      * findViewById的简化方法
      */
-    protected final <E extends View> E getView(int id) {
+    protected final <E extends View> E findViewById(int id) {
         return rootView.findViewById(id);
+    }
+
+    public void startActivity(Intent intent) {
+        activity.startActivity(intent);
     }
 
 }

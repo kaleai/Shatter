@@ -1,31 +1,36 @@
-package kale.ui.uimodule.lifecycle;
+package kale.ui.shatter.lifecycle;
+
+import android.app.Activity;
 
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
-import kale.ui.uimodule.UiModuleActivity;
-import kale.ui.uimodule.UiModuleManager;
+import kale.ui.shatter.ShatterManager;
+import kale.ui.shatter.ShatterOwner;
 
 /**
  * @author Kale
  * @date 2016/4/7
  */
 @Aspect
-/*package*/ public class UiModuleActivityAspect {
+/*package*/ public class ShatterActivityAspect {
 
     private String oldActivityName;
 
     private String oldMethod;
-    
-    @Pointcut("execution(* kale.ui.uimodule.UiModuleActivity..on*(..))")
-    public void on$() {
+
+    @Pointcut("execution(* kale.ui.shatter.ShatterOwner..on*(..))")
+    public void onXXXMethods() {
     }
 
-    @After("on$()")
+    @After("onXXXMethods()")
     public void callManagerMethods(JoinPoint point) {
-        UiModuleActivity activity = (UiModuleActivity) point.getThis();
+        ShatterOwner activity = (ShatterOwner) point.getThis();
+        if (!(activity instanceof Activity)) {
+            return;
+        }
         String methodName = point.getSignature().getName();
 
         if (activity.toString().equals(oldActivityName) && methodName.equals(oldMethod)) {
@@ -35,7 +40,7 @@ import kale.ui.uimodule.UiModuleManager;
             oldMethod = methodName;
         }
 
-        UiModuleManager manager = activity.getUiModuleManager();
+        ShatterManager manager = activity.getShatterManager();
         MethodExecutor.scheduleMethod(methodName, manager, point.getArgs());
     }
 

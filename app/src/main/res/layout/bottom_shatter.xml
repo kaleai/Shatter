@@ -1,32 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    android:id="@+id/root_ll"
+<FrameLayout android:id="@+id/root_ll"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    
+    android:layout_gravity="center"
     android:background="#673ab7"
     android:orientation="vertical"
-    tools:showIn="@layout/demo_activity"
+    tools:showIn="@layout/main_activity"
     >
-
-    <EditText
-        android:id="@+id/bottom_et"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="20sp"
-        android:textColor="#ffffff"
-        android:gravity="center_horizontal"
-        android:hint="This is a UI Block"
-        />
 
     <Button
         android:id="@+id/bottom_btn"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_horizontal"
+        android:layout_gravity="center"
+        android:gravity="center"
         android:text="send"
         />
 
-</LinearLayout>
+</FrameLayout>

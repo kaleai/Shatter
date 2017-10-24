@@ -1,22 +1,23 @@
-package kale.ui.uimodule;
+package kale.ui.viewpager;
 
 import android.util.Log;
 import android.view.View;
 import android.widget.TextView;
 
 import kale.ui.R;
+import kale.ui.shatter.Shatter;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  */
-public class VpUiModule extends UiModule {
+public class VpShatter extends Shatter {
 
-    private static final String TAG = "VpUiModule";
+    private static final String TAG = "VpShatter";
     
     @Override
     protected int getLayoutResId() {
-        return R.layout.demo_vp_uiblock;
+        return R.layout.pager_shatter;
     }
 
     @Override
@@ -25,13 +26,13 @@ public class VpUiModule extends UiModule {
 
     @Override
     public void setViews() {
-        ((TextView) getView(R.id.header_tv)).setTextSize(30);
+        ((TextView) findViewById(R.id.header_tv)).setTextSize(30);
     }
 
     @Override
     public void handleData(Object model, int position) {
         Log.d(TAG, "handleData: pos = " + position);
-        ((TextView) getView(R.id.header_tv)).setText((CharSequence) model);
+        ((TextView) findViewById(R.id.header_tv)).setText((CharSequence) model);
     }
 
     @Override

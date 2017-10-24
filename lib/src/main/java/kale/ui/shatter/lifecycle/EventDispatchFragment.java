@@ -1,11 +1,11 @@
-package kale.ui.uimodule.lifecycle;
+package kale.ui.shatter.lifecycle;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import kale.ui.uimodule.UiModuleActivity;
-import kale.ui.uimodule.UiModuleManager;
+import kale.ui.shatter.ShatterOwner;
+import kale.ui.shatter.ShatterManager;
 
 /**
  * @author Kale
@@ -24,24 +24,23 @@ class Event {
             ON_SAVE_INSTANCE_STATE = "onSaveInstanceState";
 }
 
-public class ReportFragment extends android.app.Fragment {
+public class EventDispatchFragment extends android.app.Fragment {
 
-    private static final String REPORT_FRAGMENT_TAG = "KALE_UI_MODULE_FRAGMENT_TAG";
+    private static final String REPORT_FRAGMENT_TAG = "KALE_UI_SHATTER_EVENT_FRAGMENT_TAG";
 
     public static void injectIfNeededIn(Activity activity) {
         // ProcessLifecycleOwner should always correctly work and some activities may not extend
         // FragmentActivity from support lib, so we use framework fragments for activities
         android.app.FragmentManager manager = activity.getFragmentManager();
         if (manager.findFragmentByTag(REPORT_FRAGMENT_TAG) == null) {
-            manager.beginTransaction().add(new ReportFragment(), REPORT_FRAGMENT_TAG).commit();
+            manager.beginTransaction().add(new EventDispatchFragment(), REPORT_FRAGMENT_TAG).commit();
             // Hopefully, we are the first to make a transaction.
             manager.executePendingTransactions();
         }
     }
 
-    public static ReportFragment get(Activity activity) {
-        return (ReportFragment) activity.getFragmentManager().findFragmentByTag(
-                REPORT_FRAGMENT_TAG);
+    public static EventDispatchFragment get(Activity activity) {
+        return (EventDispatchFragment) activity.getFragmentManager().findFragmentByTag(REPORT_FRAGMENT_TAG);
     }
 
     @Override
@@ -101,8 +100,8 @@ public class ReportFragment extends android.app.Fragment {
 
     private void dispatch(String event, Object... args) {
         Activity activity = getActivity();
-        if (activity instanceof UiModuleActivity) {
-            UiModuleManager manager = ((UiModuleActivity) activity).getUiModuleManager();
+        if (activity instanceof ShatterOwner) {
+            ShatterManager manager = ((ShatterOwner) activity).getShatterManager();
             MethodExecutor.scheduleMethod(event, manager, args);
         }
     }

@@ -1,4 +1,8 @@
-package kale.ui.uimodule.adapter;
+package kale.ui.shatter.adapter;
+
+import java.util.LinkedList;
+import java.util.Map;
+import java.util.Queue;
 
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArrayMap;
@@ -7,11 +11,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import java.util.LinkedList;
-import java.util.Map;
-import java.util.Queue;
-
-import kale.ui.uimodule.R;
+import kale.ui.shatter.R;
 
 /**
  * @author Jack Tony

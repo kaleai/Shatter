@@ -5,28 +5,28 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
-import kale.ui.uimodule.UiModuleActivity;
-import kale.ui.uimodule.UiModuleManager;
+import kale.ui.shatter.ShatterManager;
+import kale.ui.shatter.ShatterOwner;
 
 /**
  * @author Kale
  * @date 2016/4/8
  */
-public class BaseActivity extends AppCompatActivity implements UiModuleActivity {
+public class BaseActivity extends AppCompatActivity implements ShatterOwner {
 
-    private UiModuleManager mUiModuleManager;
+    private ShatterManager mShatterManager;
 
-    public UiModuleManager getUiModuleManager() {
-        if (mUiModuleManager == null) {
-            mUiModuleManager = new UiModuleManager(this);
+    public ShatterManager getShatterManager() {
+        if (mShatterManager == null) {
+            mShatterManager = new ShatterManager(this);
         }
-        return mUiModuleManager;
+        return mShatterManager;
     }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//        ReportFragment.injectIfNeededIn(this);
+//        EventDispatchFragment.injectIfNeededIn(this);
     }
 
     @Override

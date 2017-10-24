@@ -1,6 +1,7 @@
-package kale.ui.uimodule;
+package kale.ui.shatter;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -9,13 +10,13 @@ import android.view.View;
  * @author Kale
  * @date 2017/10/23
  */
-public class LifeUiModule extends UiModule {
+public class LifeShatter extends Shatter {
 
-    private static final String TAG = "LifeUiModule";
+    private static final String TAG = "LifeShatter";
 
     @Override
     protected int getLayoutResId() {
-        return 0;
+        return NO_LAYOUT;
     }
 
     @Override
@@ -31,7 +32,7 @@ public class LifeUiModule extends UiModule {
     @Override
     protected void onAttach(Activity activity) {
         super.onAttach(activity);
-        Log.d(TAG, "onAttach() called with: activity = [" + activity + "]");
+        Log.d(TAG, "onAttach() called with: mActivity = [" + activity + "]");
     }
 
     @Override
@@ -81,5 +82,11 @@ public class LifeUiModule extends UiModule {
     public void onDestroy() {
         super.onDestroy();
         Log.d(TAG, "onDestroy() called");
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d(TAG, "onActivityResult() called with: requestCode = [" + requestCode + "], resultCode = [" + resultCode + "], data = [" + data + "]");
     }
 }

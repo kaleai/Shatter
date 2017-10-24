@@ -1,12 +1,12 @@
-package kale.ui.uimodule.lifecycle;
+package kale.ui.shatter.lifecycle;
 
 import java.util.List;
 
 import android.content.Intent;
 import android.os.Bundle;
 
-import kale.ui.uimodule.UiModule;
-import kale.ui.uimodule.UiModuleManager;
+import kale.ui.shatter.Shatter;
+import kale.ui.shatter.ShatterManager;
 
 /**
  * @author Kale
@@ -14,11 +14,11 @@ import kale.ui.uimodule.UiModuleManager;
  */
 public class MethodExecutor {
 
-    public static void scheduleMethod(String methodName, UiModuleManager manager, Object[] args) {
+    public static void scheduleMethod(String methodName, ShatterManager manager, Object[] args) {
         if (manager == null) {
             return;
         }
-        List<UiModule> blocks = manager.getUiModuleList();
+        List<Shatter> blocks = manager.getShatters();
         switch (methodName) {
             case "onNewIntent":
                 callBlocks(blocks, UiBlock -> UiBlock.onNewIntent((Intent) args[0]));
@@ -30,26 +30,26 @@ public class MethodExecutor {
                 callBlocks(blocks, UiBlock -> UiBlock.onRestoreInstanceState(((Bundle) args[0])));
                 break;
             case "onStart":
-                callBlocks(blocks, UiModule::onStart);
+                callBlocks(blocks, Shatter::onStart);
                 break;
             case "onResume":
-                callBlocks(blocks, UiModule::onResume);
+                callBlocks(blocks, Shatter::onResume);
                 break;
             case "onPause":
-                callBlocks(blocks, UiModule::onPause);
+                callBlocks(blocks, Shatter::onPause);
                 break;
             case "onStop":
-                callBlocks(blocks, UiModule::onStop);
+                callBlocks(blocks, Shatter::onStop);
                 break;
             case "onRestart":
-                callBlocks(blocks, UiModule::onRestart);
+                callBlocks(blocks, Shatter::onRestart);
                 break;
             case "onDestroy":
-                callBlocks(blocks, UiModule::doDestroy);
+                callBlocks(blocks, Shatter::doDestroy);
                 manager.onDestroy();
                 break;
             case "onBackPressed":
-                callBlocks(blocks, UiModule::onBackPressed);
+                callBlocks(blocks, Shatter::onBackPressed);
                 break;
             case "onActivityResult":
                 callBlocks(blocks, UiBlock ->
@@ -59,7 +59,7 @@ public class MethodExecutor {
         }
     }
 
-    private static void callBlocks(List<UiModule> blocks, final Callback callback) {
+    private static void callBlocks(List<Shatter> blocks, final Callback callback) {
         for (int i = 0, size = blocks.size(); i < size; i++) {
             callback.onCall(blocks.get(i));
         }
@@ -67,7 +67,7 @@ public class MethodExecutor {
 
     private interface Callback {
 
-        void onCall(UiModule UiModule);
+        void onCall(Shatter UiModule);
 
     }
 }

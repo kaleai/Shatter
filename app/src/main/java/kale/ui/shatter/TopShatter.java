@@ -1,4 +1,4 @@
-package kale.ui.uimodule;
+package kale.ui.shatter;
 
 import android.view.View;
 import android.widget.TextView;
@@ -9,24 +9,23 @@ import kale.ui.R;
  * @author Jack Tony
  * @date 2015/9/21
  */
-public class TopUiModule extends UiModule {
+public class TopShatter extends Shatter {
 
-    TextView mTopTv;
+    private TextView mTopTv;
 
     @Override
     protected int getLayoutResId() {
-        return R.layout.demo_activity;
+        return NO_LAYOUT;
     }
 
     @Override
     public void bindViews(View rootView) {
-        mTopTv = getView(R.id.top_tv);
+        mTopTv = findViewById(R.id.top_tv);
     }
 
     @Override
     public void setViews() {
-        String content = mTopTv.getText().toString();
-        mTopTv.setText(content + " :)");
+        mTopTv.append("  :)");
     }
-    
+
 }

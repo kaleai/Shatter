@@ -1,42 +1,42 @@
-package kale.ui.uimodule.adapter;
+package kale.ui.shatter.adapter;
 
 import android.support.annotation.NonNull;
 import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.view.ViewGroup;
 
-import kale.ui.uimodule.UiModule;
-import kale.ui.uimodule.UiModuleManager;
+import kale.ui.shatter.Shatter;
+import kale.ui.shatter.ShatterManager;
 
 /**
  * @author Jack Tony
  * @date 2015/11/21
  * 这个类不关心缓存，仅仅做一般的操作。比如得到view，返回view
  */
-public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiModule> {
+public abstract class ShatterPagerAdapter extends InternalBasePagerAdapter<Shatter> {
 
-    private final UiModuleManager mManager;
+    private final ShatterManager mManager;
 
-    public UiBlockPagerAdapter(UiModuleManager manager) {
+    public ShatterPagerAdapter(ShatterManager manager) {
         super();
         mManager = manager;
     }
 
     @NonNull
     @Override
-    protected View getViewFromItem(UiModule item, int position) {
+    protected View getViewFromItem(Shatter item, int position) {
         return item.getRootView();
     }
 
     @Override
     public void setPrimaryItem(ViewGroup container, int position, Object object) {
         if (object != currentItem) { // 支持懒加载
-            setVisibleToUser(((UiModule) object), position);
+            setVisibleToUser(((Shatter) object), position);
         }
         super.setPrimaryItem(container, position, object);
     }
 
-    protected void setVisibleToUser(UiModule block, int pos) {
+    protected void setVisibleToUser(Shatter block, int pos) {
         block.onVisibleToUser(true);
         if (currentItem != null) {
             currentItem.onVisibleToUser(false);
@@ -48,8 +48,8 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiMod
      */
     @Deprecated
     @Override
-    protected UiModule createItem(ViewPager viewPager, int position) {
-        UiModule uiModule = createItem(getItemType(position));
+    protected Shatter createItem(ViewPager viewPager, int position) {
+        Shatter uiModule = createItem(getItemType(position));
         mManager.add(viewPager, uiModule);
         return uiModule;
     }
@@ -59,5 +59,5 @@ public abstract class UiBlockPagerAdapter extends InternalBasePagerAdapter<UiMod
      */
     public abstract
     @NonNull
-    UiModule createItem(Object type);
+    Shatter createItem(Object type);
 }
