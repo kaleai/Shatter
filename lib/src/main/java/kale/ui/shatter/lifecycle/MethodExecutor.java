@@ -18,50 +18,50 @@ public class MethodExecutor {
         if (manager == null) {
             return;
         }
-        List<Shatter> blocks = manager.getShatters();
+        List<Shatter> shatters = manager.getShatters();
         switch (methodName) {
             case "onNewIntent":
-                callBlocks(blocks, UiBlock -> UiBlock.onNewIntent((Intent) args[0]));
+                callShatterFunc(shatters, shatter -> shatter.onNewIntent((Intent) args[0]));
                 break;
             case "onSaveInstanceState":
-                callBlocks(blocks, UiBlock -> UiBlock.onSaveInstanceState((Bundle) args[0]));
+                callShatterFunc(shatters, shatter -> shatter.onSaveInstanceState((Bundle) args[0]));
                 break;
             case "onRestoreInstanceState":
-                callBlocks(blocks, UiBlock -> UiBlock.onRestoreInstanceState(((Bundle) args[0])));
+                callShatterFunc(shatters, shatter -> shatter.onRestoreInstanceState(((Bundle) args[0])));
                 break;
             case "onStart":
-                callBlocks(blocks, Shatter::onStart);
+                callShatterFunc(shatters, Shatter::onStart);
                 break;
             case "onResume":
-                callBlocks(blocks, Shatter::onResume);
+                callShatterFunc(shatters, Shatter::onResume);
                 break;
             case "onPause":
-                callBlocks(blocks, Shatter::onPause);
+                callShatterFunc(shatters, Shatter::onPause);
                 break;
             case "onStop":
-                callBlocks(blocks, Shatter::onStop);
+                callShatterFunc(shatters, Shatter::onStop);
                 break;
             case "onRestart":
-                callBlocks(blocks, Shatter::onRestart);
+                callShatterFunc(shatters, Shatter::onRestart);
                 break;
             case "onDestroy":
-                callBlocks(blocks, Shatter::doDestroy);
+                callShatterFunc(shatters, Shatter::doDestroy);
                 manager.onDestroy();
                 break;
             case "onBackPressed":
-                callBlocks(blocks, Shatter::onBackPressed);
+                callShatterFunc(shatters, Shatter::onBackPressed);
                 break;
             case "onActivityResult":
-                callBlocks(blocks, UiBlock ->
-                        UiBlock.onActivityResult(Integer.parseInt(args[0].toString()),
+                callShatterFunc(shatters, shatter ->
+                        shatter.onActivityResult(Integer.parseInt(args[0].toString()),
                                 Integer.parseInt(args[1].toString()), (Intent) args[2]));
                 break;
         }
     }
 
-    private static void callBlocks(List<Shatter> blocks, final Callback callback) {
-        for (int i = 0, size = blocks.size(); i < size; i++) {
-            callback.onCall(blocks.get(i));
+    private static void callShatterFunc(List<Shatter> shatters, final Callback callback) {
+        for (int i = 0, size = shatters.size(); i < size; i++) {
+            callback.onCall(shatters.get(i));
         }
     }
 

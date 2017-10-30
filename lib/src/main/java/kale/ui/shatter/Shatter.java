@@ -70,7 +70,7 @@ public abstract class Shatter implements ActivityFullLifecycleCallbacks {
     }
 
     /**
-     * 得到的{@link ShatterManager}和当前容纳UiBlock的Activity中的{@link ShatterManager}是同一个对象
+     * 得到的{@link ShatterManager}和当前Activity中的{@link ShatterManager}是同一个对象
      */
     public ShatterManager getShatterManager() {
         return ((ShatterOwner) activity).getShatterManager();
@@ -95,9 +95,6 @@ public abstract class Shatter implements ActivityFullLifecycleCallbacks {
     }
 
     // @formatter:off
-    /**
-     * @return uiBlock对应的layout文件id
-     */
     protected abstract @LayoutRes int getLayoutResId();
     protected abstract void bindViews(View rootView);
     protected void onViewCreated() {}

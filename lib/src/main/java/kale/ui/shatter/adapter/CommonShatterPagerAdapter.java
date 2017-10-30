@@ -13,7 +13,6 @@ import lombok.Setter;
 /**
  * @author Jack Tony
  * @date 2015/11/27
- * 如果在viewpager中的UIBlock有数据源，那么可以用这个做处理
  */
 public abstract class CommonShatterPagerAdapter<T> extends ShatterPagerAdapter {
 

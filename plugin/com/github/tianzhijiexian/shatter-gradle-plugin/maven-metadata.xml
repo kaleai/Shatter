@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <metadata>
   <groupId>com.github.tianzhijiexian</groupId>
-  <artifactId>uiblock-gradle-plugin</artifactId>
+  <artifactId>Shatter-gradle-plugin</artifactId>
   <versioning>
     <release>1.0.0</release>
     <versions>

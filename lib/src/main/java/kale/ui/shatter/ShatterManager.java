@@ -24,24 +24,24 @@ public class ShatterManager {
     private List<Shatter> mShatters = new ArrayList<>();
 
     @Getter
-    private Activity mActivity;
+    private Activity activity;
 
     public ShatterManager(@NonNull Activity activity) {
         if (activity instanceof ShatterOwner) {
-            this.mActivity = activity;
+            this.activity = activity;
         } else {
             throw new IllegalArgumentException("Activity must be implements ShatterOwner");
-        } 
+        }
     }
 
     public ShatterManager add(@IdRes int containViewId, @NonNull Shatter shatter) {
         shatter.setContainId(containViewId);
-        return add(mActivity.findViewById(containViewId), shatter);
+        return add(activity.findViewById(containViewId), shatter);
     }
 
     public ShatterManager add(@NonNull View containView, @NonNull Shatter shatter) {
         shatter.setRootView(containView);
-        shatter.attachActivity(mActivity);
+        shatter.attachActivity(activity);
         mShatters.add(shatter);
         return this;
     }
@@ -87,7 +87,7 @@ public class ShatterManager {
     public void onDestroy() {
         mShatters.clear();
         mShatters = null;
-        mActivity = null;
+        activity = null;
     }
 
 }

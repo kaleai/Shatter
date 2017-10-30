@@ -26,9 +26,11 @@ public class BaseActivity extends AppCompatActivity implements ShatterOwner {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        
 //        EventDispatchFragment.injectIfNeededIn(this);
     }
-
+    
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
