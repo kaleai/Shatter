@@ -9,35 +9,26 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import kale.ui.shatter.lifecycle.ActivityFullLifecycleCallbacks;
 import kale.ui.shatter.lifecycle.EventDispatchFragment;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author Jack Tony
  * @date 2015/6/15
  * 需要在界面销毁时把回调停止
  */
-public abstract class Shatter implements ActivityFullLifecycleCallbacks {
+public abstract class Shatter implements IShatterOwner {
 
     public static final int NO_LAYOUT = 0;
 
-    @Getter
-    @Setter
     private View rootView;
 
-    @Getter
     private Activity activity;
 
     /**
      * 当前是否对用户可见
      */
-    @Getter
     private boolean visibleToUser = true;
 
-    @Setter
-    @Getter
     private int containId;
 
     protected void attachActivity(Activity activity) {
@@ -73,7 +64,7 @@ public abstract class Shatter implements ActivityFullLifecycleCallbacks {
      * 得到的{@link ShatterManager}和当前Activity中的{@link ShatterManager}是同一个对象
      */
     public ShatterManager getShatterManager() {
-        return ((ShatterOwner) activity).getShatterManager();
+        return ((IShatterOwner) activity).getShatterManager();
     }
 
     /**
@@ -134,9 +125,6 @@ public abstract class Shatter implements ActivityFullLifecycleCallbacks {
         }
     }
 
-    /**
-     * findViewById的简化方法
-     */
     protected final <E extends View> E findViewById(int id) {
         return rootView.findViewById(id);
     }
@@ -145,4 +133,27 @@ public abstract class Shatter implements ActivityFullLifecycleCallbacks {
         activity.startActivity(intent);
     }
 
+    public Activity getActivity() {
+        return activity;
+    }
+
+    public View getRootView() {
+        return rootView;
+    }
+
+    public void setRootView(View rootView) {
+        this.rootView = rootView;
+    }
+
+    public boolean isVisibleToUser() {
+        return visibleToUser;
+    }
+
+    public void setContainId(int containId) {
+        this.containId = containId;
+    }
+
+    public int getContainId() {
+        return containId;
+    }
 }

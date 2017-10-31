@@ -30,7 +30,7 @@
                 android:layout_gravity="center"
                 android:contentDescription="这里的文字会被加上:)"
                 android:gravity="center"
-                android:text="This is a UI Block"
+                android:text="This is a Shatter"
                 android:textSize="30sp"
                 />
 

@@ -5,14 +5,14 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 
+import kale.ui.shatter.IShatterActivity;
 import kale.ui.shatter.ShatterManager;
-import kale.ui.shatter.ShatterOwner;
 
 /**
  * @author Kale
  * @date 2016/4/8
  */
-public class BaseActivity extends AppCompatActivity implements ShatterOwner {
+public class BaseActivity extends AppCompatActivity implements IShatterActivity {
 
     private ShatterManager mShatterManager;
 
@@ -26,11 +26,9 @@ public class BaseActivity extends AppCompatActivity implements ShatterOwner {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        
 //        EventDispatchFragment.injectIfNeededIn(this);
     }
-    
+
     @Override
     public void onNewIntent(Intent intent) {
         super.onNewIntent(intent);

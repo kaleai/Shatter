@@ -7,8 +7,6 @@ import android.support.annotation.Nullable;
 
 import kale.ui.shatter.Shatter;
 import kale.ui.shatter.ShatterManager;
-import lombok.Getter;
-import lombok.Setter;
 
 /**
  * @author Jack Tony
@@ -16,7 +14,6 @@ import lombok.Setter;
  */
 public abstract class CommonShatterPagerAdapter<T> extends ShatterPagerAdapter {
 
-    @Setter @Getter
     private List<T> data;
 
     public CommonShatterPagerAdapter(ShatterManager manager, @Nullable List<T> data) {
@@ -25,6 +22,8 @@ public abstract class CommonShatterPagerAdapter<T> extends ShatterPagerAdapter {
             this.data = new ArrayList<>();
         }
         this.data = data;
+        
+        
     }
 
     @Override

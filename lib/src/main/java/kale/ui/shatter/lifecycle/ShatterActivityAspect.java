@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 import kale.ui.shatter.ShatterManager;
-import kale.ui.shatter.ShatterOwner;
+import kale.ui.shatter.IShatterOwner;
 
 /**
  * @author Kale
@@ -21,13 +21,13 @@ import kale.ui.shatter.ShatterOwner;
 
     private String oldMethod;
 
-    @Pointcut("execution(* kale.ui.shatter.ShatterOwner..on*(..))")
+    @Pointcut("execution(* kale.ui.shatter.IShatterActivity..on*(..))")
     public void onXXXMethods() {
     }
 
     @After("onXXXMethods()")
     public void callManagerMethods(JoinPoint point) {
-        ShatterOwner activity = (ShatterOwner) point.getThis();
+        IShatterOwner activity = (IShatterOwner) point.getThis();
         if (!(activity instanceof Activity)) {
             return;
         }

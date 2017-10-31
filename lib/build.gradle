@@ -26,8 +26,7 @@ android {
 }
 
 dependencies {
-    provided 'org.projectlombok:lombok:1.12.6'
-    provided 'com.android.support:appcompat-v7:25.0.0'
+    provided 'com.android.support:appcompat-v7:26.1.0'
 }
 
 // build a jar with source files

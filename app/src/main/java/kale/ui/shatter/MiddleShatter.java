@@ -40,9 +40,9 @@ public class MiddleShatter extends Shatter {
         @Override
         public void setViews() {
             View root = getRootView();
-            
+
             root.setBackgroundResource(R.color.colorPrimary);
-            TextView textView = (TextView) findViewById(android.R.id.text1);
+            TextView textView = findViewById(android.R.id.text1);
             textView.setGravity(Gravity.CENTER);
             textView.setText(R.string.test_text);
         }

@@ -13,7 +13,6 @@ import android.view.View;
 import org.aspectj.lang.JoinPoint;
 
 import kale.ui.shatter.lifecycle.ShatterActivityAspect;
-import lombok.Getter;
 
 /**
  * @author Jack Tony
@@ -23,25 +22,24 @@ public class ShatterManager {
 
     private List<Shatter> mShatters = new ArrayList<>();
 
-    @Getter
-    private Activity activity;
+    private Activity mActivity;
 
     public ShatterManager(@NonNull Activity activity) {
-        if (activity instanceof ShatterOwner) {
-            this.activity = activity;
+        if (activity instanceof IShatterOwner) {
+            this.mActivity = activity;
         } else {
-            throw new IllegalArgumentException("Activity must be implements ShatterOwner");
+            throw new IllegalArgumentException("Activity must be implements IShatterOwner");
         }
     }
 
     public ShatterManager add(@IdRes int containViewId, @NonNull Shatter shatter) {
         shatter.setContainId(containViewId);
-        return add(activity.findViewById(containViewId), shatter);
+        return add(mActivity.findViewById(containViewId), shatter);
     }
 
     public ShatterManager add(@NonNull View containView, @NonNull Shatter shatter) {
         shatter.setRootView(containView);
-        shatter.attachActivity(activity);
+        shatter.attachActivity(mActivity);
         mShatters.add(shatter);
         return this;
     }
@@ -81,13 +79,17 @@ public class ShatterManager {
         return mShatters;
     }
 
+    public Activity getActivity() {
+        return mActivity;
+    }
+
     /**
      * Call by {@link ShatterActivityAspect#callManagerMethods(JoinPoint)}
      */
     public void onDestroy() {
         mShatters.clear();
         mShatters = null;
-        activity = null;
+        mActivity = null;
     }
 
 }

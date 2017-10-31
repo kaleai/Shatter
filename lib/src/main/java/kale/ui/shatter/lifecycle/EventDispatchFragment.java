@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import kale.ui.shatter.ShatterOwner;
+import kale.ui.shatter.IShatterOwner;
 import kale.ui.shatter.ShatterManager;
 
 /**
@@ -100,8 +100,8 @@ public class EventDispatchFragment extends android.app.Fragment {
 
     private void dispatch(String event, Object... args) {
         Activity activity = getActivity();
-        if (activity instanceof ShatterOwner) {
-            ShatterManager manager = ((ShatterOwner) activity).getShatterManager();
+        if (activity instanceof IShatterOwner) {
+            ShatterManager manager = ((IShatterOwner) activity).getShatterManager();
             MethodExecutor.scheduleMethod(event, manager, args);
         }
     }
