@@ -40,6 +40,7 @@ public abstract class Shatter implements IShatterOwner {
             } else if (rootView instanceof ViewGroup) {
                 View view = LayoutInflater.from(activity).inflate(getLayoutResId(), null);
                 ((ViewGroup) rootView).addView(view);
+                rootView = view;
             } else {
                 throw new IllegalArgumentException("ContainView must extends ViewGroup");
             }
@@ -90,10 +91,6 @@ public abstract class Shatter implements IShatterOwner {
     protected abstract void bindViews(View rootView);
     protected void onViewCreated() {}
     protected abstract void setViews();
-     /**
-     * 在viewpager中更新数据时才会用到的方法，一般情况下不需要使用
-     */
-    public void handleData(Object model, int position) {}
     
     // --- life ---
     @Override public void onSaveInstanceState(Bundle outState) {}

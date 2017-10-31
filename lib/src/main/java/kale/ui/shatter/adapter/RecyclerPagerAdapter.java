@@ -1,11 +1,11 @@
 package kale.ui.shatter.adapter;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
 import android.support.annotation.NonNull;
-import android.support.v4.util.ArrayMap;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.View;
@@ -17,19 +17,23 @@ import kale.ui.shatter.R;
  * @author Jack Tony
  * @date 2015/11/21
  *
+ * 有item缓存的ViewPagerAdapter
+ *
  * 如果调用{@link #notifyDataSetChanged()}来更新，
  * 它会自动调用{@link #instantiateItem(ViewGroup, int)}重新new出需要的item，算是完全初始化一次。
  */
-abstract class InternalBasePagerAdapter<T> extends PagerAdapter {
+public abstract class RecyclerPagerAdapter<T> extends PagerAdapter {
 
-    protected T currentItem = null;
-    
+    T currentItem = null;
+
+    private boolean useCache = true;
+
     /**
      * 这的cache的最大大小是：type * pageSize
      */
     private final PagerCache<T> mCache;
 
-    public InternalBasePagerAdapter() {
+    public RecyclerPagerAdapter() {
         mCache = new PagerCache<>();
     }
 
@@ -50,13 +54,18 @@ abstract class InternalBasePagerAdapter<T> extends PagerAdapter {
         }
         // 通过item得到将要被add到viewpager中的view
         View view = getViewFromItem(item, position);
-        view.setTag(R.id.item_type, type);
-        
+        view.setTag(R.id.item_type, type); // set tag
+
         if (view.getParent() != null) {
             ((ViewGroup) view.getParent()).removeView(view);
         }
         container.addView(view);
+        afterInstantiateItem(item, position);
         return item;
+    }
+
+    protected void afterInstantiateItem(T item, int position) {
+
     }
 
     @Override
@@ -71,15 +80,16 @@ abstract class InternalBasePagerAdapter<T> extends PagerAdapter {
     @Override
     public void destroyItem(ViewGroup container, int position, Object object) {
         T item = (T) object;
-        // 现在通过item拿到其中的view，然后remove掉
-        container.removeView(getViewFromItem(item, position));
-        Object type = getViewFromItem(item, position).getTag(R.id.item_type);
+        // 现在通过item拿到其中的view，然后从ViewPager中remove掉
+        View view = getViewFromItem(item, position);
+        container.removeView(view);
+        Object type = view.getTag(R.id.item_type); // get tag
         mCache.putItem(type, item);
     }
 
     @Override
     public int getItemPosition(Object object) {
-        return POSITION_NONE;
+        return POSITION_NONE; // 保证notify时可以更新item的个数
     }
 
     public Object getItemType(int position) {
@@ -90,8 +100,12 @@ abstract class InternalBasePagerAdapter<T> extends PagerAdapter {
         return currentItem;
     }
 
-    protected PagerCache<T> getCache() {
+    public PagerCache<T> getCache() {
         return mCache;
+    }
+
+    public void setUseCache(boolean useCache) {
+        this.useCache = useCache;
     }
 
     /**
@@ -116,35 +130,41 @@ abstract class InternalBasePagerAdapter<T> extends PagerAdapter {
     // 缓存类
     ///////////////////////////////////////////////////////////////////////////
 
-    private static class PagerCache<T> {
+    public class PagerCache<Item> {
 
-        private Map<Object, Queue<T>> mCacheMap;
+        private final Map<Object, Queue<Item>> mCacheMap;
 
-        public PagerCache() {
-            mCacheMap = new ArrayMap<>();
+        PagerCache() {
+            mCacheMap = new HashMap<>();
         }
 
         /**
          * @param type item type
          * @return cache中的item，如果拿不到就返回null
          */
-        public T getItem(Object type) {
-            Queue<T> queue = mCacheMap.get(type);
+        Item getItem(Object type) {
+            Queue<Item> queue = mCacheMap.get(type);
             return queue != null ? queue.poll() : null;
         }
 
         /**
          * @param type item's type
          */
-        public void putItem(Object type, T item) {
-            Queue<T> queue;
+        void putItem(Object type, Item item) {
+            if (!useCache) {
+                return;
+            }
+            Queue<Item> queue;
             if ((queue = mCacheMap.get(type)) == null) {
                 queue = new LinkedList<>();
                 mCacheMap.put(type, queue);
             }
             queue.offer(item);
         }
-    }
 
+        public int size() {
+            return mCacheMap.size();
+        }
+    }
 
 }

@@ -11,9 +11,8 @@ import kale.ui.shatter.ShatterManager;
 /**
  * @author Jack Tony
  * @date 2015/11/21
- * 这个类不关心缓存，仅仅做一般的操作。比如得到view，返回view
  */
-public abstract class ShatterPagerAdapter extends InternalBasePagerAdapter<Shatter> {
+public abstract class ShatterPagerAdapter extends RecyclerPagerAdapter<Shatter> {
 
     private final ShatterManager mManager;
 
@@ -36,8 +35,8 @@ public abstract class ShatterPagerAdapter extends InternalBasePagerAdapter<Shatt
         super.setPrimaryItem(container, position, object);
     }
 
-    protected void setVisibleToUser(Shatter block, int pos) {
-        block.onVisibleToUser(true);
+    protected void setVisibleToUser(Shatter shatter, int pos) {
+        shatter.onVisibleToUser(true);
         if (currentItem != null) {
             currentItem.onVisibleToUser(false);
         }
@@ -49,9 +48,9 @@ public abstract class ShatterPagerAdapter extends InternalBasePagerAdapter<Shatt
     @Deprecated
     @Override
     protected Shatter createItem(ViewPager viewPager, int position) {
-        Shatter uiModule = createItem(getItemType(position));
-        mManager.add(viewPager, uiModule);
-        return uiModule;
+        Shatter shatter = createItem(getItemType(position));
+        mManager.add(viewPager, shatter);
+        return shatter;
     }
 
     /**

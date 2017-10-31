@@ -25,10 +25,10 @@ public class ShatterManager {
     private Activity mActivity;
 
     public ShatterManager(@NonNull Activity activity) {
-        if (activity instanceof IShatterOwner) {
+        if (activity instanceof IShatterActivity) {
             this.mActivity = activity;
         } else {
-            throw new IllegalArgumentException("Activity must be implements IShatterOwner");
+            throw new IllegalArgumentException("Activity must be implements IShatterActivity");
         }
     }
 
@@ -44,9 +44,9 @@ public class ShatterManager {
         return this;
     }
 
-    public void remove(@NonNull Shatter block) {
-        block.onDestroy();
-        mShatters.remove(block);
+    public void remove(@NonNull Shatter shatter) {
+        shatter.onDestroy();
+        mShatters.remove(shatter);
     }
 
     @CheckResult
