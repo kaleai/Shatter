@@ -6,7 +6,7 @@ buildscript {
         google()
     }
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.1.0'
+        classpath 'com.android.tools.build:gradle:3.0.1'
         classpath 'me.tatarka:gradle-retrolambda:3.2.0'//lambda
         classpath 'me.leolin:android-aspectj-plugin:1.0.7' // https://github.com/leolin310148/GradleAndroidAspectJPlugin
     }
