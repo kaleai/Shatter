@@ -41,12 +41,13 @@ public abstract class RecyclerPagerAdapter<T> extends PagerAdapter {
      * 注意：这里必须是view和view的比较
      */
     @Override
-    public boolean isViewFromObject(View view, Object obj) {
+    public boolean isViewFromObject(@NonNull View view, @NonNull Object obj) {
         return view == getViewFromItem((T) obj, 0);
     }
 
+    @NonNull
     @Override
-    public T instantiateItem(ViewGroup container, int position) {
+    public T instantiateItem(@NonNull ViewGroup container, int position) {
         Object type = getItemType(position);
         T item = mCache.getItem(type); // get item from type
         if (item == null) {
@@ -69,7 +70,7 @@ public abstract class RecyclerPagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         super.setPrimaryItem(container, position, object);
         if (object != currentItem) {
             // 可能是currentItem不等于null，可能是二者不同
@@ -88,7 +89,7 @@ public abstract class RecyclerPagerAdapter<T> extends PagerAdapter {
     }
 
     @Override
-    public int getItemPosition(Object object) {
+    public int getItemPosition(@NonNull Object object) {
         return POSITION_NONE; // 保证notify时可以更新item的个数
     }
 

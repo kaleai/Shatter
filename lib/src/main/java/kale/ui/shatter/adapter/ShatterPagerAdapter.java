@@ -28,7 +28,7 @@ public abstract class ShatterPagerAdapter extends RecyclerPagerAdapter<Shatter> 
     }
 
     @Override
-    public void setPrimaryItem(ViewGroup container, int position, Object object) {
+    public void setPrimaryItem(@NonNull ViewGroup container, int position, @NonNull Object object) {
         if (object != currentItem) { // 支持懒加载
             setVisibleToUser(((Shatter) object), position);
         }
