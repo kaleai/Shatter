@@ -1,5 +1,11 @@
 # Shatter
 
+[Shatter](https://github.com/tianzhijiexian/Shatter)是一个代替fragment的UI区块库，它主要完成的工作是让每个UI区块和activity保持完全相同的生命周期，简化开发者学习成本。它对于单页面多模块的结构有着很好的支持，非常适合用来降低复杂activity的复杂度。但因为设计的关系，它的生命周期仅仅是监听activity的，所以不会有完整的生命周期的概念。
+
+你可以通过shatter监听activity的生命周期，所有的监听工作都是通过shatterManager来实现的：
+
+![](http://static.zybuluo.com/shark0017/yui6evs3qghmofoevdxripzo/image_1btm78fhn1inj2mbn8gnunm3a9.png)
+
 ## 引入方式
 
 1.添加JitPack仓库
@@ -19,7 +25,9 @@ repositories {
 
 ## 配置方式
 
-1.让shatter有监听activity全部生命周期的能力
+配置的方式有两种可选，第一种比较复杂，第二种较为简单。
+
+### 1.让shatter有监听activity全部生命周期的能力
 
 需要在app的build.gradle中配置aspectj：
 
@@ -44,7 +52,7 @@ public void onSaveInstanceState(Bundle outState) {
 
 ```
 
-2.仅仅需要监听部分重要的生命周期
+### 2.仅仅需要监听部分重要的生命周期
 
 在baseActivity中的onCreate()中写上如下语句：
 
@@ -54,6 +62,20 @@ protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     EventDispatchFragment.injectIfNeededIn(this);
 }
+```
+
+Fragment可监听的生命周期：
+
+```
+public final static String
+            ON_CREATE = "onRestoreInstanceState",
+            ON_START = "onStart",
+            ON_RESUME = "onResume",
+            ON_PAUSE = "onPause",
+            ON_STOP = "onStop",
+            ON_DESTROY = "onDestroy",
+            ON_ACTIVITY_RESULT = "onActivityResult",
+            ON_SAVE_INSTANCE_STATE = "onSaveInstanceState";
 ```
 
 ## 使用
@@ -95,7 +117,7 @@ Shatter会自身产生事件，如果要和activity进行交互，那么可以�
 
 ShatterManager提供了`findShatterByTag()`和`findShatterByContainViewId()`，可以通过二者来查找，方便解耦。
 
-
+如果你需要在viewPager中使用shatter，那么可以“选用”`shatterPagerAdapter`来做。
 
 ### 开发者
 ![](https://avatars3.githubusercontent.com/u/9552155?v=3&s=460)
