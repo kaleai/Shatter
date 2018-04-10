@@ -4,15 +4,17 @@
 
 1.添加JitPack仓库
 
+```
 repositories {
 	maven {
 		url "https://jitpack.io"
 	}
 }
+```
 
 2.添加依赖
 
-compile 'com.github.tianzhijiexian:Shatter:[Latest release](https://github.com/tianzhijiexian/Shatter/releases)（<-click）'
+> compile 'com.github.tianzhijiexian:Shatter:[Latest release](https://github.com/tianzhijiexian/Shatter/releases)（<-click）'
 
 
 ## 配置方式
