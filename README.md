@@ -12,7 +12,7 @@ repositories {
 
 2.添加依赖
 
-compile 'com.github.tianzhijiexian:Shatter:Latest release（<-click）'
+compile 'com.github.tianzhijiexian:Shatter:[Latest release](https://github.com/tianzhijiexian/Shatter/releases)（<-click）'
 
 
 ## 配置方式
