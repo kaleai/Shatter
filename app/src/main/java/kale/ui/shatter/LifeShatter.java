@@ -42,45 +42,38 @@ public class LifeShatter extends Shatter {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onActStart() {
         Log.d(TAG, "onStart() called");
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onActResume() {
         Log.d(TAG, "onResume() called");
     }
 
     @Override
-    public void onPause() {
-        super.onPause();
+    public void onActPause() {
         Log.d(TAG, "onPause() called");
     }
 
     @Override
-    public void onStop() {
-        super.onStop();
+    public void onActStop() {
         Log.d(TAG, "onStop() called");
     }
 
     @Override
-    public void onRestoreInstanceState(Bundle savedInstanceState) {
-        super.onRestoreInstanceState(savedInstanceState);
+    public void onActRestoreInstanceState(Bundle savedInstanceState) {
         Log.d(TAG, "onRestoreInstanceState() called with: savedInstanceState = [" + savedInstanceState + "]");
     }
 
     @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
+    public void onActSaveInstanceState(Bundle outState) {
         Log.d(TAG, "onSaveInstanceState() called with: outState = [" + outState + "]");
         outState.putString("name", "kale");
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onActDestroy() {
         Log.d(TAG, "onDestroy() called");
     }
 

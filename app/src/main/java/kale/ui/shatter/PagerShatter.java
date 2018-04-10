@@ -40,18 +40,4 @@ public class PagerShatter extends Shatter {
         ((TextView) findViewById(R.id.header_tv)).setText(data);
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-    }
-
-    @Override
-    public void onResume() {
-        super.onResume();
-    }
-
-    @Override
-    public void onPause() {
-        super.onPause();
-    }
 }
