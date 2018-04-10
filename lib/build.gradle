@@ -1,5 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'me.leolin.gradle-android-aspectj'
 
 android {
@@ -23,10 +22,17 @@ android {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
     }
+    
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
 }
 
 dependencies {
-    compile 'com.android.support:appcompat-v7:27.1.1'
+    provided 'com.android.support:appcompat-v7:27.1.1'
 }
 
 // build a jar with source files

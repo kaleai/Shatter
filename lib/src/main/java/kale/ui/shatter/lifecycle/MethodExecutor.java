@@ -21,40 +21,94 @@ public class MethodExecutor {
         List<Shatter> shatters = manager.getShatters();
         switch (methodName) {
             case "onNewIntent":
-                callShatterFunc(shatters, shatter -> shatter.onActNewIntent((Intent) args[0]));
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter) {
+                        shatter.onActNewIntent((Intent) args[0]);
+                    }
+                });
                 break;
             case Event.ON_SAVE_INSTANCE_STATE:
-                callShatterFunc(shatters, shatter -> shatter.onActSaveInstanceState((Bundle) args[0]));
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter) {
+                        shatter.onActSaveInstanceState((Bundle) args[0]);
+                    }
+                });
                 break;
             case "onRestoreInstanceState":
-                callShatterFunc(shatters, shatter -> shatter.onActRestoreInstanceState(((Bundle) args[0])));
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter) {
+                        shatter.onActRestoreInstanceState(((Bundle) args[0]));
+                    }
+                });
                 break;
             case Event.ON_START:
-                callShatterFunc(shatters, Shatter::onActStart);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.onActStart();
+                    }
+                });
                 break;
             case Event.ON_RESUME:
-                callShatterFunc(shatters, Shatter::onActResume);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.onActResume();
+                    }
+                });
                 break;
             case Event.ON_PAUSE:
-                callShatterFunc(shatters, Shatter::onActPause);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.onActPause();
+                    }
+                });
                 break;
             case Event.ON_STOP:
-                callShatterFunc(shatters, Shatter::onActStop);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.onActStop();
+                    }
+                });
                 break;
             case "onRestart":
-                callShatterFunc(shatters, Shatter::onActRestart);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.onActRestart();
+                    }
+                });
                 break;
             case Event.ON_DESTROY:
-                callShatterFunc(shatters, Shatter::doDestroy);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.doDestroy();
+                    }
+                });
                 manager.destroy();
                 break;
             case "onBackPressed":
-                callShatterFunc(shatters, Shatter::onActBackPressed);
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter1) {
+                        shatter1.onActBackPressed();
+                    }
+                });
                 break;
             case Event.ON_ACTIVITY_RESULT:
-                callShatterFunc(shatters, shatter ->
+                callShatterFunc(shatters, new Callback() {
+                    @Override
+                    public void onCall(Shatter shatter) {
                         shatter.onActivityResult(Integer.parseInt(args[0].toString()),
-                                Integer.parseInt(args[1].toString()), (Intent) args[2]));
+                                Integer.parseInt(args[1].toString()), (Intent) args[2]);
+                    }
+                });
                 break;
         }
     }
