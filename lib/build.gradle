@@ -26,7 +26,7 @@ android {
 }
 
 dependencies {
-    provided 'com.android.support:appcompat-v7:27.1.1'
+    compile 'com.android.support:appcompat-v7:27.1.1'
 }
 
 // build a jar with source files
