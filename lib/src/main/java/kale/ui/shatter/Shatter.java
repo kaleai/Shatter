@@ -16,7 +16,7 @@ import kale.ui.shatter.lifecycle.EventDispatchFragment;
  * @date 2015/6/15
  * 需要在界面销毁时把回调停止
  */
-public abstract class Shatter implements IShatterOwner {
+public abstract class Shatter implements IShatterHost, ActivityFullLifecycleListener {
 
     public static final int NO_LAYOUT = 0;
 
@@ -65,11 +65,11 @@ public abstract class Shatter implements IShatterOwner {
      * 得到的{@link ShatterManager}和当前Activity中的{@link ShatterManager}是同一个对象
      */
     public ShatterManager getShatterManager() {
-        return ((IShatterOwner) activity).getShatterManager();
+        return ((IShatterHost) activity).getShatterManager();
     }
 
     /**
-     * 对用户可见的时的回调，可用作懒加载<br>
+     * 对用户可见的时的回调，可用作懒加载（仅在ViewPager中生效）<br>
      *
      * @param isVisible 是否可见
      */
@@ -93,21 +93,22 @@ public abstract class Shatter implements IShatterOwner {
     protected abstract void setViews();
     
     // --- life ---
-    @Override public void onSaveInstanceState(Bundle outState) {}
-    @Override public void onRestoreInstanceState(Bundle savedInstanceState) {}
-    @Override public void onStart() {}
-    @Override public void onResume() {}
-    @Override public void onPause() {}
-    @Override public void onStop() {}
-    @Override public void onDestroy() {}
-    @Override public void onRestart() {}
-    @Override public void onBackPressed() {}
-    @Override public void onNewIntent(Intent intent) {}
+    @Override public void onActSaveInstanceState(Bundle outState) {}
+    @Override public void onActRestoreInstanceState(Bundle savedInstanceState) {}
+    @Override public void onActStart() {}
+    @Override public void onActResume() {}
+    @Override public void onActPause() {}
+    @Override public void onActStop() {}
+    protected void onSelfDestroy(){}
+    @Override public void onActDestroy() {}
+    @Override public void onActRestart() {}
+    @Override public void onActBackPressed() {}
+    @Override public void onActNewIntent(Intent intent) {}
     @Override public void onActivityResult(int requestCode, int resultCode, Intent data) {}
     // @formatter:on
 
     public void doDestroy() {
-        onDestroy();
+        onActDestroy();
         // after onDestroy()
         activity = null;
         rootView = null;

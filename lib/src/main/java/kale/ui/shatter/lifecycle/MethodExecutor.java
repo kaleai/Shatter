@@ -21,37 +21,37 @@ public class MethodExecutor {
         List<Shatter> shatters = manager.getShatters();
         switch (methodName) {
             case "onNewIntent":
-                callShatterFunc(shatters, shatter -> shatter.onNewIntent((Intent) args[0]));
+                callShatterFunc(shatters, shatter -> shatter.onActNewIntent((Intent) args[0]));
                 break;
-            case "onSaveInstanceState":
-                callShatterFunc(shatters, shatter -> shatter.onSaveInstanceState((Bundle) args[0]));
+            case Event.ON_SAVE_INSTANCE_STATE:
+                callShatterFunc(shatters, shatter -> shatter.onActSaveInstanceState((Bundle) args[0]));
                 break;
             case "onRestoreInstanceState":
-                callShatterFunc(shatters, shatter -> shatter.onRestoreInstanceState(((Bundle) args[0])));
+                callShatterFunc(shatters, shatter -> shatter.onActRestoreInstanceState(((Bundle) args[0])));
                 break;
-            case "onStart":
-                callShatterFunc(shatters, Shatter::onStart);
+            case Event.ON_START:
+                callShatterFunc(shatters, Shatter::onActStart);
                 break;
-            case "onResume":
-                callShatterFunc(shatters, Shatter::onResume);
+            case Event.ON_RESUME:
+                callShatterFunc(shatters, Shatter::onActResume);
                 break;
-            case "onPause":
-                callShatterFunc(shatters, Shatter::onPause);
+            case Event.ON_PAUSE:
+                callShatterFunc(shatters, Shatter::onActPause);
                 break;
-            case "onStop":
-                callShatterFunc(shatters, Shatter::onStop);
+            case Event.ON_STOP:
+                callShatterFunc(shatters, Shatter::onActStop);
                 break;
             case "onRestart":
-                callShatterFunc(shatters, Shatter::onRestart);
+                callShatterFunc(shatters, Shatter::onActRestart);
                 break;
-            case "onDestroy":
+            case Event.ON_DESTROY:
                 callShatterFunc(shatters, Shatter::doDestroy);
-                manager.onDestroy();
+                manager.destroy();
                 break;
             case "onBackPressed":
-                callShatterFunc(shatters, Shatter::onBackPressed);
+                callShatterFunc(shatters, Shatter::onActBackPressed);
                 break;
-            case "onActivityResult":
+            case Event.ON_ACTIVITY_RESULT:
                 callShatterFunc(shatters, shatter ->
                         shatter.onActivityResult(Integer.parseInt(args[0].toString()),
                                 Integer.parseInt(args[1].toString()), (Intent) args[2]));

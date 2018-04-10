@@ -16,7 +16,6 @@ import com.jakewharton.scalpel.ScalpelFrameLayout;
 import kale.ui.shatter.PagerShatter;
 import kale.ui.shatter.Shatter;
 import kale.ui.shatter.adapter.ShatterPagerAdapter;
-import kale.ui.viewpager.ZoomOutPageTransformer;
 
 /**
  * @author Kale
@@ -102,7 +101,6 @@ public class ViewPagerActivity extends BaseActivity {
         ViewPager viewPager = findViewById(R.id.viewpager);
         viewPager.setOffscreenPageLimit(2); // 设置预加载的页面个数
         viewPager.setAdapter(adapter);
-        viewPager.setPageTransformer(true, new ZoomOutPageTransformer());
         viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
             public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {

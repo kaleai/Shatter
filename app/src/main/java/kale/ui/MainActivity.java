@@ -37,11 +37,4 @@ public class MainActivity extends BaseActivity {
         Log.d(TAG, "onResume: ");
     }
 
-    public void onTheBottomBtnClick() {
-        BottomShatter shatter = getShatterManager().findShatterByTag(BottomShatter.TAG);
-
-        assert shatter != null;
-//        shatter.onTextChangeCompleted("Text from mActivity");
-    }
-
 }

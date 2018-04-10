@@ -4,17 +4,18 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import kale.ui.shatter.IShatterOwner;
+import kale.ui.shatter.IShatterHost;
 import kale.ui.shatter.ShatterManager;
 
 /**
  * @author Kale
- * @date 2017/10/23
  */
 
+// Fragment中可以提供的监听方法，如果这里没有，那么只能用aspect了
 class Event {
 
-    static String ON_CREATE = "onRestoreInstanceState",
+    public final static String
+            ON_CREATE = "onRestoreInstanceState",
             ON_START = "onStart",
             ON_RESUME = "onResume",
             ON_PAUSE = "onPause",
@@ -100,8 +101,8 @@ public class EventDispatchFragment extends android.app.Fragment {
 
     private void dispatch(String event, Object... args) {
         Activity activity = getActivity();
-        if (activity instanceof IShatterOwner) {
-            ShatterManager manager = ((IShatterOwner) activity).getShatterManager();
+        if (activity instanceof IShatterHost) {
+            ShatterManager manager = ((IShatterHost) activity).getShatterManager();
             MethodExecutor.scheduleMethod(event, manager, args);
         }
     }

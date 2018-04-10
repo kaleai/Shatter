@@ -45,7 +45,7 @@ public class ShatterManager {
     }
 
     public void remove(@NonNull Shatter shatter) {
-        shatter.onDestroy();
+        shatter.onSelfDestroy();
         mShatters.remove(shatter);
     }
 
@@ -53,9 +53,9 @@ public class ShatterManager {
     public
     @Nullable
     <E extends Shatter> E findShatterByTag(@NonNull String tag) {
-        for (Shatter block : mShatters) {
-            if (tag.equals(block.getTag())) {
-                return (E) block;
+        for (Shatter shatter : mShatters) {
+            if (tag.equals(shatter.getTag())) {
+                return (E) shatter;
             }
         }
         return null;
@@ -86,7 +86,7 @@ public class ShatterManager {
     /**
      * Call by {@link ShatterActivityAspect#callManagerMethods(JoinPoint)}
      */
-    public void onDestroy() {
+    public void destroy() {
         mShatters.clear();
         mShatters = null;
         mActivity = null;

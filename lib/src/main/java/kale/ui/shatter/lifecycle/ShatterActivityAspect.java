@@ -8,7 +8,7 @@ import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 
 import kale.ui.shatter.ShatterManager;
-import kale.ui.shatter.IShatterOwner;
+import kale.ui.shatter.IShatterHost;
 
 /**
  * @author Kale
@@ -27,7 +27,7 @@ import kale.ui.shatter.IShatterOwner;
 
     @After("onXXXMethods()")
     public void callManagerMethods(JoinPoint point) {
-        IShatterOwner activity = (IShatterOwner) point.getThis();
+        IShatterHost activity = (IShatterHost) point.getThis();
         if (!(activity instanceof Activity)) {
             return;
         }
