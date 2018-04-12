@@ -42,6 +42,20 @@ apply plugin: 'me.leolin.gradle-android-aspectj'
 并且在baseActivity实现`IShatterActivity`，并复写你需要被监听的生命周期方法（无需做任何处理，只需复写即可）,如：
 
 ```
+private ShatterManager mShatterManager;
+
+public ShatterManager getShatterManager() {
+     if (mShatterManager == null) {
+    	mShatterManager = new ShatterManager(this);
+     }
+     return mShatterManager;
+}
+
+@Override
+protected void onCreate(@Nullable Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+}
+
 @Override
 public void onNewIntent(Intent intent) {
     super.onNewIntent(intent);
@@ -59,6 +73,15 @@ public void onSaveInstanceState(Bundle outState) {
 在baseActivity中的onCreate()中写上如下语句：
 
 ```
+private ShatterManager mShatterManager;
+
+public ShatterManager getShatterManager() {
+     if (mShatterManager == null) {
+    	mShatterManager = new ShatterManager(this);
+     }
+     return mShatterManager;
+}
+
 @Override
 protected void onCreate(@Nullable Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
