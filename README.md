@@ -2,7 +2,9 @@
 
 [![](https://jitpack.io/v/tianzhijiexian/Shatter.svg)](https://jitpack.io/#tianzhijiexian/Shatter)
 
-[Shatter](https://github.com/tianzhijiexian/Shatter)是一个代替fragment来划分ui模块的库。它主要完成的工作是管理ui区块，并且能和activity保持完全相同的生命周期，没有任何学习成本。它对于单页面多ui模块的结构有着很好的支持，非常适合用来降低复杂activity的复杂度。但因为设计的关系，它的生命周期仅仅被activity触发的，所以不会有完整的生命周期的概念。
+[Shatter](https://github.com/tianzhijiexian/Shatter)是一个代替fragment来划分ui模块的库。它主要完成的工作是管理ui区块，并且能和activity保持完全相同的生命周期，没有任何学习成本。
+
+Shatter对于单页面多ui模块的结构有着很好的支持，非常适合用来降低复杂activity的复杂度。但因为设计的关系，它的生命周期仅仅被activity触发的，所以不会有完整的生命周期的概念。
 
 所有的监听工作都是通过shatterManager来实现的，这个类将会把activity的方法对应给shatter：
 
