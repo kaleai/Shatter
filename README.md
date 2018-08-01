@@ -171,7 +171,7 @@ public class MiddleShatter extends Shatter {
 
 ## 效果
 
-![多个shatter组合完成一个界面](http://static.zybuluo.com/shark0017/7ech0wqy0ln4zdsqwr98g3q5/image_1cjqitgd9t32ep519vbu9u10a49.png)
+![多个shatter组合完成一个界面](http://static.zybuluo.com/shark0017/wutbgvnqsfo8asckods283hi/image_1cjqj2ula1ma91hul17dq7qj16bs23.png)
 
 ## 额外说明
 
