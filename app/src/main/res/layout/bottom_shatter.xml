@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-    android:background="#673ab7"
     android:orientation="vertical"
     tools:showIn="@layout/main_activity"
+    android:background="@drawable/shatter_blue_bg"
     >
 
     <Button

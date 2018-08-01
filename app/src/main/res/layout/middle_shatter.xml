@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:padding="8dp"
     >
 
     <TextView
@@ -10,7 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="hahaha"
+        android:textStyle="bold"
+        android:text="hello world"
         android:textSize="30sp"
         />
 
@@ -18,7 +20,9 @@
         android:id="@+id/inner_fl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:padding="5dp"
+        android:background="@drawable/bg"
+        android:layout_marginTop="8dp"
+        android:padding="2dp"
         />
 
 </LinearLayout>

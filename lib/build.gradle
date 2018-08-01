@@ -2,12 +2,11 @@ apply plugin: 'com.android.library'
 apply plugin: 'me.leolin.gradle-android-aspectj'
 
 android {
-    compileSdkVersion 27
-    buildToolsVersion '27.0.3'
+    compileSdkVersion 28
 
     defaultConfig {
         minSdkVersion 14
-        targetSdkVersion 27
+        targetSdkVersion 28
     }
 
     buildTypes {
@@ -32,7 +31,7 @@ android {
 }
 
 dependencies {
-    provided 'com.android.support:appcompat-v7:27.1.1'
+    compileOnly 'com.android.support:appcompat-v7:28.0.0-alpha3'
 }
 
 // build a jar with source files

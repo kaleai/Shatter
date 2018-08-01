@@ -1,62 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:id="@+id/root_sv"
+<LinearLayout android:id="@+id/root_view"
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
+    android:padding="16dp"
     >
 
     <LinearLayout
+        android:id="@+id/top_ll"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/top_vp"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg"
+        android:padding="8dp"
+        android:layout_weight="1"
         >
 
-        <LinearLayout
-            android:id="@+id/top_ub"
+        <TextView
+            android:id="@+id/top_tv"
             android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/top_vp"
-            android:layout_marginTop="16dp"
-            android:background="#009688"
-            >
-
-            <TextView
-                android:id="@+id/top_tv"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:contentDescription="这里的文字会被加上:)"
-                android:gravity="center"
-                android:text="This is a Shatter"
-                android:textSize="30sp"
-                />
-
-        </LinearLayout>
-
-        <FrameLayout
-            android:id="@+id/middle_fl"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_below="@+id/top_ub"
-            android:layout_marginTop="16dp"
-            android:background="#9e9e9e"
-            android:padding="12dp"
-            />
-
-        <FrameLayout
-            android:id="@+id/bottom_ub"
-            android:layout_width="match_parent"
-            android:layout_height="100dp"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/middle_ub"
-            android:layout_marginTop="16dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:contentDescription="这里的文字会被加上:)"
+            android:gravity="center"
+            android:text="This is a Shatter"
+            android:textStyle="bold"
+            android:textSize="30sp"
             />
 
     </LinearLayout>
-</ScrollView>
+
+    <FrameLayout
+        android:id="@+id/middle_fl"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/top_ll"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg"
+        android:padding="8dp"
+        android:layout_weight="1"
+        />
+
+    <FrameLayout
+        android:id="@+id/bottom_fl"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/middle_ub"
+        android:layout_marginTop="16dp"
+        android:background="@drawable/bg"
+        android:padding="2dp"
+        android:layout_weight="1"
+        />
+
+</LinearLayout>

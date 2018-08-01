@@ -25,10 +25,10 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.main_activity);
 
         getShatterManager()
-                .add(R.id.root_sv, new LifeShatter())
-                .add(R.id.top_ub, new TopShatter())
+                .add(R.id.root_view, new LifeShatter())
+                .add(R.id.top_ll, new TopShatter())
                 .add(R.id.middle_fl, new MiddleShatter())
-                .add(R.id.bottom_ub, new BottomShatter());
+                .add(R.id.bottom_fl, new BottomShatter());
     }
 
     @Override
