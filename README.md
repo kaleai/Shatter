@@ -8,7 +8,7 @@
 
 ![](http://static.zybuluo.com/shark0017/yui6evs3qghmofoevdxripzo/image_1btm78fhn1inj2mbn8gnunm3a9.png)
 
-*上图的方法均是一一对应的关系*
+*（上图的方法均是一一对应的关系）*
 
 ## 引入方式
 
@@ -93,7 +93,7 @@ protected void onCreate(@Nullable Bundle savedInstanceState) {
 }
 ```
 
-这种方式下shatter可拥有如下生命周期：
+这种方式下的shatter可拥有如下生命周期：
 
 - onRestoreInstanceState
 - onStart
