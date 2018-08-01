@@ -18,9 +18,9 @@ Shatter对于单页面多ui模块的结构有着很好的支持，非常适合�
 
 ```
 repositories {
-	maven {
-		url "https://jitpack.io"
-	}
+    maven {
+        url "https://jitpack.io"
+    }
 }
 ```
 
@@ -45,7 +45,7 @@ apply plugin: 'me.leolin.gradle-android-aspectj'
 
 接着在baseActivity实现`IShatterActivity`，并复写你需要被shatter感知的生命周期（无需做任何处理，只需复写即可）,如：
 
-```
+```java
 private ShatterManager mShatterManager;
 
 public ShatterManager getShatterManager() {
@@ -78,7 +78,7 @@ public void onSaveInstanceState(Bundle outState) {
 
 在baseActivity中的onCreate()中写上如下语句：
 
-```
+```java
 private ShatterManager mShatterManager;
 
 public ShatterManager getShatterManager() {
@@ -110,7 +110,7 @@ protected void onCreate(@Nullable Bundle savedInstanceState) {
 
 定义一个shatter：
 
-```
+```java
 public static class MyShatter extends Shatter {
 
     private TextView mTopTv;
@@ -138,9 +138,9 @@ public static class MyShatter extends Shatter {
 }
 ```
 
-在activity中添加这个shatter：
+方式一：在activity中添加这个shatter：
 
-```
+```java
 @Override
 protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
@@ -150,9 +150,9 @@ protected void onCreate(Bundle savedInstanceState) {
 }
 ```
 
-在shatter中添加一个shatter（支持多重嵌套）：
+方式二：在shatter中添加一个shatter（支持多重嵌套）：
 
-```
+```java
 public class MiddleShatter extends Shatter {
 
     @Override
